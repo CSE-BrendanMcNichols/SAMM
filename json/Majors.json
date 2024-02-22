@@ -1,0 +1,10 @@
+[
+   {
+    "courses": ["CSCE 205 Business Applications Programming","CSCE 145 Algorithmic Design I","CSCE 190 Computing in the Modern World"],
+    "coreReq": { "CMW": 6,
+                 "ARP": 7,
+                 "INF": 3},
+    "electiveCourses": ["CSCE 101 Introduction to Computer Concepts", "MGSC 290 Computer Information Systems in Business"],
+    "major": "CSCE"
+   }
+]
