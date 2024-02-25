@@ -1,6 +1,7 @@
 package backEnd;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class UserList {
     private ArrayList<Student> studentList;
@@ -25,13 +26,13 @@ public class UserList {
         }
         switch (userType) {
             case STUDENT:
-                studentList.add(new Student(firstName, lastName, userName, email, password));
+                studentList.add(new Student(firstName, lastName, userName, email, UUID.randomUUID()));
                 break;
             case ADVISOR:
-                advisorList.add(new Advisor(firstName, lastName, userName, email, password));
+                advisorList.add(new Advisor(firstName, lastName, userName, email, UUID.randomUUID()));
                 break;
             case ADMINISTRATOR:
-                adminList.add(new Administrator(firstName, lastName, userName, email, password));
+                adminList.add(new Administrator(firstName, lastName, userName, email, UUID.randomUUID()));
                 break;
             default:
                 return false;
@@ -65,8 +66,9 @@ public class UserList {
 
     public void saveUsers() {
         DataWriter dataWriter = new DataWriter();
-        dataWriter.saveUsers(studentList);
-        dataWriter.saveUsers(advisorList);
-        dataWriter.saveUsers(adminList);
+        // Note: Seperated as 3 different methods as saveUsers can not differentiate list if use saveUSers
+        dataWriter.saveStudents(studentList);
+        dataWriter.saveAdvisors(advisorList);
+        dataWriter.saveAdministrators(adminList);
     }
 }
