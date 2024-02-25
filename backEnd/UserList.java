@@ -58,3 +58,4 @@ public class UserList {
         dataWriter.saveAdvisors(advisorList);
         dataWriter.saveAdministrators(administratorList);
     }
+}
