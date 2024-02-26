@@ -1,3 +1,5 @@
+package backEnd;
+
 import java.util.UUID;
 
 /**
@@ -10,7 +12,14 @@ public class User {
     private String password;
     private String email;
     private String uscid;
-    private UUID uuid;
+    private UUID uuid = UUID.randomUUID();
+
+    public User(String username, String password, String email, String uscid) {
+        username = this.username;
+        password = this.password;
+        email = this.email;
+        uscid = this.uscid;
+    }
 
     public User(String username, String password, String email, String uscid, UUID uuid) {
         username = this.username;

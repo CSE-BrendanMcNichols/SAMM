@@ -1,7 +1,6 @@
 package backEnd;
 
 import java.util.ArrayList;
-import java.util.UUID;
 
 /**
  * This is a Student Class
@@ -20,12 +19,18 @@ public class Student extends User {
 
     // TODO - implement the rest of the methods from the UML diagram
 
-    public Student(String username, String password, String email, String uscid, UUID uuid) {
-        super(username, password, email, uscid, uuid);
+    public Student(String username, String password, String email, String uscid) {
+        super(username, password, email, uscid);
+    }
+
+    public Student(String username, String password, String email, String uscid, Year gradeYear,
+            Advisor advisor, Major major, double overallGrade, int credits,
+            ArrayList<Course> completedCourses, ArrayList<Course> currentCourses, ArrayList<String> notes) {
+        super(username, password, email, uscid);
     }
 
     // Added Getters and setters methods
-    
+
     public Year getGradeYear() {
         return gradeYear;
     }
@@ -90,6 +95,6 @@ public class Student extends User {
         this.notes = notes;
     }
 
-    
+
 
 }
