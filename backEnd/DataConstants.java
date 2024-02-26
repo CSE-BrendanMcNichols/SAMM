@@ -31,4 +31,6 @@ public abstract class DataConstants {
     protected static final String CREDITS = "credits";
     protected static final String COMPLETEDCLASSES = "completedClasses";
     protected static final String CURRENTCLASSES = "currentClasses";
+	protected static final String ASSIGNED_STUDENTS = "assignedStudents";
+
 }

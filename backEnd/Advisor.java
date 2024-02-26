@@ -9,6 +9,7 @@ import java.util.UUID;
  * @author Sree
  */
 public class Advisor extends User {
+    
     private ArrayList<Student> assignedStudents;
 
     public Advisor(String username, String password, String email, String uscid, UUID uuid) {

@@ -27,6 +27,7 @@ public class Student extends User {
             Advisor advisor, Major major, double overallGrade, int credits,
             ArrayList<Course> completedCourses, ArrayList<Course> currentCourses, ArrayList<String> notes) {
         super(username, password, email, uscid);
+        // TODO  - store the other parameters.
     }
 
     // Added Getters and setters methods
