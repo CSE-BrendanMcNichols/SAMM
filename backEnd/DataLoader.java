@@ -28,18 +28,21 @@ public class DataLoader extends DataConstants{
 				String email = (String)studentJSON.get(EMAIL);
 				String uscid = (String)studentJSON.get(USCID);
 				String uuid = (String)studentJSON.get(UUID);
-				String gradeYear = (String)studentJSON.get(GRADEYEAR);
-				String advisor = (String)studentJSON.get(ADVISOR);
-				String major = (String)studentJSON.get(MAJOR);
-				String overallGrade = (String)studentJSON.get(OVERALLGRADE);
-				String credits = (String)studentJSON.get(CREDITS);
-				String completedClasses = (String)studentJSON.get(COMPLETEDCLASSES);
-				String currentClasses = (String)studentJSON.get(GRADEYEAR);
+				Year gradeYear = (Year)studentJSON.get(GRADEYEAR);
+				Advisor advisor = (Advisor)studentJSON.get(ADVISOR);
+				Major major = (Major)studentJSON.get(MAJOR);
+				double overallGrade = (double)studentJSON.get(OVERALLGRADE);
+				int credits = (int)studentJSON.get(CREDITS);
+				ArrayList<Course> completedCourses = (ArrayList<Course>)studentJSON.get(COMPLETEDCOURSES);
+				ArrayList<Course> currentCourses = (ArrayList<Course>)studentJSON.get(CURRENTCOURSES);
+				ArrayList<String> notes = (ArrayList<String>)studentJSON.get(NOTES);
 
-				students.add(new Student(username, password, email, uscid, uuid));
+				students.add( new Student(username, password, email, uscid, gradeYear,
+				advisor, major, overallGrade, credits,
+				completedCourses, currentCourses, notes));
 			}
 			
-			return people;
+			return students;
 			
 		} catch (Exception e) {
 			e.printStackTrace();

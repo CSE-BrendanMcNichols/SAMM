@@ -29,6 +29,7 @@ public abstract class DataConstants {
     protected static final String MAJOR = "major";
     protected static final String OVERALLGRADE = "overallGrade";
     protected static final String CREDITS = "credits";
-    protected static final String COMPLETEDCLASSES = "completedClasses";
-    protected static final String CURRENTCLASSES = "currentClasses";
+    protected static final String COMPLETEDCOURSES = "completedClasses";
+    protected static final String CURRENTCOURSES = "currentClasses";
+	protected static final String NOTES = "notes";
 }
