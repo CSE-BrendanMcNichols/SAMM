@@ -27,7 +27,14 @@ public class Student extends User {
             Advisor advisor, Major major, double overallGrade, int credits,
             ArrayList<Course> completedCourses, ArrayList<Course> currentCourses, ArrayList<String> notes) {
         super(username, password, email, uscid);
-        // TODO  - store the other parameters.
+        this.major = major; 
+        this.gradeYear = gradeYear; 
+        this.advisor = advisor; 
+        this.overallGrade = overallGrade; 
+        this.credits = credits; 
+        this.completedClasses = completedCourses; 
+        this.currentClasses = currentCourses; 
+        this.notes = notes;
     }
 
     // Added Getters and setters methods
@@ -98,4 +105,42 @@ public class Student extends User {
 
 
 
+
+    private double calculateGPA(ArrayList<Course> courses){
+        //Take credit hours for class and grade for it and calculate its gpa
+        for(int i = 0; i < getCompletedClasses().size(); i++){
+            System.out.println(getCompletedClasses().get(i));
+        }
+        return 2.9;
+    }
+    private ArrayList<Course> viewClassGrades(){
+
+    }
+    public boolean riskOfFailure(){
+
+    }
+    public Major viewFutureSchedule(){
+        
+    }
+    public ArrayList<Course> viewCurrentSchedule(){
+        
+    }
+    private void assignAdvisor(Advisor advisor){
+        this.advisor = advisor;
+    }
+    private void updateGrade(Course course, char grade){
+
+    }
+    private void checkHours(ArrayList<Course> completedCourses){
+
+    }
+    private void updateCourseCompleted(Course course){
+
+    }
+    private int getCreditsAccumulated(){
+
+    }
+    private void updateCurrentCourses(Course course){
+        
+    }
 }
