@@ -2,6 +2,9 @@ package backEnd;
 
 public class SchedulingFacade {
     private User user;
+    private Advisor advisor;
+    private Student student;
+    private Administrator administrator;
     private Course course;
     private MajorList majorList;
     private UserList userList;
@@ -9,8 +12,17 @@ public class SchedulingFacade {
     private DataLoader dataLoader;
     private DataWriter dataWriter;
 
-    public SchedulingFacade() {
-
+    public SchedulingFacade(User user, Advisor advisor, Student student, 
+    Administrator administrator, Course course, MajorList majorList, 
+    UserList userList, CourseList courseList) {
+        this.user = user;
+        this.advisor = advisor;
+        this.student = student;
+        this.administrator = administrator;
+        this.course = course;
+        this.majorList = majorList;
+        this.userList = userList;
+        this.courseList = courseList;
     }
 
     public void login () {
