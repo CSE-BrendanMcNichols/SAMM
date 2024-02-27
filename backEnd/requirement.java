@@ -17,7 +17,7 @@ public class Requirement{
     }
 
     public void addCourse(Course course){
-        courses.add(course)
+        courses.add(course);
     }
 
     public String toString(){
