@@ -5,7 +5,7 @@ import java.util.UUID;
 
 public class Requirement{
     private Boolean eitherOr;
-    private String requirementFor;
+    private String requirementType;
     private RequirementType type;
     private ArrayList<Course> courses;
 
