@@ -11,13 +11,13 @@ public class Requirement{
 
     Requirement(ArrayList<Course> courses, Boolean eitherOr, RequirementType type, String requirementFor){
         this.eitherOr = eitherOr;
-        this.requirementType = requirementFor;
+        this.requirementFor = requirementFor;
         this.type = type;
         this.courses = courses;
     }
 
     public void addCourse(Course course){
-        courses.add(course)
+        courses.add(course);
     }
 
     public String toString(){

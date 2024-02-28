@@ -118,32 +118,66 @@ public class Student extends User {
         }
         return 2.9;
     }
-    private ArrayList<Course> viewClassGrades(){
-
+    private void viewClassGrades(){
+        System.out.println("These are your class grades:");
+        for(Course course: this.completedClasses){
+            System.out.println(course.getName()+": "+course.getUserGrade());
+        }
     }
     public boolean riskOfFailure(){
-
+        if(overallGrade < 2.5){
+            return true;
+        }
+        return false;
     }
     public Major viewFutureSchedule(){
         
     }
-    public ArrayList<Course> viewCurrentSchedule(){
-        
+    public void viewCurrentSchedule(){
+        System.out.println("This is Your Current Schedule:");
+        for(Course course: this.currentClasses){
+            System.out.println(course);
+        }
     }
     private void assignAdvisor(Advisor advisor){
         this.advisor = advisor;
     }
     private void updateGrade(Course course, char grade){
-
+        course.setUserGrade(grade);
+    }
+    private void updateOverallGrade(){
+        double totalGrade = 0.0;
+        for(Course course: this.completedClasses){
+            totalGrade += (course.getPointGrade() * course.getCourseHours());
+        }
+        this.overallGrade = totalGrade/credits;
+    }
+    private void updateCredits(){
+        this.credits = getCreditsAccumulated();
     }
     private void checkHours(ArrayList<Course> completedCourses){
-
+        int creditTotal = 0;
+        for(Course course: this.completedClasses){
+            creditTotal += course.getCourseHours();
+        }
+        System.out.println("credit hours completed are: " + creditTotal);
     }
-    private void updateCourseCompleted(Course course){
-
+    private void updateCourseCompleted(Course updateCourse){
+        for(Course course: this.currentClasses){
+            if(course.getUuid() == updateCourse.getUuid()){
+                currentClasses.remove(course);
+            }
+        }
+        this.completedClasses.add(updateCourse);
+        updateCredits();
+        updateOverallGrade();
     }
     private int getCreditsAccumulated(){
-
+        int creditTotal = 0;
+        for(Course course: this.completedClasses){
+            creditTotal += course.getCourseHours();
+        }
+        return creditTotal;
     }
     private void updateCurrentCourses(Course course){
         

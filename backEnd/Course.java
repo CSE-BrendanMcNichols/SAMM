@@ -43,6 +43,15 @@ public class Course {
     public void addCorequisite(Requirement requirement) {
 
     }
+    public String getName(){
+        return this.courseName;
+    }
+    public char getUserGrade(){
+        return this.userGrade;
+    }
+    public void setUserGrade(char userGrade){
+        this.userGrade = userGrade;
+    }
 
     public String displayDescription(){
         return this.courseDescription;
@@ -51,4 +60,30 @@ public class Course {
     public String toString(){
         return "";
     }
+
+    public int getCourseHours(){
+        return this.courseHours;
+    }
+
+    public UUID getUuid(){
+        return this.uuid;
+    }
+
+    public double getPointGrade(){
+        double grade = 0.0;
+        if(this.userGrade == 'A'){
+            grade = 4.0;
+        }else if(this.userGrade == 'B'){
+            grade = 3.0;
+        }else if(this.userGrade == 'C'){
+            grade = 2.0;
+        }else if(this.userGrade == 'D'){
+            grade = 1.0;
+        }else if(this.userGrade == 'F'){
+            grade = 0.0;
+        }
+        return grade;
+    }
+
+
 }
