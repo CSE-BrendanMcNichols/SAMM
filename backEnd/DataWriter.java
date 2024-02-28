@@ -31,8 +31,8 @@ public class DataWriter {
             studentJSON.put(DataConstants.MAJOR, student.getMajor());
             studentJSON.put(DataConstants.OVERALLGRADE, student.getOverallGrade());
             studentJSON.put(DataConstants.CREDITS, student.getCredits());
-            studentJSON.put(DataConstants.COMPLETEDCLASSES, student.getCompletedClasses());
-            studentJSON.put(DataConstants.CURRENTCLASSES, student.getCurrentClasses());
+            studentJSON.put(DataConstants.COMPLETEDCOURSES, student.getCompletedClasses());
+            studentJSON.put(DataConstants.CURRENTCOURSES, student.getCurrentClasses());
 
             jsonArray.add(studentJSON);
         }
@@ -78,10 +78,31 @@ public class DataWriter {
      * @param administratorList
      */
     public void saveAdministrators(ArrayList<Administrator> administratorList) {
-        // TODO
+        // Convert ArrayList to JSON
+        JSONArray jsonArray = new JSONArray();
+        for (Administrator administrator : administratorList) {
+            JSONObject administratorJSON = new JSONObject();
+            administratorJSON.put(DataConstants.USERNAME, administrator.getUsername());
+            administratorJSON.put(DataConstants.PASSWORD, administrator.getPassword());
+            administratorJSON.put(DataConstants.EMAIL, administrator.getEmail());
+            administratorJSON.put(DataConstants.USCID, administrator.getUscid());
+            administratorJSON.put(DataConstants.UUID, administrator.getUuid());
+
+            jsonArray.add(administratorJSON);
+        }
+
+        // Write JSON to file
+        try (FileWriter file = new FileWriter(DataConstants.ADMINISTRATOR_FILE_NAME)) {
+            file.write(jsonArray.toJSONString());
+            file.flush();
+            System.out.println("Administrator JSON data is written to the file.");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
-    public static void saveMajors(ArrayList<Major> majors) {
+    public static void saveMajors(ArrayList<Major> majorList) {
        // Convert ArrayList to JSON
        JSONArray jsonArray = new JSONArray();
        for (Major major : majorList) {
