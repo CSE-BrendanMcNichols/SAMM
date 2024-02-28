@@ -51,5 +51,41 @@ public class DataLoader extends DataConstants {
 
 		return null;
 	}
+
+	/**
+	 * This method returns the MajorList by reading from the major list json file
+	 * @return
+	 */
+	public static ArrayList<Major> loadMajorList() {
+
+		ArrayList<Major> majors = new ArrayList<Major>();
+
+		try {
+			FileReader reader = new FileReader(DataConstants.MAJORS_FILE_NAME);
+			JSONParser parser = new JSONParser();
+			JSONArray majorssJSONObjects = (JSONArray)parser.parse(reader);
+			
+			for(int i=0; i < majorssJSONObjects.size(); i++) {
+
+				JSONObject majorJSON = (JSONObject)majorssJSONObjects.get(i);
+
+				String majorString = (String)majorJSON.get(DataConstants.MAJOR);
+				Major major = new Major(majorString);
+				
+				//TODO: Only getting "major" for now. need to load the rest of the json elemnts into the respective classes.
+
+				majors.add(major);
+			}
+			
+			return majors;
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return null;
+	}
+
+
 }
 //Made no changes

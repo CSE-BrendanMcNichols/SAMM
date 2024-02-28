@@ -6,9 +6,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
-/** 
- * This class will write or save the data 
- * */
+/**
+ * This class will write or save the data
+ */
 
 public class DataWriter {
     /**
@@ -22,21 +22,20 @@ public class DataWriter {
         for (Student student : studentList) {
             JSONObject studentJSON = new JSONObject();
             studentJSON.put(DataConstants.USERNAME, student.getUsername());
-            studentJSON.put(DataConstants.PASSWORD,student.getPassword());
-            studentJSON.put(DataConstants.EMAIL,student.getEmail());
-            studentJSON.put(DataConstants.USCID,student.getUscid());
-            studentJSON.put(DataConstants.UUID,student.getUuid());
-            studentJSON.put(DataConstants.GRADEYEAR,student.getGradeYear());
-            studentJSON.put(DataConstants.ADVISOR,student.getAdvisor());
-            studentJSON.put(DataConstants.MAJOR,student.getMajor());
-            studentJSON.put(DataConstants.OVERALLGRADE,student.getOverallGrade());
-            studentJSON.put(DataConstants.CREDITS,student.getCredits());
-            studentJSON.put(DataConstants.COMPLETEDCLASSES,student.getCompletedClasses());
-            studentJSON.put(DataConstants.CURRENTCLASSES,student.getCurrentClasses());
-      
+            studentJSON.put(DataConstants.PASSWORD, student.getPassword());
+            studentJSON.put(DataConstants.EMAIL, student.getEmail());
+            studentJSON.put(DataConstants.USCID, student.getUscid());
+            studentJSON.put(DataConstants.UUID, student.getUuid());
+            studentJSON.put(DataConstants.GRADEYEAR, student.getGradeYear());
+            studentJSON.put(DataConstants.ADVISOR, student.getAdvisor());
+            studentJSON.put(DataConstants.MAJOR, student.getMajor());
+            studentJSON.put(DataConstants.OVERALLGRADE, student.getOverallGrade());
+            studentJSON.put(DataConstants.CREDITS, student.getCredits());
+            studentJSON.put(DataConstants.COMPLETEDCLASSES, student.getCompletedClasses());
+            studentJSON.put(DataConstants.CURRENTCLASSES, student.getCurrentClasses());
+
             jsonArray.add(studentJSON);
         }
-
 
         // Write JSON to file
         try (FileWriter file = new FileWriter(DataConstants.STUDENT_FILE_NAME)) {
@@ -46,7 +45,6 @@ public class DataWriter {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
 
     }
 
@@ -63,7 +61,6 @@ public class DataWriter {
             advisorJSON.put(DataConstants.ASSIGNED_STUDENTS, advisor.getAssignedStudents());
             jsonArray.add(advisorJSON);
         }
-
 
         // Write JSON to file
         try (FileWriter file = new FileWriter(DataConstants.ADVISOR_FILE_NAME)) {
@@ -82,6 +79,31 @@ public class DataWriter {
      */
     public void saveAdministrators(ArrayList<Administrator> administratorList) {
         // TODO
+    }
+
+    public static void saveMajors(ArrayList<Major> majors) {
+       // Convert ArrayList to JSON
+       JSONArray jsonArray = new JSONArray();
+       for (Major major : majorList) {
+           JSONObject majorJSON = new JSONObject();
+           majorJSON.put(DataConstants.MAJOR, major.getMajor());
+           majorJSON.put(DataConstants.COREREQ, major.getCoreReq());
+           majorJSON.put(DataConstants.COURSES, major.getCourses());
+           majorJSON.put(DataConstants.ELECTIVE_COURSES, major.getElectiveCourses());
+           majorJSON.put(DataConstants.MAJOR, major.getMajor());
+          
+           jsonArray.add(majorJSON);
+
+       }
+
+       // Write JSON to file
+       try (FileWriter file = new FileWriter(DataConstants.ADVISOR_FILE_NAME)) {
+           file.write(jsonArray.toJSONString());
+           file.flush();
+           System.out.println("Majors JSON data is written to the file.");
+       } catch (IOException e) {
+           e.printStackTrace();
+       };
     }
 
 }
