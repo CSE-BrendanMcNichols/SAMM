@@ -6,12 +6,12 @@ import java.util.UUID;
 public class Requirement{
     private Boolean eitherOr;
     private String requirementFor;
-    private RequirementFor type;
+    private RequirementType type;
     private ArrayList<Course> courses;
 
     Requirement(ArrayList<Course> courses, Boolean eitherOr, RequirementType type, String requirementFor){
         this.eitherOr = eitherOr;
-        this.requirementFor = requirementFor;
+        this.requirementType = requirementFor;
         this.type = type;
         this.courses = courses;
     }
