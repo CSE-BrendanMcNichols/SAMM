@@ -5,8 +5,8 @@ import java.util.UUID;
 
 public class Requirement{
     private Boolean eitherOr;
-    private String requirementType;
-    private RequirementType type;
+    private String requirementFor;
+    private RequirementFor type;
     private ArrayList<Course> courses;
 
     Requirement(ArrayList<Course> courses, Boolean eitherOr, RequirementType type, String requirementFor){
@@ -17,7 +17,7 @@ public class Requirement{
     }
 
     public void addCourse(Course course){
-        courses.add(course);
+        courses.add(course)
     }
 
     public String toString(){
