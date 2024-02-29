@@ -43,6 +43,7 @@ public class SchedulingFacade {
 
     public void accessUserActions() {
         //make a boolean that is quit and in the logout case you set quit to true;
+        //The printing should be all in the UI and the 
         boolean exit = false;
         System.out.println("These are your user Actions");
         while (!exit) {
@@ -54,6 +55,7 @@ public class SchedulingFacade {
             }
             else if(user.getRole() == "Administrator") {
                 //swtich case with all administrator actions
+                
             }
         }
     }

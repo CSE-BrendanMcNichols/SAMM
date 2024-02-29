@@ -1,10 +1,24 @@
 package backEnd;
 
+import java.util.ArrayList;
+
 public class TestDriver {
     private SchedulingFacade facade;
+    private User user;
+    private Advisor advisor;
+    private Student student;
+    private Administrator administrator;
+    private Course course;
+    private MajorList majorList;
+    private UserList userList;
+    private CourseList courseList;
+    private DataLoader dataLoader;
+    private DataWriter dataWriter;
 
     TestDriver(){
-        facade = new SchedulingFacade;
+        SchedulingFacade facade = new SchedulingFacade(user, advisor, student, 
+        administrator, course, majorList, 
+        userList, courseList);
     }
 
     public void run(){

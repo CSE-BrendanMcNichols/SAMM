@@ -131,7 +131,11 @@ public class Student extends User {
         return false;
     }
     public Major viewFutureSchedule(){
-        
+        //get everything not completed from the roadmap
+        System.out.println("viewFutureSchedule called.");
+        Major returnMajor = getMajor();
+        System.out.println(returnMajor);
+        return null;
     }
     public void viewCurrentSchedule(){
         System.out.println("This is Your Current Schedule:");
