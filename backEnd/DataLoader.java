@@ -13,7 +13,7 @@ import org.json.simple.parser.JSONParser;;
 
 public class DataLoader extends DataConstants {
 
-	public static ArrayList<Student> loadStudents() {
+	public static ArrayList<Student> getStudents() {
 		ArrayList<Student> students = new ArrayList<Student>();
 
 		
@@ -52,11 +52,126 @@ public class DataLoader extends DataConstants {
 		return null;
 	}
 
+
+
+	public static ArrayList<Administrator> getAdministrators() {
+		ArrayList<Administrator> administrators = new ArrayList<Administrator>();
+
+		
+		try {
+			FileReader reader = new FileReader(ADMINISTRATOR_FILE_NAME);
+			JSONParser parser = new JSONParser();
+			JSONArray administratorJSON = (JSONArray)new JSONParser().parse(reader);
+			
+			for(int i=0; i < administratorJSON.size(); i++) {
+				JSONObject administratorJSON = (JSONObject)administratorJSON.get(i);
+				String username = (String)administratorJSON.get(USERNAME);
+				String password = (String)administratorJSON.get(PASSWORD);
+				String email = (String)administratorJSON.get(EMAIL);
+				String uscid = (String)administratorJSON.get(USCID);
+				
+				administrators.add( new Administrator(username, password, email, uscid));
+			}
+			
+			return administrators;
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return null;
+	}
+
+	public static ArrayList<Advisor> getAdvisors() {
+		ArrayList<Advisor> advisors = new ArrayList<Advisor>();
+
+		
+		try {
+			FileReader reader = new FileReader(ADVISOR_FILE_NAME);
+			JSONParser parser = new JSONParser();
+			JSONArray advisorJSON = (JSONArray)new JSONParser().parse(reader);
+			
+			for(int i=0; i < advisorJSON.size(); i++) {
+				JSONObject advisorJSON = (JSONObject)advisorJSON.get(i);
+				String username = (String)advisorJSON.get(USERNAME);
+				String password = (String)advisorJSON.get(PASSWORD);
+				String email = (String)advisorJSON.get(EMAIL);
+				String uscid = (String)advisorJSON.get(USCID);
+				ArrayList<Student> assignedStudents = (ArrayList<Student>)advisorJSON.get(ASSIGNED_STUDENTS);
+				
+				advisors.add( new Advisor(username, password, email, uscid, assignedStudents));
+			}
+				
+			return advisors;
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return null;
+	}
+
+
+	public static ArrayList<Administrator> getAdministrators() {
+		ArrayList<Administrator> administrators = new ArrayList<Administrator>();
+		
+		try {
+			FileReader reader = new FileReader(ADMINISTRATOR_FILE_NAME);
+			JSONParser parser = new JSONParser();
+			JSONArray administratorJSON = (JSONArray)new JSONParser().parse(reader);
+				
+			for(int i=0; i < administratorJSON.size(); i++) {
+				JSONObject administratorJSON = (JSONObject)administratorJSON.get(i);
+				String username = (String)administratorJSON.get(USERNAME);
+				String password = (String)administratorJSON.get(PASSWORD);
+				String email = (String)administratorJSON.get(EMAIL);
+				String uscid = (String)administratorJSON.get(USCID);
+				
+				administrators.add( new Administrator(username, password, email, uscid));
+			}
+				
+			return administrators;
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return null;
+	}
+	// working on this
+
+	public static ArrayList<Course> getCourses() {
+		ArrayList<Course> courses = new ArrayList<Course>();
+
+		
+		try {
+			FileReader reader = new FileReader(COURSE_FILE_NAME);
+			JSONParser parser = new JSONParser();
+			JSONArray courseJSON = (JSONArray)new JSONParser().parse(reader);
+			
+			for(int i=0; i < courseJSON.size(); i++) {
+				JSONObject courseJSON = (JSONObject)courseJSON.get(i);
+				String username = (String)courseJSON.get(USERNAME);
+				String password = (String)courseJSON.get(PASSWORD);
+				ArrayList<Student> assignedStudents = (ArrayList<Student>)courseJSON.get(ASSIGNED_STUDENTS);
+				
+				courses.add( new Course(username, password, email, uscid, assignedStudents));
+			}
+			
+			return advisors;
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	
+		return null;
+	}
+
 	/**
 	 * This method returns the MajorList by reading from the major list json file
 	 * @return
 	 */
-	public static ArrayList<Major> loadMajorList() {
+	public static ArrayList<Major> getMajorList() {
 
 		ArrayList<Major> majors = new ArrayList<Major>();
 
