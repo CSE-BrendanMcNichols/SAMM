@@ -34,7 +34,7 @@ public abstract class DataConstants {
 	protected static final String ASSIGNED_STUDENTS = "assignedStudents";
 
 	//Major Related Constants
-	protected static final String MAJORS_FILE_NAME = "Masors.json";
+	protected static final String MAJORS_FILE_NAME = "Majors.json";
 	protected static final String MAJOR = "major";
 	protected static final String COREREQ = "coreReq";
 	protected static final String COURSES = "courses";
