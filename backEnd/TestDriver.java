@@ -1,5 +1,7 @@
 package backEnd;
 
+import java.util.ArrayList;
+
 public class TestDriver {
     private SchedulingFacade facade;
     private User user;
@@ -24,7 +26,7 @@ public class TestDriver {
         //scenario2();
     }
 
-    public void scenario1() {
-        facade.accessUserActions();
+    public void scenario1();{
+        
     }
 }
