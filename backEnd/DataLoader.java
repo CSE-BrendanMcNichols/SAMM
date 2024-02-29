@@ -151,10 +151,15 @@ public class DataLoader extends DataConstants {
 			
 			for(int i=0; i < courseJSON.size(); i++) {
 				JSONObject courseJSON = (JSONObject)courseJSON.get(i);
-				String username = (String)courseJSON.get(USERNAME);
-				String password = (String)courseJSON.get(PASSWORD);
-				ArrayList<Student> assignedStudents = (ArrayList<Student>)courseJSON.get(ASSIGNED_STUDENTS);
-				
+				String courseName = (String)courseJSON.get(COURSENAME);
+				Semester courseSemester = (Semester)courseJSON.get(COURSESEMESTER);
+				int courseNumber = (int)courseJSON.get(COURSENUMBER);
+				ArrayList<Requirement> prerequisites = (ArrayList<Requirement>)courseJSON.get(PREREQUISITES);
+				ArrayList<Requirement> corequisites = (ArrayList<Requirement>)courseJSON.get(COREQUISITES);
+				String courseDescription = (String)courseJSON.get(COURSEDESCRIPTION);
+				int courseHours = (int)courseJSON.get(COURSEHOURS);
+				char minGrade = ()
+
 				courses.add( new Course(username, password, email, uscid, assignedStudents));
 			}
 			

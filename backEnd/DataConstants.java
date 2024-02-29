@@ -8,7 +8,8 @@ package backEnd;
 public abstract class DataConstants {
 	protected static final String STUDENT_FILE_NAME = "StudentUsers.json";
 	protected static final String ADVISOR_FILE_NAME = "AdvisorUsers.json";
-	
+	protected static final String COURSE_FILE_NAME = "Courses.json";
+
 	protected static final String ADMINISTRATOR_FILE_NAME = "AdministratorUsers.json";
 	protected static final String USER = "User";
 	protected static final String USERNAME = "username";
@@ -39,8 +40,6 @@ public abstract class DataConstants {
 	protected static final String COREREQ = "coreReq";
 	protected static final String COURSES = "courses";
 	protected static final String ELECTIVE_COURSES = "electiveCourses";
-
-
 
 
 
