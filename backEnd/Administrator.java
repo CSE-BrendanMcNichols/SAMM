@@ -4,6 +4,8 @@ import java.util.UUID;
 
 public class Administrator extends User {
 
+    private User user;
+
     public Administrator(String username, String password, String email, String uscid, UUID uuid) {
         super(username, password, email, uscid, uuid);
     }
@@ -17,7 +19,7 @@ public class Administrator extends User {
     }
 
     private User searchUser(String name) {
-        if(User.isVa)
+        
     }
 
 }
