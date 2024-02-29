@@ -1,18 +1,15 @@
 package backEnd;
 
 import java.util.UUID;
+import java.util.ArrayList;
 
-/**
- * user class
- * 
- * @author Matthew Bojanowski
- */
 public class User {
     private String username;
     private String password;
     private String email;
     private String uscid;
     private UUID uuid = UUID.randomUUID();
+    private ArrayList<User> users;
 
     public User(String username, String password, String email, String uscid) {
         username = this.username;
@@ -35,6 +32,16 @@ public class User {
 
     protected void signOutOfOtherSessions() {
         System.out.println("sign out successful.");
+    }
+
+    public boolean isValidUser(User user) {
+        boolean valid = false;
+        for(int i = 0; i < users.size(); i++) {
+            if(user.equals(users.get(i))) {
+                valid = true;
+            }
+        }
+        return valid;
     }
 
     // Note - generated getters and setters for all the private variables

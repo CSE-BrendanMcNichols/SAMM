@@ -2,16 +2,22 @@ package backEnd;
 
 import java.util.UUID;
 
-/**
- * This is an Administrator class
- * 
- * @author Sree
- */
 public class Administrator extends User {
 
     public Administrator(String username, String password, String email, String uscid, UUID uuid) {
         super(username, password, email, uscid, uuid);
     }
-    // TODO - implement the rest of the methods from the UML diagram
+    
+    private void overrideStudentGrade(String name, char grade) {
+        System.out.println("The new grade for " + name + "will be " + grade);
+    }
+
+    private void updateMajor(String majorDetails) {
+        System.out.println("The new major is " + majorDetails);
+    }
+
+    private User searchUser(String name) {
+        if(User.isVa)
+    }
 
 }
