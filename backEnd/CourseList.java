@@ -24,3 +24,26 @@ public class CourseList {
         }
         return null;
       }
+
+      public void addCourse(String name, Semester courseSemester, int courseNumber,  
+                            ArrayList<Requirement> preRequisites, ArrayList<Requirement> coRequisites,
+                            String courseDescription)
+                        if (name = true   
+                        || courseSemester == null
+                        || courseNumber == null
+                        || preRequisites == null
+                        || coRequisites == null
+                        || courseDescription == null
+                        || type == null);
+
+      public Course getCourseID(String id) {
+          for (Course course: courses) {
+            if(course.getCourseID().equals(id)) {
+              return course;
+            }
+          }
+      }
+
+      private void loadCourses() {
+        this.courses = DataLoader.getInstance().LoadCourses();
+      }
