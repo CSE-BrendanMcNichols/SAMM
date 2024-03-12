@@ -10,6 +10,7 @@ public class User {
     private String uscid;
     private UUID uuid = UUID.randomUUID();
     private ArrayList<User> users;
+    private User user;
 
     public User(String username, String password, String email, String uscid) {
         username = this.username;
@@ -29,6 +30,16 @@ public class User {
     public void login() {
         System.out.println("login called.");
     }
+
+    private String searchUser(String name) { 
+        for(int i = 0; i < users.size(); i++) {
+            if(users.get(i).equals(name)) {
+                return name;
+            }
+        }
+        return null;
+    }
+    
 
     protected void signOutOfOtherSessions() {
         System.out.println("sign out successful.");
