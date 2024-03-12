@@ -128,6 +128,7 @@ public class Major {
     }
     private void removeCourse(Course course){
         System.out.println("removeCourse called");
+        
     }
 }
 
