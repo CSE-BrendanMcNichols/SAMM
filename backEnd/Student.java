@@ -149,6 +149,8 @@ public class Student extends User {
     private void updateGrade(Course course, char grade){
         course.setUserGrade(grade);
     }
+
+    //Havent tested this yet
     private void updateOverallGrade(){
         double totalGrade = 0.0;
         for(Course course: this.completedClasses){
@@ -156,17 +158,23 @@ public class Student extends User {
         }
         this.overallGrade = totalGrade/credits;
     }
+
+    //Havent tested this yet
     private void updateCredits(){
         this.credits = getCreditsAccumulated();
     }
-    private void checkHours(ArrayList<Course> completedCourses){
+
+    //this works
+    public void checkHours(ArrayList<Course> completedCourses){
         int creditTotal = 0;
         for(Course course: this.completedClasses){
             creditTotal += course.getCourseHours();
         }
         System.out.println("credit hours completed are: " + creditTotal);
     }
-    private void updateCourseCompleted(Course updateCourse){
+
+    //This works
+    public void updateCourseCompleted(Course updateCourse){
         System.out.println("updateCourseCompleted called. updateCourse: " + updateCourse);
         for(Course course: this.currentClasses){
             if(course.getUuid() == updateCourse.getUuid()){
@@ -177,6 +185,8 @@ public class Student extends User {
         updateCredits();
         updateOverallGrade();
     }
+
+    //This works
     private int getCreditsAccumulated(){
         int creditTotal = 0;
         for(Course course: this.completedClasses){
@@ -184,7 +194,11 @@ public class Student extends User {
         }
         return creditTotal;
     }
+
+    //This works
     private void updateCurrentCourses(Course course){
-        System.out.println("updateCurrentCourses called. Course: " + course);
+        ArrayList<Course> updatedclasses = currentClasses;
+        updatedclasses.add(course);
+        setCurrentClasses(updatedclasses);
     }
 }
