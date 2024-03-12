@@ -27,14 +27,23 @@ public class User {
         uuid = this.uuid;
     }
 
-    public void login() {
-        System.out.println("login called.");
+    public User(UUID uuid, String username) {
+        this.uuid = uuid;
+        this.username = username;
     }
 
-    private String searchUser(String name) { 
-        for(int i = 0; i < users.size(); i++) {
-            if(users.get(i).equals(name)) {
-                return name;
+    public void login(String username) {
+        if(isValidUser(user)) {
+            System.out.println("Log in was successful");
+        } else {
+            System.out.println("Log in failed");
+        }
+    }
+
+    public User searchUser(ArrayList<User> users, UUID uuid) {
+        for(int i = 0; i < users.size(); i ++) {
+            if(users.get(i).getUuid().equals(uuid)) {
+                return user;
             }
         }
         return null;
