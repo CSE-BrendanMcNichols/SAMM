@@ -159,6 +159,7 @@ public class Student extends User {
         this.overallGrade = totalGrade/credits;
     }
 
+    
     //Havent tested this yet
     private void updateCredits(){
         this.credits = getCreditsAccumulated();
