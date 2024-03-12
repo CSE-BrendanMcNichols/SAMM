@@ -6,7 +6,7 @@ public class CourseList {
     private static CourseList courseList;
 
     private CourseList() {
-        courses = DataLoader.loadCourses();
+      loadCourses();
     }
 
     public static CourseList getInstance() {
@@ -47,3 +47,4 @@ public class CourseList {
       private void loadCourses() {
         this.courses = DataLoader.getInstance().LoadCourses();
       }
+}
