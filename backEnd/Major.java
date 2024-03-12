@@ -94,7 +94,40 @@ public class Major {
     }
 
     // TODO - implement the rest of the methods from the UML diagram
-
-
-    
+    /*
+     + Major(ArrayList<Course> courses, HashMap<RequirementType, int> coreReq, Elelctive electiveCourses, String major) Major
++ addCourse(Course course): void
++ addCoreReq(): void
++ addElective(Course course): void
++ toString(): String
++ printRoadmap(): void
+- removeCourse(Course course)
+     */
+    public Major Major(ArrayList<Course> courses,HashMap<RequirementType, Integer> coreReq, Elective electiveCourses, String major){
+        this.coreReq = coreReq;
+        this.electiveCourses = electiveCourses;
+        this.major = major;
+        return null;
+    }
+    public void addCourse(Course course){
+        courses.add(course);
+        System.out.println("addCourse called");
+    }
+    public void addCoreReq(){ 
+        System.out.println("addCoreReq called");
+    }
+    public void addElective(Course course){
+        //electiveCourses.add(course);
+        System.out.println("addElective called");
+    }
+    public String toString(){
+        return "toString called. String: " + major;
+    }
+    public void printRoadmap(){
+        System.out.println("printRoadmap called");
+    }
+    private void removeCourse(Course course){
+        System.out.println("removeCourse called");
+    }
 }
+
