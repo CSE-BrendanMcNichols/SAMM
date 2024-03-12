@@ -6,7 +6,7 @@ import java.util.UUID;
 public class Requirement{
     private Boolean eitherOr;
     private String requirementFor;
-    private RequirementType type;
+    private RequirementFor type;
     private ArrayList<Course> courses;
 
     Requirement(ArrayList<Course> courses, Boolean eitherOr, RequirementType type, String requirementFor){

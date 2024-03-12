@@ -167,6 +167,7 @@ public class Student extends User {
         System.out.println("credit hours completed are: " + creditTotal);
     }
     private void updateCourseCompleted(Course updateCourse){
+        System.out.println("updateCourseCompleted called. updateCourse: " + updateCourse);
         for(Course course: this.currentClasses){
             if(course.getUuid() == updateCourse.getUuid()){
                 currentClasses.remove(course);
@@ -184,6 +185,6 @@ public class Student extends User {
         return creditTotal;
     }
     private void updateCurrentCourses(Course course){
-        
+        System.out.println("updateCurrentCourses called. Course: " + course);
     }
 }
