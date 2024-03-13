@@ -6,7 +6,7 @@ import java.util.UUID;
 /**
  * This is a Advisor class
  * 
- * @author Sree
+ * @author sree
  */
 public class Advisor extends User {
     
