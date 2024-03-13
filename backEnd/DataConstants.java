@@ -9,7 +9,7 @@ public abstract class DataConstants {
 	protected static final String STUDENT_FILE_NAME = "json/StudentUsers.json";
 	protected static final String ADVISOR_FILE_NAME = "json/AdvisorUsers.json";
 	protected static final String COURSE_FILE_NAME = "json/Courses.json";
-	protected static final String ADMINISTRATOR_FILE_NAME = "AdministratorUsers.json";
+	protected static final String ADMINISTRATOR_FILE_NAME = "json/AdministratorUsers.json";
 	
 	protected static final String USER = "User";
 	protected static final String USERNAME = "username";
@@ -29,7 +29,7 @@ public abstract class DataConstants {
 	protected static final String EITHEROR = "eitherOr";
 	protected static final String TYPE = "type";
 	protected static final String REQUIREMENTFOR = "requirementFor";
-	protected static final String UUID = "uuid";
+	protected static final String UUIDSTRING = "uuid";
     protected static final String GRADEYEAR = "gradeYear";
     protected static final String ADVISOR = "advisor";
     protected static final String OVERALLGRADE = "overallGrade";

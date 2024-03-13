@@ -32,6 +32,21 @@ public class Course {
         this.userGrade = userGrade;
         this.courseStatus = courseStatus;
     }
+    Course(String courseName, Semester courseSemester, int courseNumber,
+            String courseDescription, int courseHours, char minGrade, char userGrade,
+            CourseState courseStatus, UUID uuid) {
+        this.courseName = courseName;
+        this.courseSemester = courseSemester;
+        this.courseNumber = courseNumber;
+        this.prerequisites = new ArrayList<Requirement>();
+        this.corequisites = new ArrayList<Requirement>();
+        this.courseDescription = courseDescription;
+        this.courseHours = courseHours;
+        this.minGrade = minGrade;
+        this.userGrade = userGrade;
+        this.courseStatus = courseStatus;
+        this.uuid = uuid;
+    }
     //DELETE CODE BELOW AFTER TESTING IT
     public Course(String string, int i, String string2, String string3, String string4) {
         courseName = string;

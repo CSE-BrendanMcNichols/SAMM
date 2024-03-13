@@ -30,7 +30,7 @@ public class Student extends User {
 
     public Student(String username, String password, String email, String uscid, Year gradeYear,
             Advisor advisor, Major major, double overallGrade, int credits,
-            ArrayList<Course> completedCourses, ArrayList<Course> currentCourses, ArrayList<String> notes) {
+            ArrayList<Course> completedCourses, ArrayList<Course> currentCourses, ArrayList<String> notes, UUID uuid) {
         super(username, password, email, uscid);
         this.major = major; 
         this.gradeYear = gradeYear; 

@@ -46,8 +46,10 @@ public class TestDriver {
 
         DataLoader dataLoader = new DataLoader();
 
-        ArrayList<Student> students;
+        ArrayList<Course> students;
 
-        students = dataLoader.getStudents();
+        students = dataLoader.getCourses();
+
+        System.out.println(students.get(0).displayDescription());
     }
 }
