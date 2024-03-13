@@ -14,13 +14,13 @@ public class Course {
     private int courseHours;
     private char minGrade;
     private char userGrade;
-    private CourseState courseSatus;
+    private CourseState courseStatus;
     private UUID uuid = UUID.randomUUID();
 
     Course(String courseName, Semester courseSemester, int courseNumber,
             ArrayList<Requirement> prerequisites, ArrayList<Requirement> corequisites,
             String courseDescription, int courseHours, char minGrade, char userGrade,
-            CourseState courseSatus) {
+            CourseState courseStatus) {
         this.courseName = courseName;
         this.courseSemester = courseSemester;
         this.courseNumber = courseNumber;
@@ -30,7 +30,7 @@ public class Course {
         this.courseHours = courseHours;
         this.minGrade = minGrade;
         this.userGrade = userGrade;
-        this.courseSatus = courseSatus;
+        this.courseStatus = courseStatus;
     }
     //DELETE CODE BELOW AFTER TESTING IT
     public Course(String string, int i, String string2, String string3, String string4) {
@@ -42,7 +42,7 @@ public class Course {
         System.out.println("Course " + courseName + " has " + courseHours + "hours");
         minGrade = string4.charAt(0);
         userGrade = string4.charAt(1);
-        courseSatus = CourseState.NOT_STARTED;
+        courseStatus = CourseState.NOT_STARTED;
 
     }
     //DELETE CODE ABOVE AFTER TESTING IT
@@ -82,6 +82,10 @@ public class Course {
 
     public UUID getUuid(){
         return this.uuid;
+    }
+
+    public int getCourseNumber() {
+        return this.courseNumber;
     }
 
     public double getPointGrade(){
