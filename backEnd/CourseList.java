@@ -7,15 +7,14 @@ import java.util.UUID;
 public class CourseList {
     private ArrayList<Course> courses;
     private HashMap<UUID, Course> coursesByUuid;
-    private HashMap<String, UUID> uuidsByNameAndNumber; // Use for combined name and number
+    private HashMap<String, UUID> uuidsByNameAndNumber;
     private static CourseList courseList;
 
     private CourseList() {
-        courses = DataLoader.getCourses(); // Assuming DataLoader properly initializes courses
+        courses = DataLoader.getCourses();
         coursesByUuid = new HashMap<>();
         uuidsByNameAndNumber = new HashMap<>();
         
-        // Initialize maps with courses loaded from DataLoader
         for (Course course : courses) {
             UUID uuid = course.getUuid();
             String key = course.getName() + " " + course.getCourseNumber();
@@ -31,12 +30,10 @@ public class CourseList {
         return courseList;
     }
 
-    // Method to get a course by its UUID
     public Course getCourseByUuid(UUID uuid) {
         return coursesByUuid.get(uuid);
     }
 
-    // Method to get a course by combining its name and number
     public Course getCourseByNameAndNumber(String name, int number) {
         UUID uuid = uuidsByNameAndNumber.get(name + " " + number);
         return coursesByUuid.get(uuid);
