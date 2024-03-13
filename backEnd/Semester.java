@@ -1,6 +1,17 @@
 package backEnd;
 
 public enum Semester {
-    FALL,
-    SPRING
+    Fall,
+    Spring;
+
+    public static Semester StringToSemester(String semesterString) {
+        switch(semesterString) {
+            case  "Fall":
+                return  Fall;
+            case "Spring":
+                return Spring;
+            default:
+                throw new IllegalArgumentException("Invalid semester " + semesterString);
+        }
+    }
 }

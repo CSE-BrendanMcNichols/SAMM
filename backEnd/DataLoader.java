@@ -29,11 +29,13 @@ public class DataLoader extends DataConstants {
 				String email = (String)studentJSON.get(EMAIL);
 				String uscid = (String)studentJSON.get(USCID);
 				String uuid = (String)studentJSON.get(UUID);
-				Year gradeYear = (Year)studentJSON.get(GRADEYEAR);
+				String gradeYearString = (String)studentJSON.get(GRADEYEAR);
+				Year gradeYear = Year.StringToYear(gradeYearString);
+				Long creditsLong = (Long)studentJSON.get(CREDITS);
+				int credits = creditsLong.intValue();
+				double overallGrade = (double)studentJSON.get(OVERALLGRADE);
 				Advisor advisor = (Advisor)studentJSON.get(ADVISOR);
 				Major major = (Major)studentJSON.get(MAJOR);
-				double overallGrade = (double)studentJSON.get(OVERALLGRADE);
-				int credits = (int)studentJSON.get(CREDITS);
 				ArrayList<Course> completedCourses = (ArrayList<Course>)studentJSON.get(COMPLETEDCOURSES);
 				ArrayList<Course> currentCourses = (ArrayList<Course>)studentJSON.get(CURRENTCOURSES);
 				ArrayList<String> notes = (ArrayList<String>)studentJSON.get(NOTES);
@@ -53,7 +55,7 @@ public class DataLoader extends DataConstants {
 	}
 
 
-
+	
 	public static ArrayList<Administrator> getAdministrators() {
 		ArrayList<Administrator> administrators = new ArrayList<Administrator>();
 
@@ -138,6 +140,7 @@ public class DataLoader extends DataConstants {
 
 		return null;
 	}
+	
 	// working on this
 
 	public static ArrayList<Course> getCourses() {
@@ -147,23 +150,28 @@ public class DataLoader extends DataConstants {
 		try {
 			FileReader reader = new FileReader(COURSE_FILE_NAME);
 			JSONParser parser = new JSONParser();
-			JSONArray courseJSON = (JSONArray)new JSONParser().parse(reader);
+			JSONArray coursesJSON = (JSONArray)new JSONParser().parse(reader);
 			
-			for(int i=0; i < courseJSON.size(); i++) {
+			for(int i=0; i < coursesJSON.size(); i++) {
 				JSONObject courseJSON = (JSONObject)courseJSON.get(i);
 				String courseName = (String)courseJSON.get(COURSENAME);
-				Semester courseSemester = (Semester)courseJSON.get(COURSESEMESTER);
-				int courseNumber = (int)courseJSON.get(COURSENUMBER);
+				String courseSemesterString = (String)courseJSON.get(COURSESEMESTER);
+				Semester courseSemester = Semester.StringToSemester(courseSemesterString);
+				Long courseNumberLong = (Long)courseJSON.get(COURSENUMBER);
+				int courseNumber = courseNumberLong.intValue();
+				String courseDescription = (String)courseJSON.get(COURSEDESCRIPTION);
+				Long courseHoursLong = (Long)courseJSON.get(COURSEHOURS);
+				int courseHours = courseHoursLong.intValue();
+				char minGrade = (char)courseJSON.get(MINGRADE);
+				char userGrade = (char)courseJSON.get(USERGRADE);
+				String courseStatusString = (String)courseJSON.get(COURSESTATUS);
 				ArrayList<Requirement> prerequisites = (ArrayList<Requirement>)courseJSON.get(PREREQUISITES);
 				ArrayList<Requirement> corequisites = (ArrayList<Requirement>)courseJSON.get(COREQUISITES);
-				String courseDescription = (String)courseJSON.get(COURSEDESCRIPTION);
-				int courseHours = (int)courseJSON.get(COURSEHOURS);
-				char minGrade = ()
 
-				courses.add( new Course(username, password, email, uscid, assignedStudents));
+				courses.add(new Course(username, password, email, uscid, assignedStudents));
 			}
 			
-			return advisors;
+			return courses;
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -171,7 +179,7 @@ public class DataLoader extends DataConstants {
 	
 		return null;
 	}
-
+	
 	/**
 	 * This method returns the MajorList by reading from the major list json file
 	 * @return

@@ -43,5 +43,11 @@ public class TestDriver {
         THIS CODE IS BEING USED FOR TESTING DO NOT DELETE
         THIS CODE IS BEING USED FOR TESTING DO NOT DELETE
         */
+
+        DataLoader dataLoader = new DataLoader();
+
+        ArrayList<Student> students;
+
+        students = dataLoader.getStudents();
     }
 }
