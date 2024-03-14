@@ -20,10 +20,6 @@ public class Student extends User {
 
     // TODO - implement the rest of the methods from the UML diagram
 
-    public Student(String username, String password, String email, String uscid) {
-        super(username, password, email, uscid);
-    }
-
     public Student(String username, String password, String email, String uscid, UUID uuid) {
         super(username, password, email, uscid, uuid);
     }
