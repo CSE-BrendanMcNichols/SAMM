@@ -171,6 +171,7 @@ public class Student extends User {
     }
     /*
      * Updates the students credits and prints it out
+     * By Matt
      */
 
     
@@ -181,6 +182,10 @@ public class Student extends User {
         }
         System.out.println("credit hours completed are: " + creditTotal);
     }
+    /*
+     * Checks the hours of completed courses and prints them out
+     * By Matt
+     */
 
     
     public void updateCourseCompleted(Course updateCourse){
@@ -194,6 +199,7 @@ public class Student extends User {
         updateCredits();
         updateOverallGrade();
     }
+    
 
    
     private int getCreditsAccumulated(){
