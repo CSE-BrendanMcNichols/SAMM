@@ -25,7 +25,7 @@ public class SchedulingFacade {
         this.courseList = courseList;
     }
 
-    public void login () {
+    public boolean login () {
         user.login();    
     }
 

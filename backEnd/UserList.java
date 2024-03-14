@@ -45,23 +45,18 @@ public class UserList {
         return true;
     }
 
-    public User getUserByEmailAndPassword(String email, String password) {
-        User user = usersByEmail.get(email.toLowerCase());
-        if (user != null && user.getPassword().equals(password)) {
-            return user;
-        }
-        return null;
-    }
-
-    public User getUserByNameAndPassword(String firstName, String lastName, String password) {
+    public User getUserByUscUsername(String username) {
         return users.stream()
-                    .filter(user -> user.getFirstName().equalsIgnoreCase(firstName) && user.getLastName().equalsIgnoreCase(lastName) && user.getPassword().equals(password))
+                    .filter(user -> user.getUsername().equalsIgnoreCase(username))
                     .findFirst()
                     .orElse(null);
     }
 
-    public User getUserByUuid(UUID uuid) {
-        return usersById.get(uuid);
+    public User getUserByUscId(String uscid) {
+        return users.stream()
+                    .filter(user -> user.getUscid().equals(uscid))
+                    .findFirst()
+                    .orElse(null);
     }
 
     public boolean deleteUser(UUID uuid) {
@@ -88,10 +83,6 @@ public class UserList {
         users.add(updatedUser);
 
         return true;
-    }
-
-    public boolean emailExists(String email) {
-        return usersByEmail.containsKey(email.toLowerCase());
     }
 
     public boolean usernameExists(String username) {
