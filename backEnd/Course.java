@@ -15,13 +15,12 @@ public class Course {
     private String courseDescription;
     private int courseHours;
     private char minGrade;
-    private char userGrade;
     private CourseState courseStatus;
 
     public Course(String courseName, String courseSubject, int courseNumber,
                   ArrayList<Requirement> prerequisites, ArrayList<Requirement> corequisites,
                   ArrayList<Semester> courseAvailability, String courseDescription,
-                  int courseHours, char minGrade, char userGrade, CourseState courseStatus) {
+                  int courseHours, char minGrade, CourseState courseStatus) {
         this.courseSubject = courseSubject;
         this.courseNumber = courseNumber;
         this.prerequisites = new ArrayList<>(prerequisites);
@@ -30,11 +29,10 @@ public class Course {
         this.courseDescription = courseDescription;
         this.courseHours = courseHours;
         this.minGrade = minGrade;
-        this.userGrade = userGrade;
         this.courseStatus = courseStatus;
     }
     Course(String courseSubject, ArrayList<Semester> courseSemester, int courseNumber,
-            String courseDescription, int courseHours, char minGrade, char userGrade,
+            String courseDescription, int courseHours, char minGrade,
             CourseState courseStatus, UUID uuid) {
         this.courseSubject = courseSubject;
         this.courseAvailability = courseSemester;
@@ -44,11 +42,10 @@ public class Course {
         this.courseDescription = courseDescription;
         this.courseHours = courseHours;
         this.minGrade = minGrade;
-        this.userGrade = userGrade;
         this.courseStatus = courseStatus;
         this.uuid = uuid;
     }
-    
+
     //DELETE CODE BELOW AFTER TESTING IT
     public Course(String string, int i, String string2, String string3, String string4) {
         courseName = string;
@@ -99,9 +96,6 @@ public class Course {
         return minGrade;
     }
 
-    public char getUserGrade() {
-        return userGrade;
-    }
 
     public CourseState getCourseStatus() {
         return courseStatus;
@@ -128,9 +122,6 @@ public class Course {
         this.minGrade = minGrade;
     }
 
-    public void setUserGrade(char userGrade) {
-        this.userGrade = userGrade;
-    }
 
     public void setCourseStatus(CourseState courseStatus) {
         this.courseStatus = courseStatus;
@@ -141,21 +132,6 @@ public class Course {
         //return courseName;
     }
 
-    public double getPointGrade(){
-        double grade = 0.0;
-        if(this.userGrade == 'A'){
-            grade = 4.0;
-        }else if(this.userGrade == 'B'){
-            grade = 3.0;
-        }else if(this.userGrade == 'C'){
-            grade = 2.0;
-        }else if(this.userGrade == 'D'){
-            grade = 1.0;
-        }else if(this.userGrade == 'F'){
-            grade = 0.0;
-        }
-        return grade;
-    }
     
     // Methods for managing prerequisites and corequisites
     public void addPrerequisite(Requirement prerequisite) {
