@@ -17,6 +17,10 @@ public class TestDriver {
     }
     public static void scenario1(){
         
-        
+        DataLoader dataLoader = new DataLoader();
+
+        ArrayList<Elective> electives = DataLoader.getElectives();
+
+        electives.get(2).displayName();
     }
 }

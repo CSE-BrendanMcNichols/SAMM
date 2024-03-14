@@ -14,6 +14,67 @@ import java.util.UUID;
 
 public class DataLoader extends DataConstants {
 
+	public static ArrayList<Course> getCourses(){
+		ArrayList<Course> courses = getCoursesNoReq();
+		ArrayList<Requirement> requirements = getRequirements(courses);
+		courses = addReqs(courses, requirements);
+		requirements = getRequirements(courses);
+		courses = addReqs(courses, requirements);
+		return courses;
+	}
+
+	public static ArrayList<Requirement> getRequirements(){
+		ArrayList<Course> courses = getCoursesNoReq();
+		ArrayList<Requirement> requirements = getRequirements(courses);
+		courses = addReqs(courses, requirements);
+		requirements = getRequirements(courses);
+		return requirements;
+	}
+
+	public static ArrayList<Elective> getElectives(){
+		ArrayList<Course> courses = getCourses();
+		ArrayList<Elective> electives = getElective(courses);
+		return electives;
+	}
+
+	
+
+	public static ArrayList<Elective> getMajor(ArrayList<Course> courses, ArrayList<Elective> electives){
+		ArrayList<Major> majors = new ArrayList<Major>();
+
+		try {
+			FileReader reader = new FileReader(ELECTIVE_FILE_NAME);
+			JSONParser parser = new JSONParser();
+			JSONArray electivesJSON = (JSONArray)new JSONParser().parse(reader);
+			
+			for(int i=0; i < electivesJSON.size(); i++) {
+				JSONObject electiveJSON = (JSONObject)electivesJSON.get(i);
+				String electiveName = (String)electiveJSON.get(ELECTIVENAME);
+				int hours = ((Long)electiveJSON.get(HOURS)).intValue();
+				UUID uuid = UUID.fromString((String)electiveJSON.get(UUIDSTRING));
+				JSONArray coursesJSON = (JSONArray) electiveJSON.get(COURSES);
+                ArrayList<Course> electiveCourses = new ArrayList<Course>();
+				for(int j=0; j<coursesJSON.size(); j++){
+					UUID courseUUID = UUID.fromString((String) coursesJSON.get(j));
+					if(Course.findCourse(courses, courseUUID)){
+						electiveCourses.add(Course.getCourse(courses, courseUUID));
+					}
+					else{
+						System.out.println("Missing course for Elective "+ electiveName);
+					}
+				}
+				electives.add(new Elective(electiveCourses, electiveName, hours, uuid));
+			}
+			
+			return electives;
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	
+		return null;
+	}
+
 	public static ArrayList<Student> getStudents() {
 		ArrayList<Student> students = new ArrayList<Student>();
 
@@ -54,7 +115,41 @@ public class DataLoader extends DataConstants {
 		return null;
 	}
 
+	public static ArrayList<Elective> getElective(ArrayList<Course> courses){
+		ArrayList<Elective> electives = new ArrayList<Elective>();
 
+		try {
+			FileReader reader = new FileReader(ELECTIVE_FILE_NAME);
+			JSONParser parser = new JSONParser();
+			JSONArray electivesJSON = (JSONArray)new JSONParser().parse(reader);
+			
+			for(int i=0; i < electivesJSON.size(); i++) {
+				JSONObject electiveJSON = (JSONObject)electivesJSON.get(i);
+				String electiveName = (String)electiveJSON.get(ELECTIVENAME);
+				int hours = ((Long)electiveJSON.get(HOURS)).intValue();
+				UUID uuid = UUID.fromString((String)electiveJSON.get(UUIDSTRING));
+				JSONArray coursesJSON = (JSONArray) electiveJSON.get(COURSES);
+                ArrayList<Course> electiveCourses = new ArrayList<Course>();
+				for(int j=0; j<coursesJSON.size(); j++){
+					UUID courseUUID = UUID.fromString((String) coursesJSON.get(j));
+					if(Course.findCourse(courses, courseUUID)){
+						electiveCourses.add(Course.getCourse(courses, courseUUID));
+					}
+					else{
+						System.out.println("Missing course for Elective "+ electiveName);
+					}
+				}
+				electives.add(new Elective(electiveCourses, electiveName, hours, uuid));
+			}
+			
+			return electives;
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	
+		return null;
+	}
 	
 	public static ArrayList<Administrator> getAdministrators() {
 		ArrayList<Administrator> administrators = new ArrayList<Administrator>();
@@ -134,18 +229,13 @@ public class DataLoader extends DataConstants {
 					String semester = (String) semesters.get(j);
         			courseSemester.add(Semester.StringToSemester(semester));
 				}
-				Long courseNumberLong = (Long)courseJSON.get(COURSENUMBER);
-				int courseNumber = courseNumberLong.intValue();
+				int courseNumber = ((Long)courseJSON.get(COURSENUMBER)).intValue();
 				String courseDescription = (String)courseJSON.get(COURSEDESCRIPTION);
-				Long courseHoursLong = (Long)courseJSON.get(COURSEHOURS);
-				int courseHours = courseHoursLong.intValue();
+				int courseHours = ((Long)courseJSON.get(COURSEHOURS)).intValue();
 				char minGrade = ((String)courseJSON.get(MINGRADE)).charAt(0);
 				char userGrade = ((String)courseJSON.get(USERGRADE)).charAt(0);
 				CourseState courseState = CourseState.StringToCourseState((String)courseJSON.get(COURSESTATUS));
 				UUID uuid = UUID.fromString((String)courseJSON.get(UUIDSTRING));
-
-				//ArrayList<Requirement> prerequisites = (ArrayList<Requirement>)courseJSON.get(PREREQUISITES);
-				//ArrayList<Requirement> corequisites = (ArrayList<Requirement>)courseJSON.get(COREQUISITES);
 
 				courses.add(new Course(courseName, courseSemester, courseNumber,
 				courseDescription, courseHours, minGrade, userGrade,
@@ -183,9 +273,23 @@ public class DataLoader extends DataConstants {
 					}
 				}
 
+				JSONArray coreqsJSON = (JSONArray) courseJSON.get(COREQUISITES);
+                ArrayList<Requirement> coreqCourses = new ArrayList<Requirement>();
+				for(int j=0; j<coreqsJSON.size(); j++){
+					UUID courseUUID = UUID.fromString((String) coreqsJSON.get(j));
+					if(Requirement.findReq(requirements, courseUUID)){
+						coreqCourses.add(Requirement.getReq(requirements, courseUUID));
+					}
+					else{
+						System.out.println("Missing Req");
+					}
+				}
 
-				//ArrayList<Requirement> corequisites = (ArrayList<Requirement>)courseJSON.get(COREQUISITES);
 				for(Requirement requirement : reqCourses){
+					courses.get(i).addPrerequisite(requirement);
+				}
+
+				for(Requirement requirement : coreqCourses){
 					courses.get(i).addPrerequisite(requirement);
 				}
 			}
@@ -197,19 +301,10 @@ public class DataLoader extends DataConstants {
 		}
 		return courses;
 	}
-
-	public static ArrayList<Course> getCourses(){
-		ArrayList<Course> courses = getCoursesNoReq();
-		getRequirements1(courses);
-		ArrayList<Requirement> requirements = getRequirements1(courses);
-		courses = addReqs(courses, requirements); 
-		return courses;
-	}
 	
-	public static ArrayList<Requirement> getRequirements1(ArrayList<Course> courses){
+	public static ArrayList<Requirement> getRequirements(ArrayList<Course> courses){
 		ArrayList<Requirement> requirements = new ArrayList<Requirement>();
 
-		
 		try {
 			FileReader reader = new FileReader(REQUIREMENT_FILE_NAME);
 			JSONParser parser = new JSONParser();
@@ -217,7 +312,6 @@ public class DataLoader extends DataConstants {
 			
 			for(int i=0; i < requirementsJSON.size(); i++) {
 				JSONObject requirementJSON = (JSONObject)requirementsJSON.get(i);
-				//Boolean eitherOr = Boolean.parseBoolean((String)requirementJSON.get(EITHEROR));
 				Boolean eitherOr = (Boolean)requirementJSON.get(EITHEROR);
 				RequirementType type = RequirementType.StringToType((String)requirementJSON.get(TYPETEST));
 				String requirementFor = (String)requirementJSON.get(REQUIREMENTFOR);

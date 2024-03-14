@@ -11,7 +11,10 @@ public abstract class DataConstants {
 	protected static final String COURSE_FILE_NAME = "json/Courses.json";
 	protected static final String ADMINISTRATOR_FILE_NAME = "json/AdministratorUsers.json";
 	protected static final String REQUIREMENT_FILE_NAME = "json/Requirements.json";
+	protected static final String ELECTIVE_FILE_NAME = "json/Electives.json";
 	
+	protected static final String ELECTIVENAME = "electiveName";
+	protected static final String HOURS = "hours";
 	protected static final String USER = "User";
 	protected static final String USERNAME = "username";
 	protected static final String PASSWORD = "password";

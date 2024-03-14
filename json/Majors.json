@@ -4,7 +4,8 @@
     "coreReq": { "CMW": 6,
                  "ARP": 7,
                  "INF": 3},
-    "electiveCourses": ["CSCE 101 Introduction to Computer Concepts", "MGSC 290 Computer Information Systems in Business"],
-    "major": "CSCE"
+    "electiveCourses": "dbf91385-3def-4028-baa6-66dcae051c8c",
+    "major": "CSCE",
+    "uuid": "29e4b605-07c5-4c46-bca3-c4e2ed618e4d"
    }
 ]

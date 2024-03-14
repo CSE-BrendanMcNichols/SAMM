@@ -1,0 +1,20 @@
+[ 
+  {
+    "courses": ["3bf30a0a-8716-46e6-9798-3faa579b7829","29e4b605-07c5-4c46-bca3-c4e2ed618e8d"],
+    "electiveName": "Test1",
+    "hours": 3,
+    "uuid": "dbf91385-3def-4028-baa6-66dcae051c8c"
+  },
+  {
+    "courses": ["afa23cd7-71ce-42b0-9d84-0c89db525f73"],
+    "electiveName": "Test2",
+    "hours": 6,
+    "uuid": "dbf91385-3def-4028-baa6-66dcae051c7c"
+  },
+  {
+    "courses": ["afa23cd7-71ce-42b0-9d84-0c89db526f73", "afa23cd7-71ce-42b0-9d84-0c89db526f73"],
+    "electiveName": "Test3",
+    "hours": 9,
+    "uuid": "dbf91385-3def-4028-baa6-66dcae051c6c"
+  }
+]
