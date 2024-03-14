@@ -199,7 +199,10 @@ public class Student extends User {
         updateCredits();
         updateOverallGrade();
     }
-    
+    /*
+     * Updates students completed course
+     * By Matt
+     */
 
    
     private int getCreditsAccumulated(){
@@ -209,6 +212,7 @@ public class Student extends User {
         }
         return creditTotal;
     }
+    
 
     
     private void updateCurrentCourses(Course course){
