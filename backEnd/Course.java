@@ -169,7 +169,7 @@ public class Course {
 
     public static Boolean findCourse(ArrayList<Course> courses, UUID uuid ){
         for (Course course : courses){
-            if(course.getUuid() == uuid){
+            if(course.getUuid().equals(uuid)){
                 return true;
             }
         }
@@ -178,7 +178,7 @@ public class Course {
 
     public static Course getCourse(ArrayList<Course> courses, UUID uuid ){
         for (Course course : courses){
-            if(course.getUuid() == uuid){
+            if(course.getUuid().equals(uuid)){
                 return course;
             }
         }

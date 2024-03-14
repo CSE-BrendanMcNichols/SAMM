@@ -41,4 +41,26 @@ public class Requirement{
     public ArrayList<Course> getCourses(){
         return this.courses;
     }
+
+    public UUID getUuid(){
+        return this.uuid;
+    }
+
+    public static Boolean findReq(ArrayList<Requirement> requirements, UUID uuid ){
+        for (Requirement requirement : requirements){
+            if(requirement.getUuid().equals(uuid)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static Requirement getReq(ArrayList<Requirement> requirements, UUID uuid ){
+        for (Requirement requirement : requirements){
+            if(requirement.getUuid().equals(uuid)){
+                return requirement;
+            }
+        }
+        return null;
+    }
 }

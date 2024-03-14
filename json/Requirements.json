@@ -2,21 +2,21 @@
   {
     "courses": ["3bf30a0a-8716-46e6-9798-3faa579b7829","29e4b605-07c5-4c46-bca3-c4e2ed618e8d"],
     "eitherOr": true,
-    "type": "CoReqOrPreReq",
+    "type": "COREQ_OR_PREREQ",
     "requirementFor": "CSCE 190 Computing in the Modern World",
     "uuid": "dbf91385-3def-4028-baa6-66dcae051c9c"
   },
   {
     "courses": ["afa23cd7-71ce-42b0-9d84-0c89db525f73"],
     "eitherOr": false,
-    "type": "PreReq",
+    "type": "PREREQ",
     "requirementFor": "CSCE 145 Algorithmic Design I",
     "uuid": "c387e3a5-1105-4c3d-9850-0870ae38b386"
   },
   {
     "courses": ["afa23cd7-71ce-42b0-9d84-0c89db526f73", "afa23cd7-71ce-42b0-9d84-0c89db526f73"],
     "eitherOr": true,
-    "type": "PreReq",
+    "type": "PREREQ",
     "requirementFor": "CSCE 205 Business Applications Programming",
     "uuid": "b80c91f3-8a9b-4ee6-a408-15cdf0720317"
   }

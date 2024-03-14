@@ -10,6 +10,7 @@ public abstract class DataConstants {
 	protected static final String ADVISOR_FILE_NAME = "json/AdvisorUsers.json";
 	protected static final String COURSE_FILE_NAME = "json/Courses.json";
 	protected static final String ADMINISTRATOR_FILE_NAME = "json/AdministratorUsers.json";
+	protected static final String REQUIREMENT_FILE_NAME = "json/Requirements.json";
 	
 	protected static final String USER = "User";
 	protected static final String USERNAME = "username";
@@ -27,7 +28,7 @@ public abstract class DataConstants {
 	protected static final String COURSESTATUS = "courseStatus";
 	protected static final String COURSEHOURS = "courseHours";
 	protected static final String EITHEROR = "eitherOr";
-	protected static final String TYPE = "type";
+	protected static final String TYPETEST = "type";
 	protected static final String REQUIREMENTFOR = "requirementFor";
 	protected static final String UUIDSTRING = "uuid";
     protected static final String GRADEYEAR = "gradeYear";

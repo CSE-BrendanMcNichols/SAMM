@@ -161,7 +161,7 @@ public class DataLoader extends DataConstants {
 		return null;
 	}
 
-	public static ArrayList<Course> addReqs(ArrayList<Course> courses){
+	public static ArrayList<Course> addReqs(ArrayList<Course> courses, ArrayList<Requirement> requirements){
 		
 		try {
 			FileReader reader = new FileReader(COURSE_FILE_NAME);
@@ -171,10 +171,23 @@ public class DataLoader extends DataConstants {
 			for(int i=0; i < coursesJSON.size(); i++) {
 				JSONObject courseJSON = (JSONObject)coursesJSON.get(i);
 
-				//ArrayList<Requirement> prerequisites = (ArrayList<Requirement>)courseJSON.get(PREREQUISITES);
-				//ArrayList<Requirement> corequisites = (ArrayList<Requirement>)courseJSON.get(COREQUISITES);
+				JSONArray prereqsJSON = (JSONArray) courseJSON.get(PREREQUISITES);
+                ArrayList<Requirement> reqCourses = new ArrayList<Requirement>();
+				for(int j=0; j<prereqsJSON.size(); j++){
+					UUID courseUUID = UUID.fromString((String) prereqsJSON.get(j));
+					if(Requirement.findReq(requirements, courseUUID)){
+						reqCourses.add(Requirement.getReq(requirements, courseUUID));
+					}
+					else{
+						System.out.println("Missing Req");
+					}
+				}
 
-				courses.get(i).addPrerequisite(null);
+
+				//ArrayList<Requirement> corequisites = (ArrayList<Requirement>)courseJSON.get(COREQUISITES);
+				for(Requirement requirement : reqCourses){
+					courses.get(i).addPrerequisite(requirement);
+				}
 			}
 			
 			return courses;
@@ -187,40 +200,39 @@ public class DataLoader extends DataConstants {
 
 	public static ArrayList<Course> getCourses(){
 		ArrayList<Course> courses = getCoursesNoReq();
-		getRequirements(courses);
-		courses = addReqs(courses);
+		getRequirements1(courses);
+		ArrayList<Requirement> requirements = getRequirements1(courses);
+		courses = addReqs(courses, requirements); 
 		return courses;
 	}
 	
-	public static ArrayList<Requirement> getRequirements(ArrayList<Course> courses){
+	public static ArrayList<Requirement> getRequirements1(ArrayList<Course> courses){
 		ArrayList<Requirement> requirements = new ArrayList<Requirement>();
 
 		
 		try {
-			FileReader reader = new FileReader(COURSE_FILE_NAME);
+			FileReader reader = new FileReader(REQUIREMENT_FILE_NAME);
 			JSONParser parser = new JSONParser();
 			JSONArray requirementsJSON = (JSONArray)new JSONParser().parse(reader);
 			
 			for(int i=0; i < requirementsJSON.size(); i++) {
 				JSONObject requirementJSON = (JSONObject)requirementsJSON.get(i);
-				Boolean eitherOr = Boolean.parseBoolean((String)requirementJSON.get(EITHEROR));
-				RequirementType type = RequirementType.StringToType((String)requirementJSON.get(TYPE));
+				//Boolean eitherOr = Boolean.parseBoolean((String)requirementJSON.get(EITHEROR));
+				Boolean eitherOr = (Boolean)requirementJSON.get(EITHEROR);
+				RequirementType type = RequirementType.StringToType((String)requirementJSON.get(TYPETEST));
 				String requirementFor = (String)requirementJSON.get(REQUIREMENTFOR);
 				UUID uuid = UUID.fromString((String)requirementJSON.get(UUIDSTRING));
-
 				JSONArray coursesJSON = (JSONArray) requirementJSON.get(COURSES);
                 ArrayList<Course> reqCourses = new ArrayList<Course>();
 				for(int j=0; j<coursesJSON.size(); j++){
 					UUID courseUUID = UUID.fromString((String) coursesJSON.get(j));
-					if(Course.findCourse(courses, uuid)){
+					if(Course.findCourse(courses, courseUUID)){
 						reqCourses.add(Course.getCourse(courses, courseUUID));
 					}
 					else{
 						System.out.println("Missing course for requirement "+ requirementFor);
 					}
 				}
-				//ArrayList<Requirement> prerequisites = (ArrayList<Requirement>)courseJSON.get(PREREQUISITES);
-
 				requirements.add(new Requirement(reqCourses, eitherOr, type, requirementFor, uuid));
 			}
 			
