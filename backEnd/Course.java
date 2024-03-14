@@ -6,6 +6,7 @@ import java.util.UUID;
 
 public class Course {
     private UUID uuid;
+    private String courseName;
     private String courseSubject;
     private int courseNumber;
     private ArrayList<Requirement> prerequisites;
@@ -14,14 +15,14 @@ public class Course {
     private String courseDescription;
     private int courseHours;
     private char minGrade;
+    
     private char userGrade;
     private CourseState courseStatus;
 
-    public Course(UUID uuid, String courseSubject, int courseNumber,
+    public Course(String courseName, String courseSubject, int courseNumber,
                   ArrayList<Requirement> prerequisites, ArrayList<Requirement> corequisites,
                   ArrayList<Semester> courseAvailability, String courseDescription,
                   int courseHours, char minGrade, char userGrade, CourseState courseStatus) {
-        this.uuid = uuid;
         this.courseSubject = courseSubject;
         this.courseNumber = courseNumber;
         this.prerequisites = new ArrayList<>(prerequisites);
@@ -48,6 +49,8 @@ public class Course {
         this.courseStatus = courseStatus;
         this.uuid = uuid;
     }
+    public void addPrerequisite(Requirement requirement) {
+        this.prerequisites.add(requirement);
     //DELETE CODE BELOW AFTER TESTING IT
     public Course(String string, int i, String string2, String string3, String string4) {
         courseName = string;
@@ -135,6 +138,32 @@ public class Course {
         this.courseStatus = courseStatus;
     }
 
+    public String toString(){
+        return "Course name:" + courseName + " Course description:" + courseDescription + " Course grade:" + userGrade + "\n";
+        //return courseName;
+    }
+
+    public int getCourseHours(){
+        System.out.println("getCourseHours called. Hours: "+courseHours);
+        return this.courseHours;
+    }
+
+    public UUID getUuid(){
+        return this.uuid;
+    }
+
+    public double getPointGrade(){
+        double grade = 0.0;
+        if(this.userGrade == 'A'){
+            grade = 4.0;
+        }else if(this.userGrade == 'B'){
+            grade = 3.0;
+        }else if(this.userGrade == 'C'){
+            grade = 2.0;
+        }else if(this.userGrade == 'D'){
+            grade = 1.0;
+        }else if(this.userGrade == 'F'){
+            grade = 0.0;
     // Methods for managing prerequisites and corequisites
     public void addPrerequisite(Requirement prerequisite) {
         if (!prerequisites.contains(prerequisite)) {
