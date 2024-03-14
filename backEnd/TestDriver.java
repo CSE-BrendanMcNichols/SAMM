@@ -17,9 +17,6 @@ public class TestDriver {
     }
     public static void scenario1(){
         
-        /*
-         * Matt has finished testing student.java methods
-        */
         
     }
 }
