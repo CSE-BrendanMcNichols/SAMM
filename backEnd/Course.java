@@ -1,6 +1,7 @@
 package backEnd;
 
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.UUID;
 
 public class Course {
@@ -164,6 +165,24 @@ public class Course {
 
     public void removeSemesterOffered(Semester semester) {
         courseAvailability.remove(semester);
+    }
+
+    public static Boolean findCourse(ArrayList<Course> courses, UUID uuid ){
+        for (Course course : courses){
+            if(course.getUuid() == uuid){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static Course getCourse(ArrayList<Course> courses, UUID uuid ){
+        for (Course course : courses){
+            if(course.getUuid() == uuid){
+                return course;
+            }
+        }
+        return null;
     }
 
     public void printSemester(){

@@ -129,7 +129,6 @@ public class DataLoader extends DataConstants {
 				JSONObject courseJSON = (JSONObject)coursesJSON.get(i);
 				String courseName = (String)courseJSON.get(COURSENAME);
 				JSONArray semesters = (JSONArray) courseJSON.get(COURSESEMESTER);
-				ArrayList<String> courseSemesterString = new ArrayList<String>();
 				ArrayList<Semester> courseSemester = new ArrayList<Semester>();
 				for(int j=0; j<semesters.size(); j++){
 					String semester = (String) semesters.get(j);
@@ -208,14 +207,21 @@ public class DataLoader extends DataConstants {
 				RequirementType type = RequirementType.StringToType((String)requirementJSON.get(TYPE));
 				String requirementFor = (String)requirementJSON.get(REQUIREMENTFOR);
 				UUID uuid = UUID.fromString((String)requirementJSON.get(UUIDSTRING));
+
 				JSONArray coursesJSON = (JSONArray) requirementJSON.get(COURSES);
-                ArrayList<String> reqCourses = new ArrayList<>();
-				for(String test : reqCourses){
-					System.out.println(test);
+                ArrayList<Course> reqCourses = new ArrayList<Course>();
+				for(int j=0; j<coursesJSON.size(); j++){
+					UUID courseUUID = UUID.fromString((String) coursesJSON.get(j));
+					if(Course.findCourse(courses, uuid)){
+						reqCourses.add(Course.getCourse(courses, courseUUID));
+					}
+					else{
+						System.out.println("Missing course for requirement "+ requirementFor);
+					}
 				}
 				//ArrayList<Requirement> prerequisites = (ArrayList<Requirement>)courseJSON.get(PREREQUISITES);
 
-				requirements.add(new Requirement(courses, eitherOr, type, requirementFor, uuid));
+				requirements.add(new Requirement(reqCourses, eitherOr, type, requirementFor, uuid));
 			}
 			
 			return requirements;
