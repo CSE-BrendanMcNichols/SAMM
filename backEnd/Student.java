@@ -24,6 +24,7 @@ public class Student extends User {
         super(username, password, email, uscid, uuid);
     }
 
+    
     public Student(String username, String password, String email, String uscid, Year gradeYear,
             Advisor advisor, Major major, double overallGrade, int credits,
             ArrayList<Course> completedCourses, ArrayList<Course> currentCourses, ArrayList<String> notes, UUID uuid) {
