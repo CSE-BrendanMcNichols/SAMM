@@ -1,91 +1,121 @@
 package backEnd;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.UUID;
 
+/**
+ * Manages a collection of users, including students, advisors, and administrators.
+ * Provides functionality to add, update, and delete users, and to retrieve users by username or USC ID.
+ */
 public class UserList {
-    private static UserList instance;
-    private HashMap<UUID, User> usersById;
-    private HashMap<String, User> usersByEmail;
-    private ArrayList<User> users;
+    private static UserList instance; // Singleton instance of UserList
+    private ArrayList<User> users; // List to store all users
 
+    /**
+     * Private constructor to prevent instantiation.
+     * Initializes the list of users.
+     */
     private UserList() {
-        usersById = new HashMap<>();
-        usersByEmail = new HashMap<>();
         users = new ArrayList<>();
         loadUsers();
     }
 
-    public static synchronized UserList getInstance() {
+    /**
+     * Returns the singleton instance of UserList.
+     * @return The singleton instance.
+     */
+    public static UserList getInstance() {
         if (instance == null) {
             instance = new UserList();
         }
         return instance;
     }
 
+    /**
+     * Loads users from the data source into the users list.
+     */
     private void loadUsers() {
         ArrayList<Student> students = DataLoader.getStudents();
         ArrayList<Advisor> advisors = DataLoader.getAdvisors();
         ArrayList<Administrator> administrators = DataLoader.getAdministrators();
-
+        
         if (students != null) students.forEach(this::addUser);
         if (advisors != null) advisors.forEach(this::addUser);
         if (administrators != null) administrators.forEach(this::addUser);
     }
 
+    /**
+     * Retrieves a user by their username.
+     * @param username The username of the user.
+     * @return The user with the specified username, or null if not found.
+     */
+    public User getUserByUsername(String username) {
+        for (User user : users) {
+            if (user.getUsername().equalsIgnoreCase(username)) {
+                return user;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Retrieves a user by their USC ID.
+     * @param uscid The USC ID of the user.
+     * @return The user with the specified USC ID, or null if not found.
+     */
+    public User getUserByUscId(String uscid) {
+        for (User user : users) {
+            if (user.getUscid().equals(uscid)) {
+                return user;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Adds a new user to the list if they don't already exist.
+     * @param user The user to add.
+     * @return true if the user was added, false if the user already exists.
+     */
     public boolean addUser(User user) {
-        if (usersById.containsKey(user.getUuid()) || usersByEmail.containsKey(user.getEmail().toLowerCase())) {
+        if (getUserByUsername(user.getUsername()) != null || getUserByUscId(user.getUscid()) != null) {
             System.out.println("User already exists.");
             return false;
         }
-        usersById.put(user.getUuid(), user);
-        usersByEmail.put(user.getEmail().toLowerCase(), user);
         users.add(user);
         return true;
     }
 
-    public User getUserByUscUsername(String username) {
-        return users.stream()
-                    .filter(user -> user.getUsername().equalsIgnoreCase(username))
-                    .findFirst()
-                    .orElse(null);
+    /**
+     * Deletes a user by their username.
+     * @param username The username of the user to delete.
+     * @return true if the user was deleted, false otherwise.
+     */
+    public boolean deleteUserByUsername(String username) {
+        return users.removeIf(user -> user.getUsername().equalsIgnoreCase(username));
     }
 
-    public User getUserByUscId(String uscid) {
-        return users.stream()
-                    .filter(user -> user.getUscid().equals(uscid))
-                    .findFirst()
-                    .orElse(null);
+    /**
+     * Deletes a user by their USC ID.
+     * @param uscid The USC ID of the user to delete.
+     * @return true if the user was deleted, false otherwise.
+     */
+    public boolean deleteUserByUscId(String uscid) {
+        return users.removeIf(user -> user.getUscid().equals(uscid));
     }
 
-    public boolean deleteUser(UUID uuid) {
-        User user = usersById.remove(uuid);
-        if (user == null) {
-            return false;
+    /**
+     * Updates the details of an existing user.
+     * @param updatedUser The user with updated details.
+     * @return true if the user was updated, false if the user was not found.
+     */
+    public boolean updateUser(User updatedUser) {
+        for (int i = 0; i < users.size(); i++) {
+            if (users.get(i).getUuid().equals(updatedUser.getUuid())) {
+                users.set(i, updatedUser);
+                return true;
+            }
         }
-        usersByEmail.remove(user.getEmail().toLowerCase());
-        users.remove(user);
-        return true;
-    }
-
-    public boolean updateUser(UUID uuid, User updatedUser) {
-        if (!usersById.containsKey(uuid)) {
-            return false;
-        }
-        User existingUser = usersById.get(uuid);
-
-        usersByEmail.remove(existingUser.getEmail().toLowerCase());
-        users.remove(existingUser);
-
-        usersById.put(uuid, updatedUser);
-        usersByEmail.put(updatedUser.getEmail().toLowerCase(), updatedUser);
-        users.add(updatedUser);
-
-        return true;
-    }
-
-    public boolean usernameExists(String username) {
-        return users.stream().anyMatch(user -> user.getUsername().equalsIgnoreCase(username));
+        return false;
     }
 }
