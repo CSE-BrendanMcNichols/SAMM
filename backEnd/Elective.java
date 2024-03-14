@@ -16,14 +16,25 @@ public class Elective {
     private UUID uuid;
     //TODO - implement the rest of the methods from the UML diagram
 
-    Elective(ArrayList<Course> courses, String electiveName, int hours, UUID uuid){
+    public Elective(ArrayList<Course> courses, String electiveName, int hours, UUID uuid){
         this.courses = courses;
         this.electiveName = electiveName;
         this.hours = hours;
         this.uuid = uuid;
     }
 
+    public Elective(){
+        this.courses = new ArrayList<Course>();
+        this.electiveName = "default name";
+        this.hours = 0;
+        this.uuid = UUID.randomUUID();
+    }
+
     public void displayName(){
         System.out.println(electiveName);
+    }
+
+    public UUID getUuid(){
+        return this.uuid;
     }
 }

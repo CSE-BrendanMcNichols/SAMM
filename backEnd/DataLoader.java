@@ -7,6 +7,7 @@ package backEnd;
  */
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -37,22 +38,26 @@ public class DataLoader extends DataConstants {
 		return electives;
 	}
 
-	
+	public static ArrayList<Major> getMajors(){
+		ArrayList<Course> courses = getCourses();
+		ArrayList<Elective> electives = getElectives();
+		ArrayList<Major> majors = getMajor(courses, electives);
+		return majors;
+	}
 
-	public static ArrayList<Elective> getMajor(ArrayList<Course> courses, ArrayList<Elective> electives){
+	public static ArrayList<Major> getMajor(ArrayList<Course> courses, ArrayList<Elective> electives){
 		ArrayList<Major> majors = new ArrayList<Major>();
 
 		try {
-			FileReader reader = new FileReader(ELECTIVE_FILE_NAME);
+			FileReader reader = new FileReader(MAJORS_FILE_NAME);
 			JSONParser parser = new JSONParser();
-			JSONArray electivesJSON = (JSONArray)new JSONParser().parse(reader);
+			JSONArray majorsJSON = (JSONArray)new JSONParser().parse(reader);
 			
-			for(int i=0; i < electivesJSON.size(); i++) {
-				JSONObject electiveJSON = (JSONObject)electivesJSON.get(i);
-				String electiveName = (String)electiveJSON.get(ELECTIVENAME);
-				int hours = ((Long)electiveJSON.get(HOURS)).intValue();
-				UUID uuid = UUID.fromString((String)electiveJSON.get(UUIDSTRING));
-				JSONArray coursesJSON = (JSONArray) electiveJSON.get(COURSES);
+			for(int i=0; i < majorsJSON.size(); i++) {
+				JSONObject majorJSON = (JSONObject)majorsJSON.get(i);
+				String major = (String)majorJSON.get(MAJOR);
+				UUID uuid = UUID.fromString((String)majorJSON.get(UUIDSTRING));
+				JSONArray coursesJSON = (JSONArray) majorJSON.get(COURSES);
                 ArrayList<Course> electiveCourses = new ArrayList<Course>();
 				for(int j=0; j<coursesJSON.size(); j++){
 					UUID courseUUID = UUID.fromString((String) coursesJSON.get(j));
@@ -60,13 +65,29 @@ public class DataLoader extends DataConstants {
 						electiveCourses.add(Course.getCourse(courses, courseUUID));
 					}
 					else{
-						System.out.println("Missing course for Elective "+ electiveName);
+						System.out.println("Missing course for Major "+ major);
 					}
 				}
-				electives.add(new Elective(electiveCourses, electiveName, hours, uuid));
+				Elective majorElective = new Elective();
+				UUID electiveUuid = UUID.fromString((String)majorJSON.get(ELECTIVE_COURSES));
+				for(Elective elective : electives){
+					if(electiveUuid.equals(elective.getUuid())){
+						majorElective = elective;
+					}
+				}
+				
+				JSONObject coreReqJSON = (JSONObject) majorJSON.get("coreReq");
+				HashMap<RequirementType, Integer> coreReq = new HashMap<>();
+				for (Object key : coreReqJSON.keySet()) {
+   					RequirementType coreReqName = RequirementType.StringToType(((String) key));
+					int coreReqValue = Integer.parseInt(coreReqJSON.get(coreReqName.toString()).toString());
+    				coreReq.put(coreReqName, coreReqValue);
+				}
+
+				majors.add(new Major( electiveCourses, coreReq, majorElective, major, uuid));
 			}
 			
-			return electives;
+			return majors;
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -208,8 +229,6 @@ public class DataLoader extends DataConstants {
 
 		return null;
 	}
-	
-	// working on this
 
 	public static ArrayList<Course> getCoursesNoReq() {
 		ArrayList<Course> courses = new ArrayList<Course>();

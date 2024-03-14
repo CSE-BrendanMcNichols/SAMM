@@ -3,7 +3,7 @@ package backEnd;
 import java.util.ArrayList;
 
 public class TestDriver {
-    private SchedulingFacade facade;
+    private ApplicationFacade facade;
 
     TestDriver(){
         //facade = new SchedulingFacade;
@@ -19,8 +19,8 @@ public class TestDriver {
         
         DataLoader dataLoader = new DataLoader();
 
-        ArrayList<Elective> electives = DataLoader.getElectives();
+        ArrayList<Major> electives = DataLoader.getMajors();
 
-        electives.get(2).displayName();
+        electives.get(0).displaycoreReq();
     }
 }

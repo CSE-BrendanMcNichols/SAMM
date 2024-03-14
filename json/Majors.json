@@ -1,6 +1,6 @@
 [
    {
-    "courses": ["CSCE 205 Business Applications Programming","CSCE 145 Algorithmic Design I","CSCE 190 Computing in the Modern World"],
+    "courses": ["3bf30a0a-8716-46e6-9798-3faa579b7829","29e4b605-07c5-4c46-bca3-c4e2ed618e8d","afa23cd7-71ce-42b0-9d84-0c89db525f73"],
     "coreReq": { "CMW": 6,
                  "ARP": 7,
                  "INF": 3},

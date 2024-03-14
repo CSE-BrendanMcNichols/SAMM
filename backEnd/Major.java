@@ -2,6 +2,7 @@ package backEnd;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -127,8 +128,15 @@ public class Major {
         System.out.println("printRoadmap called");
     }
     private void removeCourse(Course course){
-        System.out.println("removeCourse called");
-        
+        System.out.println("removeCourse called");   
+    }
+    public void displaycoreReq(){
+        for (Map.Entry<RequirementType, Integer> entry : coreReq.entrySet()) {
+            RequirementType key = entry.getKey();
+            Integer value = entry.getValue();
+
+            System.out.println(key +" "+ value);
+        }
     }
 }
 
