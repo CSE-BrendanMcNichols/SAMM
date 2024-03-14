@@ -48,8 +48,7 @@ public class Course {
         this.courseStatus = courseStatus;
         this.uuid = uuid;
     }
-    public void addPrerequisite(Requirement requirement) {
-        this.prerequisites.add(requirement);
+    
     //DELETE CODE BELOW AFTER TESTING IT
     public Course(String string, int i, String string2, String string3, String string4) {
         courseName = string;
@@ -142,15 +141,6 @@ public class Course {
         //return courseName;
     }
 
-    public int getCourseHours(){
-        System.out.println("getCourseHours called. Hours: "+courseHours);
-        return this.courseHours;
-    }
-
-    public UUID getUuid(){
-        return this.uuid;
-    }
-
     public double getPointGrade(){
         double grade = 0.0;
         if(this.userGrade == 'A'){
@@ -163,10 +153,6 @@ public class Course {
             grade = 1.0;
         }else if(this.userGrade == 'F'){
             grade = 0.0;
-        }
-        return grade;
-    }
-    
         }
         return grade;
     }
