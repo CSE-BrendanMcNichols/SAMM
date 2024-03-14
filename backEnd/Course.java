@@ -15,7 +15,6 @@ public class Course {
     private String courseDescription;
     private int courseHours;
     private char minGrade;
-    
     private char userGrade;
     private CourseState courseStatus;
 
@@ -49,6 +48,8 @@ public class Course {
         this.courseStatus = courseStatus;
         this.uuid = uuid;
     }
+    public void addPrerequisite(Requirement requirement) {
+        this.prerequisites.add(requirement);
     //DELETE CODE BELOW AFTER TESTING IT
     public Course(String string, int i, String string2, String string3, String string4) {
         courseName = string;
@@ -60,9 +61,9 @@ public class Course {
         minGrade = string4.charAt(0);
         userGrade = string4.charAt(1);
         courseStatus = CourseState.NOT_STARTED;
-    // DELETE CODE ABOVE AFTER TESTING
     }
-    
+    // DELETE CODE ABOVE AFTER TESTING
+
     public UUID getUuid() {
         return uuid;
     }
@@ -141,6 +142,15 @@ public class Course {
         //return courseName;
     }
 
+    public int getCourseHours(){
+        System.out.println("getCourseHours called. Hours: "+courseHours);
+        return this.courseHours;
+    }
+
+    public UUID getUuid(){
+        return this.uuid;
+    }
+
     public double getPointGrade(){
         double grade = 0.0;
         if(this.userGrade == 'A'){
@@ -153,6 +163,10 @@ public class Course {
             grade = 1.0;
         }else if(this.userGrade == 'F'){
             grade = 0.0;
+        }
+        return grade;
+    }
+    
         }
         return grade;
     }
