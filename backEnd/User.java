@@ -60,7 +60,15 @@ public abstract class User {
         this.type = type;
     }
 
-     // Getter methods
+    public User(String username, String password, String email, String uscid, UUID uuid) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.uscid = uscid;
+        this.uuid = uuid;
+    }
+
+    // Getter methods
      public UserType getType() {
         return type;
     }
