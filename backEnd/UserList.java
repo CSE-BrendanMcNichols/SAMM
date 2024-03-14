@@ -3,72 +3,119 @@ package backEnd;
 import java.util.ArrayList;
 import java.util.UUID;
 
+/**
+ * Manages a collection of users, including students, advisors, and administrators.
+ * Provides functionality to add, update, and delete users, and to retrieve users by username or USC ID.
+ */
 public class UserList {
-    private ArrayList<Student> studentList;
-    private ArrayList<Advisor> advisorList;
-    private ArrayList<Administrator> adminList;
+    private static UserList instance; // Singleton instance of UserList
+    private ArrayList<User> users; // List to store all users
 
-    private static UserList userList = new UserList();
-
+    /**
+     * Private constructor to prevent instantiation.
+     * Initializes the list of users.
+     */
     private UserList() {
-        studentList = new ArrayList<>();
-        advisorList = new ArrayList<>();
-        adminList = new ArrayList<>();
+        users = new ArrayList<>();
+        loadUsers();
     }
 
+    /**
+     * Returns the singleton instance of UserList.
+     * @return The singleton instance.
+     */
     public static UserList getInstance() {
-        return userList;
+        if (instance == null) {
+            instance = new UserList();
+        }
+        return instance;
     }
 
-    public boolean addUser(String firstName, String lastName, String userName, String email, String password, UserType userType) {
-        if (getUser(userName) != null) {
-            return false;
-        }
-        switch (userType) {
-            case STUDENT:
-                studentList.add(new Student(firstName, lastName, userName, email, UUID.randomUUID()));
-                break;
-            case ADVISOR:
-                advisorList.add(new Advisor(firstName, lastName, userName, email, UUID.randomUUID()));
-                break;
-            case ADMINISTRATOR:
-                adminList.add(new Administrator(firstName, lastName, userName, email, UUID.randomUUID()));
-                break;
-            default:
-                return false;
-        }
-        return true;
+    /**
+     * Loads users from the data source into the users list.
+     */
+    private void loadUsers() {
+        ArrayList<Student> students = DataLoader.getStudents();
+        ArrayList<Advisor> advisors = DataLoader.getAdvisors();
+        ArrayList<Administrator> administrators = DataLoader.getAdministrators();
+        
+        if (students != null) students.forEach(this::addUser);
+        if (advisors != null) advisors.forEach(this::addUser);
+        if (administrators != null) administrators.forEach(this::addUser);
     }
 
-    public User getUser(String userName) {
-        for (User user : studentList) {
-            if (user.getUsername().equals(userName)) {
-                return user;
-            }
-        }
-        for (User user : advisorList) {
-            if (user.getUsername().equals(userName)) {
-                return user;
-            }
-        }
-        for (User user : adminList) {
-            if (user.getUsername().equals(userName)) {
+    /**
+     * Retrieves a user by their username.
+     * @param username The username of the user.
+     * @return The user with the specified username, or null if not found.
+     */
+    public User getUserByUsername(String username) {
+        for (User user : users) {
+            if (user.getUsername().equalsIgnoreCase(username)) {
                 return user;
             }
         }
         return null;
     }
 
-    // do we need this method?
-    public void editUser(User user) {
-    
+    /**
+     * Retrieves a user by their USC ID.
+     * @param uscid The USC ID of the user.
+     * @return The user with the specified USC ID, or null if not found.
+     */
+    public User getUserByUscId(String uscid) {
+        for (User user : users) {
+            if (user.getUscid().equals(uscid)) {
+                return user;
+            }
+        }
+        return null;
     }
 
-    public void saveUsers() {
-        DataWriter dataWriter = new DataWriter();
-        // Note: Seperated as 3 different methods as saveUsers can not differentiate list if use saveUSers
-        dataWriter.saveStudents(studentList);
-        dataWriter.saveAdvisors(advisorList);
-        dataWriter.saveAdministrators(adminList);
+    /**
+     * Adds a new user to the list if they don't already exist.
+     * @param user The user to add.
+     * @return true if the user was added, false if the user already exists.
+     */
+    public boolean addUser(User user) {
+        if (getUserByUsername(user.getUsername()) != null || getUserByUscId(user.getUscid()) != null) {
+            System.out.println("User already exists.");
+            return false;
+        }
+        users.add(user);
+        return true;
+    }
+
+    /**
+     * Deletes a user by their username.
+     * @param username The username of the user to delete.
+     * @return true if the user was deleted, false otherwise.
+     */
+    public boolean deleteUserByUsername(String username) {
+        return users.removeIf(user -> user.getUsername().equalsIgnoreCase(username));
+    }
+
+    /**
+     * Deletes a user by their USC ID.
+     * @param uscid The USC ID of the user to delete.
+     * @return true if the user was deleted, false otherwise.
+     */
+    public boolean deleteUserByUscId(String uscid) {
+        return users.removeIf(user -> user.getUscid().equals(uscid));
+    }
+
+    /**
+     * Updates the details of an existing user.
+     * @param updatedUser The user with updated details.
+     * @return true if the user was updated, false if the user was not found.
+     */
+    public boolean updateUser(User updatedUser) {
+        for (int i = 0; i < users.size(); i++) {
+            if (users.get(i).getUuid().equals(updatedUser.getUuid())) {
+                users.set(i, updatedUser);
+                return true;
+            }
+        }
+        return false;
     }
 }

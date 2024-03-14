@@ -6,18 +6,20 @@ import java.util.UUID;
 public class Requirement{
     private Boolean eitherOr;
     private String requirementFor;
-    private RequirementFor type;
+    private RequirementType type;
     private ArrayList<Course> courses;
+    private UUID uuid;
 
-    Requirement(ArrayList<Course> courses, Boolean eitherOr, RequirementType type, String requirementFor){
+    Requirement(ArrayList<Course> courses, Boolean eitherOr, RequirementType type, String requirementFor, UUID uuid){
         this.eitherOr = eitherOr;
         this.requirementFor = requirementFor;
         this.type = type;
         this.courses = courses;
+        this.uuid = uuid;
     }
 
     public void addCourse(Course course){
-        courses.add(course)
+        courses.add(course);
     }
 
     public String toString(){

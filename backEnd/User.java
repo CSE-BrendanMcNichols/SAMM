@@ -1,121 +1,128 @@
 package backEnd;
 
 import java.util.UUID;
-import java.util.ArrayList;
 
-public class User {
-    private String username;
-    private String password;
-    private String email;
+public abstract class User {
+    private UserType type;
+    private UUID uuid;
     private String uscid;
-    private UUID uuid = UUID.randomUUID();
-    private ArrayList<User> users;
-    private User user;
+    private String firstName;
+    private String lastName;
+    private String username;
+    private String email;
+    private String password;
 
-    public User(String username, String password, String email, String uscid) {
-        username = this.username;
-        password = this.password;
-        email = this.email;
-        uscid = this.uscid;
-    }
-
-    public User(String username, String password, String email, String uscid, UUID uuid) {
-        username = this.username;
-        password = this.password;
-        email = this.email;
-        uscid = this.uscid;
-        uuid = this.uuid;
-    }
-
-    public User(UUID uuid, String username) {
-        this.uuid = uuid;
-        this.username = username;
-    }
-
-    public void login(String username) {
-        if(isValidUser(user)) {
-            System.out.println("Log in was successful");
-        } else {
-            System.out.println("Log in failed");
-        }
-    }
-
-    public User searchUser(ArrayList<User> users, UUID uuid) {
-        for(int i = 0; i < users.size(); i ++) {
-            if(users.get(i).getUuid().equals(uuid)) {
-                return user;
-            }
-        }
-        return null;
-    }
-    
-
-    protected void signOutOfOtherSessions() {
-        System.out.println("sign out successful.");
-    }
-
-    public boolean isValidUser(User user) {
-        boolean valid = false;
-        for(int i = 0; i < users.size(); i++) {
-            if(user.equals(users.get(i))) {
-                valid = true;
-            }
-        }
-        return valid;
-    }
-
-    // Note - generated getters and setters for all the private variables
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getUscid() {
-        return uscid;
-    }
-
-    public void setUscid(String uscid) {
+    /**
+     * Constructor for User to be created with provided user details.
+     * This constructor generates a new unique UUID for the user.
+     *
+     * @param firstName User's first name.
+     * @param lastName User's last name.
+     * @param uscid User's University ID.
+     * @param email User's email address.
+     * @param username User's username.
+     * @param password User's password.
+     * @param type User's type (STUDENT, ADVISOR, etc.).
+     */
+    public User(String firstName, String lastName, String uscid, String email, String username, String password, UserType type) {
+        this.uuid = UUID.randomUUID(); // Automatically generates a unique identifier for a new user
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.uscid = uscid;
+        this.email = email;
+        this.username = username;
+        this.password = password;
+        this.type = type;
+    }
+
+    /**
+     * Constructor for User importing data from the database.
+     * This constructor is used when user data is being loaded from an external source
+     * where the UUID is already defined.
+     *
+     * @param uuid User's UUID.
+     * @param firstName User's first name.
+     * @param lastName User's last name.
+     * @param uscid User's University ID.
+     * @param email User's email address.
+     * @param username User's username.
+     * @param password User's password.
+     * @param type User's type (STUDENT, ADVISOR, etc.).
+     */
+    public User(UUID uuid, String firstName, String lastName, String uscid, String email, String username, String password, UserType type) {
+        this.uuid = uuid; // Uses the provided UUID, for existing users loaded from a database
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.uscid = uscid;
+        this.email = email;
+        this.username = username;
+        this.password = password;
+        this.type = type;
+    }
+
+     // Getter methods
+     public UserType getType() {
+        return type;
     }
 
     public UUID getUuid() {
         return uuid;
     }
 
+    public String getUscid() {
+        return uscid;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    // Setter methods
+    public void setType(UserType type) {
+        this.type = type;
+    }
+
     public void setUuid(UUID uuid) {
         this.uuid = uuid;
     }
 
-    protected String getRole() {
-        return "stub output";
+    public void setUscid(String uscid) {
+        this.uscid = uscid;
     }
 
-    private void rememberLogin(Boolean remember) {
-        if (remember == true) {
-            System.out.println("Will remember login.");
-        } else {
-            System.out.println("Will not  remember login.");
-        }
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }
