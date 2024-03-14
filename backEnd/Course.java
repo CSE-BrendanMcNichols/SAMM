@@ -143,14 +143,6 @@ public class Course {
         //return courseName;
     }
 
-    public int getCourseHours(){
-        System.out.println("getCourseHours called. Hours: "+courseHours);
-        return this.courseHours;
-    }
-
-    public UUID getUuid(){
-        return this.uuid;
-    }
 
     public double getPointGrade(){
         double grade = 0.0;
@@ -164,6 +156,8 @@ public class Course {
             grade = 1.0;
         }else if(this.userGrade == 'F'){
             grade = 0.0;
+        }
+        
     // Methods for managing prerequisites and corequisites
     public void addPrerequisite(Requirement prerequisite) {
         if (!prerequisites.contains(prerequisite)) {

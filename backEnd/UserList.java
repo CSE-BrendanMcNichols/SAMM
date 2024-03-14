@@ -1,7 +1,6 @@
 package backEnd;
 
 import java.util.ArrayList;
-import java.util.UUID;
 
 /**
  * Manages a collection of users, including students, advisors, and administrators.
