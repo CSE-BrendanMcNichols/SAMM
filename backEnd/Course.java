@@ -32,20 +32,6 @@ public class Course {
         this.userGrade = userGrade;
         this.courseSatus = courseSatus;
     }
-    //DELETE CODE BELOW AFTER TESTING IT
-    public Course(String string, int i, String string2, String string3, String string4) {
-        courseName = string;
-        courseNumber = i;
-        courseDescription = string2;
-        Random rng = new Random();
-        courseHours = rng.nextInt(15-0+1)+1;
-        System.out.println("Course " + courseName + " has " + courseHours + "hours");
-        minGrade = string4.charAt(0);
-        userGrade = string4.charAt(1);
-        courseSatus = CourseState.NOT_STARTED;
-
-    }
-    //DELETE CODE ABOVE AFTER TESTING IT
     public void addPrerequisite(Requirement requirement) {
         this.prerequisites.add(requirement);
     }
@@ -77,6 +63,7 @@ public class Course {
     }
 
     public int getCourseHours(){
+        System.out.println("getCourseHours called. Hours: "+courseHours);
         return this.courseHours;
     }
 
