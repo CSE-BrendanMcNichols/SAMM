@@ -15,6 +15,7 @@ public class Course {
     private String courseDescription;
     private int courseHours;
     private char minGrade;
+    
     private char userGrade;
     private CourseState courseStatus;
 
