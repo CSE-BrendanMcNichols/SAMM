@@ -33,7 +33,7 @@ public class UserList {
     /**
      * Loads users from the data source into the users list.
      */
-    private void loadUsers() {
+    public void loadUsers() {
         ArrayList<Student> students = DataLoader.getStudents();
         ArrayList<Advisor> advisors = DataLoader.getAdvisors();
         ArrayList<Administrator> administrators = DataLoader.getAdministrators();

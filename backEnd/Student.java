@@ -40,7 +40,7 @@ public class Student extends User {
     }
 
     // Added Getters and setters methods
-
+    
     public Year getGradeYear() {
         return gradeYear;
     }

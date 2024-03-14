@@ -1,30 +1,41 @@
 package backEnd;
 
+import java.util.ArrayList;
+
 public class ApplicationFacade {
-    private UserList userList;
+    private UserList userList = UserList.getInstance();
 
-    public ApplicationFacade() {
-        this.userList = UserList.getInstance();
-    }
-
-    /**
-     * Attempts to register a new user with the given details.
-     * 
-     * @param firstName The first name of the user.
-     * @param lastName The last name of the user.
-     * @param uscid The USC ID of the user.
-     * @param email The email address of the user.
-     * @param username The username for the new account.
-     * @param password The password for the new account.
-     * @param type The type of the user (e.g., STUDENT, ADVISOR).
-     * @return true if the registration was successful, false otherwise.
-     */
-    public boolean registerUser(String firstName, String lastName, String uscid, String email, String username, String password, UserType type) {
-        if (userList.getUserByUsername(username) != null || userList.getUserByUscId(uscid) != null) {
-            return false;
-        }
-        User newUser = new User(firstName, lastName, uscid, email, username, password, type);
-        return userList.addUser(newUser);
+    public boolean registerUser(UserType type, String firstName, String lastName, String uscid, String email, String username, String password) {
+        switch (type) {
+            case STUDENT:
+                Student student = new Student(firstName, lastName, uscid, email, username, password);
+                userList.addUser(student);
+                ArrayList<Student> students = DataLoader.getStudents();
+                if (students == null) students = new ArrayList<>();
+                students.add(student);
+                new DataWriter().saveStudents(students);
+                break;
+            case ADVISOR:
+                Advisor advisor = new Advisor(firstName, lastName, uscid, email, username, password);
+                userList.addUser(advisor);
+                ArrayList<Advisor> advisors = DataLoader.getAdvisors();
+                if (advisors == null) advisors = new ArrayList<>();
+                advisors.add(advisor);
+                new DataWriter().saveAdvisors(advisors);
+                break;
+            case ADMINISTRATOR:
+                Administrator administrator = new Administrator(firstName, lastName, uscid, email, username, password);
+                userList.addUser(administrator);
+                ArrayList<Administrator> administrators = DataLoader.getAdministrators();
+                if (administrators == null) administrators = new ArrayList<>();
+                administrators.add(administrator);
+                new DataWriter().saveAdministrators(administrators);
+                break;
+            default:
+                return false;
+        } 
+        userList.loadUsers();
+        return true;
     }
 
     /**
@@ -40,20 +51,6 @@ public class ApplicationFacade {
             return user;
         }
         return null;
-    }
-}
-
-        
-    public void loadData () {
-        dataLoader.getUsers();
-        dataLoader.getCourses();
-        dataLoader.getMajors();
-    }
-
-    public void saveData() {
-        dataWriter.saveUsers();
-        dataWriter.saveCourses();
-        dataWriter.saveMajors();
     }
 
     public void accessUserActions() {
