@@ -1,74 +1,91 @@
 package backEnd;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.UUID;
 
 public class UserList {
-    private ArrayList<Student> studentList;
-    private ArrayList<Advisor> advisorList;
-    private ArrayList<Administrator> adminList;
-
-    private static UserList userList = new UserList();
+    private static UserList instance;
+    private HashMap<UUID, User> usersById;
+    private HashMap<String, User> usersByEmail;
+    private ArrayList<User> users;
 
     private UserList() {
-        studentList = new ArrayList<>();
-        advisorList = new ArrayList<>();
-        adminList = new ArrayList<>();
+        usersById = new HashMap<>();
+        usersByEmail = new HashMap<>();
+        users = new ArrayList<>();
+        loadUsers();
     }
 
-    public static UserList getInstance() {
-        return userList;
+    public static synchronized UserList getInstance() {
+        if (instance == null) {
+            instance = new UserList();
+        }
+        return instance;
     }
 
-    public boolean addUser(String firstName, String lastName, String userName, String email, String password, UserType userType) {
-        if (getUser(userName) != null) {
+    private void loadUsers() {
+        ArrayList<Student> students = DataLoader.getStudents();
+        ArrayList<Advisor> advisors = DataLoader.getAdvisors();
+        ArrayList<Administrator> administrators = DataLoader.getAdministrators();
+
+        if (students != null) students.forEach(this::addUser);
+        if (advisors != null) advisors.forEach(this::addUser);
+        if (administrators != null) administrators.forEach(this::addUser);
+    }
+
+    public boolean addUser(User user) {
+        if (usersById.containsKey(user.getUuid()) || usersByEmail.containsKey(user.getEmail().toLowerCase())) {
+            System.out.println("User already exists.");
             return false;
         }
-        switch (userType) {
-            case STUDENT:
-                studentList.add(new Student(firstName, lastName, userName, email, UUID.randomUUID()));
-                break;
-            case ADVISOR:
-                advisorList.add(new Advisor(firstName, lastName, userName, email, UUID.randomUUID()));
-                break;
-            case ADMINISTRATOR:
-                adminList.add(new Administrator(firstName, lastName, userName, email, UUID.randomUUID()));
-                break;
-            default:
-                return false;
-        }
+        usersById.put(user.getUuid(), user);
+        usersByEmail.put(user.getEmail().toLowerCase(), user);
+        users.add(user);
         return true;
     }
 
-    public User getUser(String userName) {
-        for (User user : studentList) {
-            if (user.getUsername().equals(userName)) {
-                return user;
-            }
-        }
-        for (User user : advisorList) {
-            if (user.getUsername().equals(userName)) {
-                return user;
-            }
-        }
-        for (User user : adminList) {
-            if (user.getUsername().equals(userName)) {
-                return user;
-            }
-        }
-        return null;
+    public User getUserByUscUsername(String username) {
+        return users.stream()
+                    .filter(user -> user.getUsername().equalsIgnoreCase(username))
+                    .findFirst()
+                    .orElse(null);
     }
 
-    // do we need this method?
-    public void editUser(User user) {
-    
+    public User getUserByUscId(String uscid) {
+        return users.stream()
+                    .filter(user -> user.getUscid().equals(uscid))
+                    .findFirst()
+                    .orElse(null);
     }
 
-    public void saveUsers() {
-        DataWriter dataWriter = new DataWriter();
-        // Note: Seperated as 3 different methods as saveUsers can not differentiate list if use saveUSers
-        dataWriter.saveStudents(studentList);
-        dataWriter.saveAdvisors(advisorList);
-        dataWriter.saveAdministrators(adminList);
+    public boolean deleteUser(UUID uuid) {
+        User user = usersById.remove(uuid);
+        if (user == null) {
+            return false;
+        }
+        usersByEmail.remove(user.getEmail().toLowerCase());
+        users.remove(user);
+        return true;
+    }
+
+    public boolean updateUser(UUID uuid, User updatedUser) {
+        if (!usersById.containsKey(uuid)) {
+            return false;
+        }
+        User existingUser = usersById.get(uuid);
+
+        usersByEmail.remove(existingUser.getEmail().toLowerCase());
+        users.remove(existingUser);
+
+        usersById.put(uuid, updatedUser);
+        usersByEmail.put(updatedUser.getEmail().toLowerCase(), updatedUser);
+        users.add(updatedUser);
+
+        return true;
+    }
+
+    public boolean usernameExists(String username) {
+        return users.stream().anyMatch(user -> user.getUsername().equalsIgnoreCase(username));
     }
 }

@@ -58,8 +58,9 @@ public class Course {
         minGrade = string4.charAt(0);
         userGrade = string4.charAt(1);
         courseStatus = CourseState.NOT_STARTED;
-
+    // DELETE CODE ABOVE AFTER TESTING
     }
+    
     public UUID getUuid() {
         return uuid;
     }
