@@ -15,7 +15,6 @@ public class Course {
     private String courseDescription;
     private int courseHours;
     private char minGrade;
-    
     private char userGrade;
     private CourseState courseStatus;
 
@@ -49,8 +48,7 @@ public class Course {
         this.courseStatus = courseStatus;
         this.uuid = uuid;
     }
-    public void addPrerequisite(Requirement requirement) {
-        this.prerequisites.add(requirement);
+
     //DELETE CODE BELOW AFTER TESTING IT
     public Course(String string, int i, String string2, String string3, String string4) {
         courseName = string;
@@ -62,9 +60,9 @@ public class Course {
         minGrade = string4.charAt(0);
         userGrade = string4.charAt(1);
         courseStatus = CourseState.NOT_STARTED;
-    // DELETE CODE ABOVE AFTER TESTING
     }
-    
+    // DELETE CODE ABOVE AFTER TESTING
+
     public UUID getUuid() {
         return uuid;
     }
@@ -157,7 +155,9 @@ public class Course {
         }else if(this.userGrade == 'F'){
             grade = 0.0;
         }
-        
+        return grade;
+    }
+    
     // Methods for managing prerequisites and corequisites
     public void addPrerequisite(Requirement prerequisite) {
         if (!prerequisites.contains(prerequisite)) {

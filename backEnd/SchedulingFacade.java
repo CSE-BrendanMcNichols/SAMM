@@ -1,34 +1,35 @@
 package backEnd;
 
-public class SchedulingFacade {
+public class ApplicationFacade {
     private User user;
     private Advisor advisor;
     private Student student;
     private Administrator administrator;
     private Course course;
-    private MajorList majorList;
-    private UserList userList;
-    private CourseList courseList;
     private DataLoader dataLoader;
     private DataWriter dataWriter;
 
-    public SchedulingFacade(User user, Advisor advisor, Student student, 
-    Administrator administrator, Course course, MajorList majorList, 
-    UserList userList, CourseList courseList) {
-        this.user = user;
-        this.advisor = advisor;
-        this.student = student;
-        this.administrator = administrator;
-        this.course = course;
-        this.majorList = majorList;
-        this.userList = userList;
-        this.courseList = courseList;
+    // Empty constructor. No need to pass individual entity instances
+    public ApplicationFacade() {}
+
+    public User login(String username, String password) {
+        User user = UserList.getInstance().getUserByUsername(username);
+        if (user != null && user.getPassword().equals(password)) {
+            return user;
+        }
+        return null;
     }
 
-    public void login () {
-        user.login();    
-    }
+    public boolean registerUser(String firstName, String lastName, String uscid, String email, String username, String password, UserType type) {
+        if (UserList.getInstance().getUserByUsername(username) != null || UserList.getInstance().getUserByUscid(uscid) != null) {
+            return false;
+        }
 
+        User newUser = new User(firstName, lastName, uscid, email, username, password, type);
+        return UserList.getInstance().addUser(newUser);
+    }
+}
+        
     public void loadData () {
         dataLoader.getUsers();
         dataLoader.getCourses();
