@@ -32,11 +32,11 @@ public class Course {
         this.userGrade = userGrade;
         this.courseStatus = courseStatus;
     }
-    Course(String courseName, Semester courseSemester, int courseNumber,
+    Course(String courseSubject, ArrayList<Semester> courseSemester, int courseNumber,
             String courseDescription, int courseHours, char minGrade, char userGrade,
             CourseState courseStatus, UUID uuid) {
-        this.courseName = courseName;
-        this.courseSemester = courseSemester;
+        this.courseSubject = courseSubject;
+        this.courseAvailability = courseSemester;
         this.courseNumber = courseNumber;
         this.prerequisites = new ArrayList<Requirement>();
         this.corequisites = new ArrayList<Requirement>();
@@ -163,5 +163,11 @@ public class Course {
 
     public void removeSemesterOffered(Semester semester) {
         courseAvailability.remove(semester);
+    }
+
+    public void printSemester(){
+        for( Semester semester: courseAvailability){
+            System.out.println(semester.name());
+        }
     }
 }

@@ -1,20 +1,20 @@
 [ 
   {
-    "courses": ["CSCE 205 Business Applications Programming","CSCE 145 Algorithmic Design I"],
+    "courses": ["3bf30a0a-8716-46e6-9798-3faa579b7829","29e4b605-07c5-4c46-bca3-c4e2ed618e8d"],
     "eitherOr": true,
     "type": "CoReqOrPreReq",
     "requirementFor": "CSCE 190 Computing in the Modern World",
     "uuid": "dbf91385-3def-4028-baa6-66dcae051c9c"
   },
   {
-    "courses": ["MATH 111 Basic College Mathematics"],
+    "courses": ["afa23cd7-71ce-42b0-9d84-0c89db525f73"],
     "eitherOr": false,
     "type": "PreReq",
     "requirementFor": "CSCE 145 Algorithmic Design I",
     "uuid": "c387e3a5-1105-4c3d-9850-0870ae38b386"
   },
   {
-    "courses": ["MGSC 290 Computer Information Systems in Business", "CSCE 101 Introduction to Computer Concepts"],
+    "courses": ["afa23cd7-71ce-42b0-9d84-0c89db526f73", "afa23cd7-71ce-42b0-9d84-0c89db526f73"],
     "eitherOr": true,
     "type": "PreReq",
     "requirementFor": "CSCE 205 Business Applications Programming",

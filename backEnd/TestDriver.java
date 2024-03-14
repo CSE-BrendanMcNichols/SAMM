@@ -48,8 +48,11 @@ public class TestDriver {
 
         ArrayList<Course> students;
 
-        students = dataLoader.getCourses();
+        students = dataLoader.getCoursesNoReq();
 
-        System.out.println(students.get(0).displayDescription());
+        //System.out.println();
+        students.get(0).printSemester();
+
+        Semester semester = Semester.Spring;
     }
 }

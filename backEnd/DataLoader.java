@@ -128,8 +128,13 @@ public class DataLoader extends DataConstants {
 			for(int i=0; i < coursesJSON.size(); i++) {
 				JSONObject courseJSON = (JSONObject)coursesJSON.get(i);
 				String courseName = (String)courseJSON.get(COURSENAME);
-				String courseSemesterString = (String)courseJSON.get(COURSESEMESTER);
-				Semester courseSemester = Semester.StringToSemester(courseSemesterString);
+				JSONArray semesters = (JSONArray) courseJSON.get(COURSESEMESTER);
+				ArrayList<String> courseSemesterString = new ArrayList<String>();
+				ArrayList<Semester> courseSemester = new ArrayList<Semester>();
+				for(int j=0; j<semesters.size(); j++){
+					String semester = (String) semesters.get(j);
+        			courseSemester.add(Semester.StringToSemester(semester));
+				}
 				Long courseNumberLong = (Long)courseJSON.get(COURSENUMBER);
 				int courseNumber = courseNumberLong.intValue();
 				String courseDescription = (String)courseJSON.get(COURSEDESCRIPTION);
@@ -183,12 +188,12 @@ public class DataLoader extends DataConstants {
 
 	public static ArrayList<Course> getCourses(){
 		ArrayList<Course> courses = getCoursesNoReq();
-		getRequirements();
+		getRequirements(courses);
 		courses = addReqs(courses);
 		return courses;
 	}
 	
-	public static ArrayList<Requirement> getRequirements(){
+	public static ArrayList<Requirement> getRequirements(ArrayList<Course> courses){
 		ArrayList<Requirement> requirements = new ArrayList<Requirement>();
 
 		
@@ -199,13 +204,16 @@ public class DataLoader extends DataConstants {
 			
 			for(int i=0; i < requirementsJSON.size(); i++) {
 				JSONObject requirementJSON = (JSONObject)requirementsJSON.get(i);
-				Boolean eitherOr = Boolean.parseBoolean((String)requirementJSON.get(COURSENAME));
+				Boolean eitherOr = Boolean.parseBoolean((String)requirementJSON.get(EITHEROR));
 				RequirementType type = RequirementType.StringToType((String)requirementJSON.get(TYPE));
 				String requirementFor = (String)requirementJSON.get(REQUIREMENTFOR);
 				UUID uuid = UUID.fromString((String)requirementJSON.get(UUIDSTRING));
-				
+				JSONArray coursesJSON = (JSONArray) requirementJSON.get(COURSES);
+                ArrayList<String> reqCourses = new ArrayList<>();
+				for(String test : reqCourses){
+					System.out.println(test);
+				}
 				//ArrayList<Requirement> prerequisites = (ArrayList<Requirement>)courseJSON.get(PREREQUISITES);
-				//ArrayList<Requirement> corequisites = (ArrayList<Requirement>)courseJSON.get(COREQUISITES);
 
 				requirements.add(new Requirement(courses, eitherOr, type, requirementFor, uuid));
 			}
