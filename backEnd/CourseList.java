@@ -12,6 +12,8 @@ public class CourseList {
 
     private CourseList() {
         courses = DataLoader.getCourses();
+        coursesByUuid = new HashMap<>();
+        uuidsBySubjectAndNumber = new HashMap<>();
     }
 
     public static CourseList getInstance() {

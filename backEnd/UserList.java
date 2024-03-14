@@ -7,7 +7,7 @@ import java.util.ArrayList;
  * Provides functionality to add, update, and delete users, and to retrieve users by username or USC ID.
  */
 public class UserList {
-    private static UserList instance; // Singleton instance of UserList
+    private static UserList userList; // Singleton instance of UserList
     private ArrayList<User> users; // List to store all users
 
     /**
@@ -24,10 +24,10 @@ public class UserList {
      * @return The singleton instance.
      */
     public static UserList getInstance() {
-        if (instance == null) {
-            instance = new UserList();
+        if (userList == null) {
+            userList = new UserList();
         }
-        return instance;
+        return userList;
     }
 
     /**
