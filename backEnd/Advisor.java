@@ -50,6 +50,10 @@ public class Advisor extends User {
         this.assignedStudents = assignedStudents;
     }
 
+    public Advisor(String username, String password, String email, String uscid, ArrayList<Student> assignedStudents2) {
+        //TODO Auto-generated constructor stub
+    }
+
     /**
      * Getter method for assignedStudents
      * 

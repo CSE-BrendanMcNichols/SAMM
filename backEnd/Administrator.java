@@ -30,9 +30,4 @@ public class Administrator extends User {
         
         return false;
     }
-
-    private void createCourse(String courseName,Semester courseSemester, int courseNumber, ArrayList<Requirement> prerequisites, ArrayList<Requirement> corequisites, String courseDescription) {
-        //TODO add logic into create Course
-    }
-
 }
