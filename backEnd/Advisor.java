@@ -80,8 +80,16 @@ public class Advisor extends User {
      * 
      * @param student
      */
-    public void unAssignStudent(Student student) {
-        this.assignedStudents.remove(student);
+    public void unAssignStudent(Student pStudent) {
+        for (Student student : this.assignedStudents) {
+            if (student.getUuid().equals(pStudent.getUuid())) {
+                this.assignedStudents.remove(student);
+                System.out.println(
+                        "Unassigned the Student: " + pStudent.getUsername() + " from advisor" + this.getUsername());
+                break;
+            }
+        }
+        
     }
 
     /**

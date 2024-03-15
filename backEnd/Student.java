@@ -14,7 +14,7 @@ import java.util.UUID;
 
  /*
  3-15 Update log by Matthew Bojanowski
-Added completedElectives and currentElectives
+Added completedElectives and currentElectives and applicationArea
 Added getters and setters for those
 Added addElective and removeElective
 Added updateElectivesCompleted
@@ -28,6 +28,7 @@ Added updateElectivesCompleted
     private HashMap<Course, String> completedCourses;
     private ArrayList<Course> currentCourses;
     private ArrayList<String> notes;
+    private String applicationArea;
     private ArrayList<Elective> currentElectives;
     private ArrayList<Elective> completedElectives;
     private UUID uuid;
@@ -320,6 +321,11 @@ public void updateElectiveCompleted(Elective elect){
     this.currentElectives.remove(elect);
     this.completedElectives.add(elect);
 }
-
+public void setApplicationArea(String area){
+    applicationArea = area;
+}
+public String getApplicationArea(){
+    return applicationArea;
+}
 
 }
