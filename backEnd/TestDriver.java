@@ -19,6 +19,7 @@ public class TestDriver {
     public static void main(String[] args) {
         //scenario1();
         // Arrange
+        /*
         Course c1 = new Course("CS101", 3, "Spring 2023", "TTh 10:30-11:45", "Instructor 1");
         Course c2 = new Course("CS202", 3, "Spring 2023", "MWF 11:00-11:50", "Instructor 2");
         Course c3 = new Course("CS303", 3, "Fall 2022", "MWF 12:00-12:50", "Instructor 3");
@@ -32,22 +33,24 @@ public class TestDriver {
         // Act
         Major futureMajor = s1.viewFutureSchedule();
 
-        
+        */
+        testLoader();
     }
     public static void scenario1(){
-        /*
-        DataLoader dataLoader = new DataLoader();
-
-        ArrayList<Major> electives = DataLoader.getMajors();
-
-        electives.get(0).displaycoreReq();
-        */
 
         Student braxWest = new Student("Brax", "West", "12345", "brax@email.sc.edu", "brax_west", "password", 
         UserType.STUDENT, Year.Junior, null, null, 0.0, 0, null, null, null);
         
         checkProgress(braxWest);
         generateSemesterPlan(braxWest);
+    }
+
+    public static void testLoader(){
+        DataLoader dataLoader = new DataLoader();
+
+        ArrayList<Major> electives = DataLoader.getMajors();
+
+        electives.get(0).displaycoreReq();
     }
 
     private static void checkProgress(Student braxWest) {

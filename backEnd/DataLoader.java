@@ -129,6 +129,8 @@ public class DataLoader extends DataConstants {
 			for(int i=0; i < studentsJSON.size(); i++) {
 				JSONObject studentJSON = (JSONObject)studentsJSON.get(i);
 				String username = (String)studentJSON.get(USERNAME);
+				String firstName = (String)studentJSON.get(FIRST_NAME);
+				String lastName = (String)studentJSON.get(LAST_NAME);
 				String password = (String)studentJSON.get(PASSWORD);
 				String email = (String)studentJSON.get(EMAIL);
 				String uscid = (String)studentJSON.get(USCID);
@@ -136,13 +138,24 @@ public class DataLoader extends DataConstants {
 				Year gradeYear = Year.StringToYear((String)studentJSON.get(GRADEYEAR));
 				int credits = ((Long)studentJSON.get(CREDITS)).intValue();
 				double overallGrade = (double)studentJSON.get(OVERALLGRADE);
-				
 				//Advisor advisor = (Advisor)studentJSON.get(ADVISOR);
-				Major major = (Major)studentJSON.get(MAJOR);
+				UUID majorUUID = UUID.fromString((String) studentJSON.get(MAJOR));
+				Major major = new Major("null");
+				if(Major.findMajor(majors, majorUUID)){
+					major = Major.getMajor(majors, majorUUID);
+				}
+				else{
+					System.out.println("Missing Major");
+				}
+				JSONArray notesJSON = (JSONArray) studentJSON.get(NOTES);
+				ArrayList<String> notes = new ArrayList<String>();
+				for(int j=0; j<notesJSON.size(); j++){
+					String note = (String) notesJSON.get(j);
+        			notes.add(note);
+				}
 
 				HashMap<Course, String> completedCourses = (HashMap<Course, String>)studentJSON.get(COMPLETEDCOURSES);
 				ArrayList<Course> currentCourses = (ArrayList<Course>)studentJSON.get(CURRENTCOURSES);
-				ArrayList<String> notes = (ArrayList<String>)studentJSON.get(NOTES);
 
 				students.add( new Student());
 			}
@@ -203,13 +216,15 @@ public class DataLoader extends DataConstants {
 			
 			for(int i=0; i < administratorsJSON.size(); i++) {
 				JSONObject administratorJSON = (JSONObject)administratorsJSON.get(i);
+				String firstName = (String)administratorJSON.get(FIRST_NAME);
+				String lastName = (String)administratorJSON.get(LAST_NAME);
 				String username = (String)administratorJSON.get(USERNAME);
 				String password = (String)administratorJSON.get(PASSWORD);
 				String email = (String)administratorJSON.get(EMAIL);
 				String uscid = (String)administratorJSON.get(USCID);
 				String stringUUID = (String)administratorJSON.get(UUIDSTRING);
 				UUID uuid = UUID.fromString(stringUUID);
-				administrators.add(new Administrator(username, password, email, uscid, uuid));
+				administrators.add(new Administrator(firstName, lastName, uscid, email, username, password, uuid));
 			}
 			
 			return administrators;

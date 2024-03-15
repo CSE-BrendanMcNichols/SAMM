@@ -1,6 +1,8 @@
 [
   {
     "username": "JaneWhite",
+    "firstName": "Jane",
+    "lastName": "White",
     "password": "word123pass",
     "email": "JaneWhite@email.sc.edu",
     "uscid": "SE83331",
@@ -58,6 +60,11 @@
         "courseStatus": "COMPLETED",
         "uuid": "3bf30a0a-8716-46e6-9798-3faa579b7829"
       }
+    ],
+    "notes":[
+      "note1",
+      "note2",
+      "note3"
     ]
   }
 ]

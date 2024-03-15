@@ -1,6 +1,8 @@
 [
     {
       "username": "JohnDoe",
+      "firstName": "John",
+      "lastName": "Doe",
       "password": "Password123",
       "email": "JohnDoe@email.sc.edu",
       "uscid": "HE82021",
@@ -8,6 +10,8 @@
     },
     {
       "username": "JohnSmith",
+      "firstName": "John",
+      "lastName": "Smith",
       "password": "Password321",
       "email": "JohnSmith@email.sc.edu",
       "uscid": "JY88081",

@@ -21,7 +21,7 @@ public class MajorList {
      * It loads the majors using DataLoader
      */
     private MajorList() {
-        majors = DataLoader.loadMajorList();
+        majors = DataLoader.getMajors();
     }
 
     /**
