@@ -266,6 +266,7 @@ Added updateElectivesCompleted
         for(Course course: this.currentCourses){
             if(course.getUuid() == updateCourse.getUuid()){
                 currentCourses.remove(course);
+                break;
             }
         }
         this.completedCourses.put(updateCourse, courseGrade);
@@ -295,7 +296,8 @@ Added updateElectivesCompleted
     
     private void updateCurrentCourses(Course course){
         ArrayList<Course> updatedclasses = currentCourses;
-        updatedclasses.add(course);
+        if(updatedclasses != null)
+            updatedclasses.add(course);
         setCurrentCourses(updatedclasses);
     }
     /*
@@ -317,15 +319,34 @@ public void setCompletedElectives(ArrayList<Elective> completedElectives){
     this.completedElectives = completedElectives;
 }
 public void addElective(Elective elect){
-    this.currentElectives.add(elect);
+    if (this.currentElectives != null) {
+        this.currentElectives.add(elect);
+        System.out.println("Added Elective: " + elect.getName())
+    }
 }
 public void removeElective(Elective elect){
-    this.currentElectives.remove(elect);
+
+    // Remove by name. in case if the objects are not fully loaded it may not be a good match
+    if (this.currentElectives != null) {
+        for(Elective elective: this.currentElectives) {
+            if (elective.getName().equals(elect.getName())) {
+                this.currentElectives.remove(elect);
+                System.out.println("Removed Elective: " + elect.getName());
+                break;
+            }
+        }
+    }
 }
 
-public void updateElectiveCompleted(Elective elect){
-    this.currentElectives.remove(elect);
-    this.completedElectives.add(elect);
+public void updateElectiveCompleted(Elective elect) {
+    
+    removeElective(elect);
+    
+    if (this.completedElectives != null) {
+        this.completedElectives = new ArrayList<Elective>();
+        this.completedElectives.add(elect);
+        System.out.println("Elective: " + elect.getName() + " is added tp completed electives list");
+    }
 }
 public void setApplicationArea(String area){
     applicationArea = area;
@@ -350,6 +371,11 @@ public static Student getStudent(ArrayList<Student> students, UUID uuid){
     return null;
 }
 public String getAdvisorName(){
-    return advisor.getFirstName();
+    if (advisor != null) {
+        return advisor.getFirstName() + " " + advisor.getLastName();
+    }
+    else {
+        return "No Advisor assigned";
+    }
 }
 }

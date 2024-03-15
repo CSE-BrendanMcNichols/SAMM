@@ -22,6 +22,10 @@ public class MajorList {
      */
     private MajorList() {
         majors = DataLoader.getMajors();
+        // just safe side
+        if (majors == null) {
+            majors = new ArrayList<Major>();
+        }
     }
 
     /**
