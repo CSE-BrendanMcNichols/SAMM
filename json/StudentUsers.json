@@ -26,6 +26,9 @@
       "note1",
       "note2",
       "note3"
-    ]
+    ],
+    "completedElectives": ["dbf91385-3def-4028-baa6-66dcae051c6c","dbf91385-3def-4028-baa6-66dcae051c7c","dbf91385-3def-4028-baa6-66dcae051c8c"],
+    "currentElectives": ["dbf91385-3def-4028-baa6-66dcae051c6c","dbf91385-3def-4028-baa6-66dcae051c8c","dbf91385-3def-4028-baa6-66dcae051c7c"],
+    "applicationArea": "Test Area"
   }
 ]

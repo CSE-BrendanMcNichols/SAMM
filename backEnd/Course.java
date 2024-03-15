@@ -26,6 +26,7 @@ public class Course {
                   ArrayList<Semester> courseAvailability, String courseDescription,
                   int courseHours, char minGrade, CourseState courseStatus) {
         this.courseSubject = courseSubject;
+        this.courseName = courseName;
         this.courseNumber = courseNumber;
         this.prerequisites = new ArrayList<>(prerequisites);
         this.corequisites = new ArrayList<>(corequisites);
@@ -39,6 +40,7 @@ public class Course {
             String courseDescription, int courseHours, char minGrade,
             CourseState courseStatus, UUID uuid) {
         this.courseSubject = courseSubject;
+        this.courseName = courseSubject;
         this.courseAvailability = courseSemester;
         this.courseNumber = courseNumber;
         this.prerequisites = new ArrayList<Requirement>();
