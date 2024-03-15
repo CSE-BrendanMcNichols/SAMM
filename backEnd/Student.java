@@ -76,11 +76,11 @@ import java.util.UUID;
         this.credits = credits;
     }
 
-    public HashMap<Course, String> getcompletedCourses() {
+    public HashMap<Course, String> getCompletedCourses() {
         return completedCourses;
     }
 
-    public void setcompletedCourses(HashMap<Course, String> completedCourses) {
+    public void setCompletedCourses(HashMap<Course, String> completedCourses) {
         this.completedCourses = completedCourses;
     }
 
