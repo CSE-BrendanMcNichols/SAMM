@@ -45,6 +45,27 @@ public class DataLoader extends DataConstants {
 		return majors;
 	}
 
+	public static ArrayList<Student> getStudents(){
+		ArrayList<Elective> electives = getElectives();
+		ArrayList<Major> majors = getMajors();
+		ArrayList<Student> students = getStudentNoAdvisor();
+		//ArrayList<Advisor> advisors = getAdvisor(students);
+		//students = addAdvisors(students, advisors);
+		//advisors = getAdvisor(students);
+		//students = addAdvisors(students, advisors);
+		return students;
+	}
+
+	public static ArrayList<Advisor> getAdvisors(){
+		ArrayList<Elective> electives = getElectives();
+		ArrayList<Major> majors = getMajors();
+		ArrayList<Student> students = getStudentNoAdvisor(majors);
+		ArrayList<Advisor> advisors = getAdvisor(students);
+		students = addAdvisors(students, advisors);
+		advisors = getAdvisor(students);
+		return advisors;
+	}
+
 	public static ArrayList<Major> getMajor(ArrayList<Course> courses, ArrayList<Elective> electives){
 		ArrayList<Major> majors = new ArrayList<Major>();
 
@@ -96,7 +117,7 @@ public class DataLoader extends DataConstants {
 		return null;
 	}
 
-	public static ArrayList<Student> getStudents() {
+	public static ArrayList<Student> getStudentNoAdvisor(ArrayList<Major> majors) {
 		ArrayList<Student> students = new ArrayList<Student>();
 
 		
@@ -116,15 +137,14 @@ public class DataLoader extends DataConstants {
 				int credits = ((Long)studentJSON.get(CREDITS)).intValue();
 				double overallGrade = (double)studentJSON.get(OVERALLGRADE);
 				
-				Advisor advisor = (Advisor)studentJSON.get(ADVISOR);
+				//Advisor advisor = (Advisor)studentJSON.get(ADVISOR);
 				Major major = (Major)studentJSON.get(MAJOR);
-				ArrayList<Course> completedCourses = (ArrayList<Course>)studentJSON.get(COMPLETEDCOURSES);
+
+				HashMap<Course, String> completedCourses = (HashMap<Course, String>)studentJSON.get(COMPLETEDCOURSES);
 				ArrayList<Course> currentCourses = (ArrayList<Course>)studentJSON.get(CURRENTCOURSES);
 				ArrayList<String> notes = (ArrayList<String>)studentJSON.get(NOTES);
 
-				students.add( new Student(username, password, email, uscid, gradeYear,
-				advisor, major, overallGrade, credits,
-				completedCourses, currentCourses, notes, uuid));
+				students.add( new Student());
 			}
 			
 			return students;
@@ -201,7 +221,7 @@ public class DataLoader extends DataConstants {
 		return null;
 	}
 
-	public static ArrayList<Advisor> getAdvisors() {
+	public static ArrayList<Advisor> getAdvisor(ArrayList<Student> students) {
 		ArrayList<Advisor> advisors = new ArrayList<Advisor>();
 
 		
@@ -211,7 +231,7 @@ public class DataLoader extends DataConstants {
 			JSONArray advisorsJSON = (JSONArray)new JSONParser().parse(reader);
 			
 			for(int i=0; i < advisorsJSON.size(); i++) {
-				JSONObject advisorJSON = (JSONObject)advisorJSON.get(i);
+				JSONObject advisorJSON = (JSONObject)advisorsJSON.get(i);
 				String username = (String)advisorJSON.get(USERNAME);
 				String password = (String)advisorJSON.get(PASSWORD);
 				String email = (String)advisorJSON.get(EMAIL);
@@ -252,12 +272,11 @@ public class DataLoader extends DataConstants {
 				String courseDescription = (String)courseJSON.get(COURSEDESCRIPTION);
 				int courseHours = ((Long)courseJSON.get(COURSEHOURS)).intValue();
 				char minGrade = ((String)courseJSON.get(MINGRADE)).charAt(0);
-				char userGrade = ((String)courseJSON.get(USERGRADE)).charAt(0);
 				CourseState courseState = CourseState.StringToCourseState((String)courseJSON.get(COURSESTATUS));
 				UUID uuid = UUID.fromString((String)courseJSON.get(UUIDSTRING));
 
 				courses.add(new Course(courseName, courseSemester, courseNumber,
-				courseDescription, courseHours, minGrade, userGrade,
+				courseDescription, courseHours, minGrade,
 				courseState, uuid));
 			}
 			
