@@ -10,6 +10,11 @@ public class UserList {
     private static UserList userList; // Singleton instance of UserList
     private ArrayList<User> users; // List to store all users
 
+    private static ArrayList<Student>  students = new ArrayList<Student>();
+    private static ArrayList<Advisor>  advisors = new ArrayList<Advisor>();
+    private static ArrayList<Administrator>  administrators = new ArrayList<Administrator>();
+
+
     /**
      * Private constructor to prevent instantiation.
      * Initializes the list of users.
@@ -33,10 +38,10 @@ public class UserList {
     /**
      * Loads users from the data source into the users list.
      */
-    public void loadUsers() {
-        ArrayList<Student> students = DataLoader.getStudents();
-        ArrayList<Advisor> advisors = DataLoader.getAdvisors();
-        ArrayList<Administrator> administrators = DataLoader.getAdministrators();
+    private void loadUsers() {
+        students = DataLoader.getStudents();
+        advisors = DataLoader.getAdvisors();
+        administrators = DataLoader.getAdministrators();
         
         if (students != null) students.forEach(this::addUser);
         if (advisors != null) advisors.forEach(this::addUser);
@@ -117,4 +122,18 @@ public class UserList {
         }
         return false;
     }
+
+    public static ArrayList<Student> getStudents() {
+        return students;
+    }
+
+    public static ArrayList<Advisor> getAdvisors() {
+        return advisors;
+    }
+
+    public static ArrayList<Administrator> getAdministrators() {
+        return administrators;
+    }
+
+    
 }

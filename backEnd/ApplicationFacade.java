@@ -9,6 +9,8 @@ public class ApplicationFacade {
     public static ApplicationFacade getInstance() {
         if(applicationFacade == null) {
             applicationFacade = new ApplicationFacade();
+            // Bootstrap the application by loading all the data from database.
+            ApplicationBootstrap.initialize();
         }
         return applicationFacade;
     }    
@@ -18,10 +20,16 @@ public class ApplicationFacade {
             case STUDENT:
                 Student student = new Student(firstName, lastName, uscid, email, username, password);
                 userList.addUser(student);
-                ArrayList<Student> students = DataLoader.getStudents();
-                if (students == null) students = new ArrayList<>();
-                students.add(student);
-                DataWriter.saveStudents(students);
+
+                // Please see the commented code. istead of loading the students every time a registerUSer method is called
+                // do it once in bootstrap class and use it everywhere
+                
+                //ArrayList<Student> students = DataLoader.getStudents();
+                //if (students == null) students = new ArrayList<>();
+                //students.add(student);
+                //DataWriter.saveStudents(students);
+                UserList.getInstance().addUser(student);
+                DataWriter.saveStudents(UserList.getStudents());
                 break;
             case ADVISOR:
                 Advisor advisor = new Advisor(firstName, lastName, uscid, email, username, password);
@@ -42,7 +50,7 @@ public class ApplicationFacade {
             default:
                 return false;
         } 
-        userList.loadUsers();
+        //userList.loadUsers();
         return true;
     }
 
