@@ -15,7 +15,7 @@ public class ApplicationUI {
             System.out.print("Choose an option: ");
 
             int choice = scanner.nextInt();
-            scanner.nextLine(); // Consume newline left-over
+            scanner.nextLine(); 
             switch (choice) {
                 case 1:
                     login();
@@ -41,7 +41,6 @@ public class ApplicationUI {
         User user = applicationFacade.loginUser(username, password);
         if (user != null) {
             System.out.println("Login successful!");
-            // Here you could show more options or menus depending on the user type
         } else {
             System.out.println("Login failed. Please check your credentials.");
         }
