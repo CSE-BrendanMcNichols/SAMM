@@ -5,10 +5,12 @@ import java.util.UUID;
 
 public class Administrator extends User {
 
-    Student student;
 
     public Administrator(String firstName, String lastName, String uscid, String email, String username, String password) {
         super(firstName,lastName,uscid,email,username, password, UserType.ADMINISTRATOR );
+    }
+    public Administrator(String firstName, String lastName, String uscid, String email, String username, String password, UUID uuid) {
+        super(uuid,firstName,lastName,uscid,email,username, password, UserType.ADMINISTRATOR);
     }
 
     private void overrideStudentGrade(String name, char grade) {
