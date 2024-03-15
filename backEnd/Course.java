@@ -55,7 +55,7 @@ public class Course {
         courseHours = rng.nextInt(15-0+1)+1;
         System.out.println("Course " + courseName + " has " + courseHours + "hours");
         minGrade = string4.charAt(0);
-        userGrade = string4.charAt(1);
+        
         courseStatus = CourseState.NOT_STARTED;
     }
     // DELETE CODE ABOVE AFTER TESTING
@@ -128,7 +128,7 @@ public class Course {
     }
 
     public String toString(){
-        return "Course name:" + courseName + " Course description:" + courseDescription + " Course grade:" + userGrade + "\n";
+        return "Course name:" + courseName + " Course description:" + courseDescription + "\n";
         //return courseName;
     }
 

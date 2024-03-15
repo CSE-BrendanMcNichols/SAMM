@@ -6,20 +6,18 @@ import java.util.UUID;
 public class Requirement{
     private Boolean eitherOr;
     private String requirementFor;
-    private RequirementType type;
+    private RequirementFor type;
     private ArrayList<Course> courses;
-    private UUID uuid;
 
-    Requirement(ArrayList<Course> courses, Boolean eitherOr, RequirementType type, String requirementFor, UUID uuid){
+    Requirement(ArrayList<Course> courses, Boolean eitherOr, RequirementType type, String requirementFor){
         this.eitherOr = eitherOr;
         this.requirementFor = requirementFor;
         this.type = type;
         this.courses = courses;
-        this.uuid = uuid;
     }
 
     public void addCourse(Course course){
-        courses.add(course);
+        courses.add(course)
     }
 
     public String toString(){
@@ -40,27 +38,5 @@ public class Requirement{
 
     public ArrayList<Course> getCourses(){
         return this.courses;
-    }
-
-    public UUID getUuid(){
-        return this.uuid;
-    }
-
-    public static Boolean findReq(ArrayList<Requirement> requirements, UUID uuid ){
-        for (Requirement requirement : requirements){
-            if(requirement.getUuid().equals(uuid)){
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public static Requirement getReq(ArrayList<Requirement> requirements, UUID uuid ){
-        for (Requirement requirement : requirements){
-            if(requirement.getUuid().equals(uuid)){
-                return requirement;
-            }
-        }
-        return null;
     }
 }

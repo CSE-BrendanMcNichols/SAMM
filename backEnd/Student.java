@@ -16,8 +16,8 @@ public class Student extends User {
     private Major major;
     private double overallGrade;
     private int credits;
-    private HashMap<Course, String> completedClasses;
-    private ArrayList<Course> currentClasses;
+    public HashMap<Course, String> completedClasses;
+    public ArrayList<Course> currentClasses;
     private ArrayList<String> notes;
 
     // TODO - implement the rest of the methods from the UML diagram
@@ -30,7 +30,7 @@ public class Student extends User {
     public Student(String username, String password, String email, String uscid, Year gradeYear,
             Advisor advisor, Major major, double overallGrade, int credits,
             HashMap<Course, String> completedCourses, ArrayList<Course> currentCourses, ArrayList<String> notes, UUID uuid) {
-        super(username, password, email, uscid);
+        super(username, password, email, uscid, uuid);
         this.major = major; 
         this.gradeYear = gradeYear; 
         this.advisor = advisor; 
@@ -107,16 +107,29 @@ public class Student extends User {
         this.notes = notes;
     }
 
-
-
-
-    private double calculateGPA(ArrayList<Course> courses){
-        //Take credit hours for class and grade for it and calculate its gpa
-        for(int i = 0; i < getCompletedClasses().size(); i++){
-            System.out.println(getCompletedClasses().get(i));
+    private double calculateGPA(){
+        double gpa = 0.0;
+        for (Map.Entry<Course, String> entry : completedClasses.entrySet()) {
+            Course course = entry.getKey();
+            String grade = entry.getValue();
+            if(grade.equals("A")){
+                gpa += 4.0;
+            }else if(grade.equals("B")){
+                gpa += 3.0;
+            }else if(grade.equals("C")){
+                gpa += 2.0;
+            }else if(grade.equals("D")){
+                gpa += 1.0;
+            }else if(grade.equals("F")){
+                gpa += 0.0;
+            }
         }
-        return 2.9;
+        return gpa;
     }
+    /*
+     * Calculates the students gpa
+     */
+
     private void viewClassGrades(){
         System.out.println("These are your class grades:");
         for (Map.Entry<Course, String> entry : completedClasses.entrySet()) {
@@ -132,10 +145,7 @@ public class Student extends User {
         return false;
     }
     public Major viewFutureSchedule(){
-        //get everything not completed from the roadmap
-        System.out.println("viewFutureSchedule called.");
-        Major returnMajor = getMajor();
-        System.out.println(returnMajor);
+        major.getCourses();
         return null;
     }
     public void viewCurrentSchedule(){
@@ -167,6 +177,10 @@ public class Student extends User {
         }
         return pointGrade;
     }
+    /*
+     * Calculate the students gpa
+     * @return the students gpa
+     */
 
     public void updateOverallGrade(){
         double totalGrade = 0.0;
@@ -235,7 +249,10 @@ public class Student extends User {
         }
         return creditTotal;
     }
-    
+    /*
+     * gets the credits accumulated
+     * @return the credits accumulated
+     */
 
     
     private void updateCurrentCourses(Course course){
@@ -243,4 +260,7 @@ public class Student extends User {
         updatedclasses.add(course);
         setCurrentClasses(updatedclasses);
     }
+    /*
+     * updates the students current courses
+     */
 }
