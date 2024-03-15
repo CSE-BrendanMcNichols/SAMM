@@ -188,4 +188,19 @@ public class Course {
             System.out.println(semester.name());
         }
     }
+    public String getCourseName() {
+        return courseName;
+    }
+    public void setCourseName(String courseName) {
+        this.courseName = courseName;
+    }
+    public void setPrerequisites(ArrayList<Requirement> prerequisites) {
+        this.prerequisites = prerequisites;
+    }
+    public void setCorequisites(ArrayList<Requirement> corequisites) {
+        this.corequisites = corequisites;
+    }
+    public void setCourseAvailability(ArrayList<Semester> courseAvailability) {
+        this.courseAvailability = courseAvailability;
+    }
 }

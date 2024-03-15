@@ -23,35 +23,24 @@ public class Advisor extends User {
 
     /**
      * Constuctor
-     * 
-     * @param username
-     * @param password
-     * @param email
-     * @param uscid
-     * @param uuid
      */
-    public Advisor(String username, String password, String email, String uscid, UUID uuid) {
-        super(username, password, email, uscid, uuid);
+    public Advisor(String firstName, String lastName, String uscid, String email, String username, String password) {
+        super(firstName, lastName, uscid, email, username, password, UserType.ADVISOR);
+        this.assignedStudents = new ArrayList<Student>();
     }
 
     /**
      * Constructor with Assigned Students
      * 
-     * @param username
-     * @param password
-     * @param email
-     * @param uscid
-     * @param uuid
-     * @param assignedStudents
      */
-    public Advisor(String username, String password, String email, String uscid, UUID uuid,
+    public Advisor(String firstName, String lastName, String uscid, String email, String username, String password,
             ArrayList<Student> assignedStudents) {
-        super(username, password, email, uscid, uuid);
-        this.assignedStudents = assignedStudents;
-    }
+        super(firstName, lastName, uscid, email, username, password, UserType.ADVISOR);
+        if (assignedStudents != null) {
+            this.assignedStudents = assignedStudents;
+        } else
+            this.assignedStudents = new ArrayList<Student>();
 
-    public Advisor(String username, String password, String email, String uscid, ArrayList<Student> assignedStudents2) {
-        //TODO Auto-generated constructor stub
     }
 
     /**
@@ -70,6 +59,24 @@ public class Advisor extends User {
      */
     public void setAssignedStudents(ArrayList<Student> assignedStudents) {
         this.assignedStudents = assignedStudents;
+    }
+
+    /**
+     * Assign one student
+     * 
+     * @param student
+     */
+    public void assignStudent(Student student) {
+        this.assignedStudents.add(student);
+    }
+
+    /**
+     * Assign one student
+     * 
+     * @param student
+     */
+    public void unAssignStudent(Student student) {
+        this.assignedStudents.remove(student);
     }
 
     /**
@@ -105,11 +112,11 @@ public class Advisor extends User {
         Student student = findAssignedStudent(pStudent);
         Course course = findStudentCourse(student, pCourse);
         if (course != null) {
-            course.setUserGrade(pGrade);
+            // course.setUserGrade(pGrade);
             System.out.println(
                     "Successfully updated Student: " + student.getUsername() + "'s grade with " + pGrade
                             + " for the course:"
-                            + course.getName());
+                            + course.getCourseName());
         }
 
     }
@@ -197,7 +204,7 @@ public class Advisor extends User {
             }
         }
         if (!matchingStudentFound) {
-            System.out.println("It looks like Student: " + pStudent.getUsername()
+            System.out.println("It looks like Student: " + username
                     + " is not an assinged a student for this Advisor: " + this.getUsername());
         }
         return null;
@@ -214,7 +221,7 @@ public class Advisor extends User {
     private Course findStudentCourse(Student pStudent, Course pCourse) {
 
         boolean matchingCourseFound = false;
-        for (Course course : pStudent.getCurrentClasses()) {
+        for (Course course : pStudent.getCurrentCourses()) {
             if (course.getCourseNumber() == pCourse.getCourseNumber()) {
                 matchingCourseFound = true;
                 // Found the matching Course
@@ -222,7 +229,7 @@ public class Advisor extends User {
             }
         }
         if (!matchingCourseFound) {
-            System.out.println("It looks like the Course: " + pCourse.getName()
+            System.out.println("It looks like the Course: " + pCourse.getCourseName()
                     + " is not an assinged to Student: " + pStudent.getUsername());
         }
         return null;

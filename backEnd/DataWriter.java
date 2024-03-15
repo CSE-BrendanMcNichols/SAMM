@@ -44,8 +44,8 @@ public class DataWriter {
             studentJSON.put(DataConstants.MAJOR, student.getMajor().getMajor());
 
             // Convert the Course Objects to Course String arraylist and store
-            studentJSON.put(DataConstants.COMPLETEDCOURSES, student.getCompletedClasses());
-            studentJSON.put(DataConstants.CURRENTCOURSES, student.getCurrentClasses());
+            studentJSON.put(DataConstants.COMPLETEDCOURSES, student.getCompletedCourses());
+            studentJSON.put(DataConstants.CURRENTCOURSES, student.getCurrentCourses());
 
             studentsJSONArray.add(studentJSON);
         }

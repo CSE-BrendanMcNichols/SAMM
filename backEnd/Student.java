@@ -88,7 +88,7 @@ import java.util.UUID;
         return currentCourses;
     }
 
-    public void setCurrentCourses(ArrayList<Course> ) {
+    public void setCurrentCourses(ArrayList<Course> currentCourses) {
         this.currentCourses = currentCourses;
     }
 
