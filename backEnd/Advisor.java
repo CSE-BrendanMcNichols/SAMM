@@ -56,7 +56,7 @@ public class Advisor extends User {
             this.assignedStudents = assignedStudents;
         } else
             this.assignedStudents = new ArrayList<Student>();
-        this.uuid = uuid;
+        //this.uuid = uuid;
     }
 
     /**
@@ -118,8 +118,8 @@ public class Advisor extends User {
                 return student;
             }
         }
-        System.out.println("It looks like : " + IdOrName + " or " + name
-                + " is not an assinged for this Advisor: " + this.getUsername());
+        System.out.println("It looks like Student: " + IdOrName + " or " + name
+                + " is not an assinged for Advisor: " + this.getUsername());
         return null;
 
     }
@@ -132,15 +132,20 @@ public class Advisor extends User {
      * @param grade
      */
     public void updateStudentGrade(Student pStudent, Course pCourse, char pGrade) {
+        if(pStudent == null || pCourse == null) {
+            System.out.println(
+                    "updateStudentGrade::Invalid Student " + pStudent + " or Invalid Course " + pCourse);
+            return;
+        }
 
-        Student student = findAssignedStudent(pStudent);
-        Course course = findStudentCourse(student, pCourse);
-        if (course != null) {
+        Student assignedStudent = findAssignedStudent(pStudent);
+        Course studentCourse = findStudentCourse(assignedStudent, pCourse);
+        if (studentCourse != null) {
             // course.setUserGrade(pGrade);
             System.out.println(
-                    "Successfully updated Student: " + student.getUsername() + "'s grade with " + pGrade
+                    "updateStudentGrade::Successfully updated Student: " + assignedStudent.getUsername() + "'s grade with " + pGrade
                             + " for the course:"
-                            + course.getCourseName());
+                            + studentCourse.getCourseName());
         }
 
     }
@@ -149,11 +154,16 @@ public class Advisor extends User {
      * This method updates the student Credits
      */
     public void updateStudentCredits(Student pStudent, Course pCourse, int credits) {
+        if(pStudent == null) {
+            System.out.println(
+                    "updateStudentCredits::Invalid Student " + pStudent);
+            return;
+        }
 
         Student student = findAssignedStudent(pStudent);
         if (student != null) {
             student.setCredits(credits);
-            System.out.println("Succesfully updated Student: " + student.getUsername() + "'s credits with " + credits);
+            System.out.println("updateStudentCredits::Succesfully updated Student: " + student.getUsername() + "'s credits with " + credits);
         }
     }
 
@@ -166,6 +176,12 @@ public class Advisor extends User {
     public boolean riskOfFailure(String username) {
 
         Student student = findAssignedStudent(username);
+        if(student == null) {
+            System.out.println(
+                    "riskOfFailure::Student: " + username + " is not an assignedStudent" );
+            return false;
+        }
+
         // TODO : stub method - temporary logic
         if (student.getCredits() < 1) {
             return true;
@@ -181,6 +197,12 @@ public class Advisor extends User {
      */
     public void makeNote(Student pStudent, String note) {
 
+        if(pStudent == null) {
+            System.out.println(
+                    "makeNote::Invalid Student: " + pStudent );
+            return;
+        }
+
         Student student = findAssignedStudent(pStudent);
         if (student != null) {
             ArrayList<String> notes = student.getNotes();
@@ -191,6 +213,10 @@ public class Advisor extends User {
             // TODO: instead of doing all of these things here, correct the Student.setNotes
             // method to take a note string and append the new notes in the setNotes method
             student.setNotes(notes);
+        }
+        else {
+            System.out.println(
+                "makeNote::Student: " + pStudent.getUsername() + " is not an assignedStudent" );
         }
     }
 
@@ -229,7 +255,7 @@ public class Advisor extends User {
         }
         if (!matchingStudentFound) {
             System.out.println("It looks like Student: " + username
-                    + " is not an assinged a student for this Advisor: " + this.getUsername());
+                    + " is not an assinged for Advisor: " + this.getUsername());
         }
         return null;
     }
@@ -259,9 +285,9 @@ public class Advisor extends User {
         return null;
     }
 
-    public void displayStudents(){
-        for(Student student : assignedStudents){
-            System.out.println(student.getFirstName());
+    public void displayStudents() {
+        for(Student student : assignedStudents) {
+            System.out.println(student.getFirstName() + " " + student.getLastName());
         }
     }
 
