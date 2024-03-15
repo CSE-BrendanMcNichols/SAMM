@@ -10,37 +10,30 @@ import java.util.UUID;
  * 
  * @Author Sree
  */
-public class Student extends User {
+
+ public class Student extends User {
     private Year gradeYear;
     private Advisor advisor;
     private Major major;
     private double overallGrade;
     private int credits;
-    public HashMap<Course, String> completedClasses;
-    public ArrayList<Course> currentClasses;
+    private HashMap<Course, String> completedCourses;
+    private ArrayList<Course> currentCourses;
     private ArrayList<String> notes;
 
-    // TODO - implement the rest of the methods from the UML diagram
-
-    public Student(String username, String password, String email, String uscid, UUID uuid) {
-        super(username, password, email, uscid, uuid);
-    }
-
-    
-    public Student(String username, String password, String email, String uscid, Year gradeYear,
-            Advisor advisor, Major major, double overallGrade, int credits,
-            HashMap<Course, String> completedCourses, ArrayList<Course> currentCourses, ArrayList<String> notes, UUID uuid) {
-        super(username, password, email, uscid, uuid);
-        this.major = major; 
-        this.gradeYear = gradeYear; 
-        this.advisor = advisor; 
-        this.overallGrade = overallGrade; 
-        this.credits = credits; 
-        this.completedClasses = completedCourses; 
-        this.currentClasses = currentCourses; 
+    // Updated Constructor
+    public Student(String firstName, String lastName, String uscid, String email, String username, String password, UserType type, Year gradeYear, Advisor advisor, Major major, double overallGrade, int credits, HashMap<Course, String> completedCourses, ArrayList<Course> currentCourses, ArrayList<String> notes) {
+        super(firstName, lastName, uscid, email, username, password, type);
+        this.gradeYear = gradeYear;
+        this.advisor = advisor;
+        this.major = major;
+        this.overallGrade = overallGrade;
+        this.credits = credits;
+        this.completedCourses = completedCourses;
+        this.currentCourses = currentCourses;
         this.notes = notes;
     }
-
+    
     // Added Getters and setters methods
     
     public Year getGradeYear() {
@@ -83,20 +76,20 @@ public class Student extends User {
         this.credits = credits;
     }
 
-    public HashMap<Course, String> getCompletedClasses() {
-        return completedClasses;
+    public HashMap<Course, String> getcompletedCourses() {
+        return completedCourses;
     }
 
-    public void setCompletedClasses(HashMap<Course, String> completedClasses) {
-        this.completedClasses = completedClasses;
+    public void setcompletedCourses(HashMap<Course, String> completedCourses) {
+        this.completedCourses = completedCourses;
     }
 
-    public ArrayList<Course> getCurrentClasses() {
-        return currentClasses;
+    public ArrayList<Course> getCurrentCourses() {
+        return currentCourses;
     }
 
-    public void setCurrentClasses(ArrayList<Course> currentClasses) {
-        this.currentClasses = currentClasses;
+    public void setCurrentCourses(ArrayList<Course> ) {
+        this.currentCourses = currentCourses;
     }
 
     public ArrayList<String> getNotes() {
@@ -109,7 +102,7 @@ public class Student extends User {
 
     private double calculateGPA(){
         double gpa = 0.0;
-        for (Map.Entry<Course, String> entry : completedClasses.entrySet()) {
+        for (Map.Entry<Course, String> entry : completedCourses.entrySet()) {
             Course course = entry.getKey();
             String grade = entry.getValue();
             if(grade.equals("A")){
@@ -132,7 +125,7 @@ public class Student extends User {
 
     private void viewClassGrades(){
         System.out.println("These are your class grades:");
-        for (Map.Entry<Course, String> entry : completedClasses.entrySet()) {
+        for (Map.Entry<Course, String> entry : completedCourses.entrySet()) {
             Course course = entry.getKey();
             String grade = entry.getValue();
             System.out.println(course.getCourseSubject() + ", " + grade);
@@ -150,7 +143,7 @@ public class Student extends User {
     }
     public void viewCurrentSchedule(){
         System.out.println("This is Your Current Schedule:");
-        for(Course course: this.currentClasses){
+        for(Course course: this.currentCourses){
             System.out.println(course);
         }
     }
@@ -158,7 +151,7 @@ public class Student extends User {
         this.advisor = advisor;
     }
     private void updateGrade(Course course, char grade){
-        completedClasses.put(course, Character.toString(grade));
+        completedCourses.put(course, Character.toString(grade));
     }
 
     
@@ -184,7 +177,7 @@ public class Student extends User {
 
     public void updateOverallGrade(){
         double totalGrade = 0.0;
-        for (Map.Entry<Course, String> entry : completedClasses.entrySet()) {
+        for (Map.Entry<Course, String> entry : completedCourses.entrySet()) {
             Course course = entry.getKey();
             String grade = entry.getValue();
             totalGrade += (toPointGrade(grade) * course.getCourseHours());
@@ -210,7 +203,7 @@ public class Student extends User {
     
     public void checkHours(HashMap<Course, String> completedCourses){
         int creditTotal = 0;
-        for (Map.Entry<Course, String> entry : completedClasses.entrySet()) {
+        for (Map.Entry<Course, String> entry : completedCourses.entrySet()) {
             Course course = entry.getKey();
             String grade = entry.getValue();
             creditTotal += course.getCourseHours();
@@ -225,12 +218,12 @@ public class Student extends User {
     
     public void updateCourseCompleted(Course updateCourse, String courseGrade){
         System.out.println("updateCourseCompleted called. updateCourse: " + updateCourse);
-        for(Course course: this.currentClasses){
+        for(Course course: this.currentCourses){
             if(course.getUuid() == updateCourse.getUuid()){
-                currentClasses.remove(course);
+                currentCourses.remove(course);
             }
         }
-        this.completedClasses.put(updateCourse, courseGrade);
+        this.completedCourses.put(updateCourse, courseGrade);
         updateCredits();
         updateOverallGrade();
     }
@@ -242,7 +235,7 @@ public class Student extends User {
    
     private int getCreditsAccumulated(){
         int creditTotal = 0;
-        for (Map.Entry<Course, String> entry : completedClasses.entrySet()) {
+        for (Map.Entry<Course, String> entry : completedCourses.entrySet()) {
             Course course = entry.getKey();
             String grade = entry.getValue();
             creditTotal += course.getCourseHours();
@@ -256,9 +249,9 @@ public class Student extends User {
 
     
     private void updateCurrentCourses(Course course){
-        ArrayList<Course> updatedclasses = currentClasses;
+        ArrayList<Course> updatedclasses = currentCourses;
         updatedclasses.add(course);
-        setCurrentClasses(updatedclasses);
+        setCurrentCourses(updatedclasses);
     }
     /*
      * updates the students current courses
