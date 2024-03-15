@@ -4,6 +4,14 @@ import java.util.ArrayList;
 
 public class ApplicationFacade {
     private UserList userList = UserList.getInstance();
+    private static ApplicationFacade applicationFacade;
+
+    public static ApplicationFacade getInstance() {
+        if(applicationFacade == null) {
+            applicationFacade = new ApplicationFacade();
+        }
+        return applicationFacade;
+    }    
 
     public boolean registerUser(UserType type, String firstName, String lastName, String uscid, String email, String username, String password) {
         switch (type) {

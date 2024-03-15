@@ -3,10 +3,11 @@ package backEnd;
 import java.util.Scanner;
 
 public class ApplicationUI {
-    private static ApplicationFacade applicationFacade = new ApplicationFacade();
+    private static ApplicationFacade applicationFacade;
     private static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
+        applicationFacade = ApplicationFacade.getInstance();
         while (true) {
             System.out.println("Welcome to the Application");
             System.out.println("1. Login");
