@@ -21,10 +21,6 @@ public class TestDriver {
         //scenario1();
 
 
-
-
-
-        /* 
         //scenario 2 code
         Course c1 = new Course("CS101", 3, "Spring 2023", "TTh 10:30-11:45", "Instructor 1");
         Course c2 = new Course("CS202", 3, "Fall 2022", "MWF 10:00-10:50", "Instructor 2");
@@ -57,8 +53,7 @@ public class TestDriver {
             //Logic to check if account exists already
         }
         //end of scenario 2 code
-        */
-        testLoader();
+
     }
     public static void scenario1(){
 
@@ -74,7 +69,7 @@ public class TestDriver {
 
         ArrayList<Student> electives = DataLoader.getStudents();
         //System.out.println
-        electives.get(0).viewCurrentSchedule();
+        System.out.println(electives.get(0).getFirstName());
     }
 
     private static void checkProgress(Student braxWest) {

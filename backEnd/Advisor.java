@@ -20,6 +20,7 @@ import java.util.UUID;
 public class Advisor extends User {
 
     private ArrayList<Student> assignedStudents;
+    private UUID uuid;
 
     /**
      * Constuctor
@@ -46,6 +47,16 @@ public class Advisor extends User {
         } else
             this.assignedStudents = new ArrayList<Student>();
 
+    }
+
+    public Advisor(String firstName, String lastName, String uscid, String email, String username, String password,
+            ArrayList<Student> assignedStudents, UUID uuid) {
+        super(uuid, firstName, lastName, uscid, email, username, password, UserType.ADVISOR);
+        if (assignedStudents != null) {
+            this.assignedStudents = assignedStudents;
+        } else
+            this.assignedStudents = new ArrayList<Student>();
+        this.uuid = uuid;
     }
 
     /**
@@ -248,4 +259,27 @@ public class Advisor extends User {
         return null;
     }
 
+    public void displayStudents(){
+        for(Student student : assignedStudents){
+            System.out.println(student.getFirstName());
+        }
+    }
+
+    public static Boolean findAdvisor(ArrayList<Advisor> advisors, UUID uuid){
+        for (Advisor advisor : advisors){
+            if(advisor.getUuid().equals(uuid)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static Advisor getAdvisor(ArrayList<Advisor> advisors, UUID uuid){
+        for (Advisor advisor : advisors){
+            if(advisor.getUuid().equals(uuid)){
+                return advisor;
+            }
+        }
+        return null;
+    }
 }

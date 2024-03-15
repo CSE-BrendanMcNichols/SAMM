@@ -34,7 +34,7 @@ Added updateElectivesCompleted
     private UUID uuid;
 
     // Updated Constructor
-    public Student(String firstName, String lastName, String uscid, String email, String username, String password, UserType type, Year gradeYear, Advisor advisor, Major major, double overallGrade, int credits, HashMap<Course, String> completedCourses, ArrayList<Course> currentCourses, ArrayList<String> notes, String applicationArea) {
+    public Student(String firstName, String lastName, String uscid, String email, String username, String password, UserType type, Year gradeYear, Advisor advisor, Major major, double overallGrade, int credits, HashMap<Course, String> completedCourses, ArrayList<Course> currentCourses, ArrayList<String> notes) {
         super(firstName, lastName, uscid, email, username, password, type);
         this.gradeYear = gradeYear;
         this.advisor = advisor;
@@ -45,7 +45,6 @@ Added updateElectivesCompleted
         this.currentCourses = currentCourses;
         this.notes = notes;
         this.uuid = UUID.randomUUID();
-        this.applicationArea = applicationArea;
     }
     // constructor for DataLoader final run through
     public Student(String firstName, String lastName, String uscid, String email, String username, String password, Year gradeYear, Advisor advisor, Major major, double overallGrade, int credits, HashMap<Course, String> completedCourses, ArrayList<Course> currentCourses, ArrayList<String> notes, UUID uuid, ArrayList<Elective> currentElectives, ArrayList<Elective> completedElectives, String applicationArea) {
@@ -64,7 +63,7 @@ Added updateElectivesCompleted
         this.applicationArea = applicationArea;
     }
     // constructor for DataLoader first sweep
-    public Student(String firstName, String lastName, String uscid, String email, String username, String password, Year gradeYear, Major major, double overallGrade, int credits, HashMap<Course, String> completedCourses, ArrayList<Course> currentCourses, ArrayList<String> notes, UUID uuid, ArrayList<Elective> currentElectives, ArrayList<Elective> completedElectives) {
+    public Student(String firstName, String lastName, String uscid, String email, String username, String password, Year gradeYear, Major major, double overallGrade, int credits, HashMap<Course, String> completedCourses, ArrayList<Course> currentCourses, ArrayList<String> notes, UUID uuid, ArrayList<Elective> currentElectives, ArrayList<Elective> completedElectives, String applicationArea) {
         super(uuid, firstName, lastName, uscid, email, username, password, UserType.STUDENT);
         this.gradeYear = gradeYear;
         this.advisor = new Advisor();
@@ -77,6 +76,7 @@ Added updateElectivesCompleted
         this.uuid = uuid;
         this.completedElectives = completedElectives;
         this.currentElectives = currentElectives;
+        this.applicationArea = applicationArea;
     }
 
     // Added Getters and setters methods
@@ -333,5 +333,23 @@ public void setApplicationArea(String area){
 public String getApplicationArea(){
     return applicationArea;
 }
-
+public static Boolean findStudent(ArrayList<Student> students, UUID uuid){
+    for (Student student : students){
+        if(student.getUuid().equals(uuid)){
+            return true;
+        }
+    }
+    return false;
+}
+public static Student getStudent(ArrayList<Student> students, UUID uuid){
+    for (Student student : students){
+        if(student.getUuid().equals(uuid)){
+            return student;
+        }
+    }
+    return null;
+}
+public String getAdvisorName(){
+    return advisor.getFirstName();
+}
 }
