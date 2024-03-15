@@ -11,6 +11,14 @@ import java.util.UUID;
  * @Author Sree
  */
 
+
+ /*
+ 3-15 Update log by Matthew Bojanowski
+Added completedElectives and currentElectives
+Added getters and setters for those
+Added addElective and removeElective
+Added updateElectivesCompleted
+*/
  public class Student extends User {
     private Year gradeYear;
     private Advisor advisor;
@@ -20,6 +28,8 @@ import java.util.UUID;
     private HashMap<Course, String> completedCourses;
     private ArrayList<Course> currentCourses;
     private ArrayList<String> notes;
+    private ArrayList<Elective> currentElectives;
+    private ArrayList<Elective> completedElectives;
 
     // Updated Constructor
     public Student(String firstName, String lastName, String uscid, String email, String username, String password, UserType type, Year gradeYear, Advisor advisor, Major major, double overallGrade, int credits, HashMap<Course, String> completedCourses, ArrayList<Course> currentCourses, ArrayList<String> notes) {
@@ -256,4 +266,32 @@ import java.util.UUID;
     /*
      * updates the students current courses
      */
+
+
+     
+public ArrayList<Elective> getCurrentElectives(){
+    return currentElectives;
+}
+public void setCurrentElectives(ArrayList<Elective> currentElectives){
+    this.currentElectives = currentElectives;
+}
+public ArrayList<Elective> getCompletedElectives(){
+    return completedElectives;
+}
+public void setCompletedElectives(ArrayList<Elective> completedElectives){
+    this.completedElectives = completedElectives;
+}
+public void addElective(Elective elect){
+    this.currentElectives.add(elect);
+}
+public void removeElective(Elective elect){
+    this.currentElectives.remove(elect);
+}
+
+public void updateElectiveCompleted(Elective elect){
+    this.currentElectives.remove(elect);
+    this.completedElectives.add(elect);
+}
+
+
 }
