@@ -31,8 +31,8 @@ public class DataWriter {
             studentJSON.put(DataConstants.MAJOR, student.getMajor());
             studentJSON.put(DataConstants.OVERALLGRADE, student.getOverallGrade());
             studentJSON.put(DataConstants.CREDITS, student.getCredits());
-            studentJSON.put(DataConstants.COMPLETEDCOURSES, student.getCompletedClasses());
-            studentJSON.put(DataConstants.CURRENTCOURSES, student.getCurrentClasses());
+            studentJSON.put(DataConstants.COMPLETEDCOURSES, student.getcompletedCourses());
+            studentJSON.put(DataConstants.CURRENTCOURSES, student.getCurrentCourses());
 
             jsonArray.add(studentJSON);
         }
