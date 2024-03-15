@@ -1,6 +1,8 @@
 package backEnd;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -14,7 +16,7 @@ public class Student extends User {
     private Major major;
     private double overallGrade;
     private int credits;
-    private ArrayList<Course> completedClasses;
+    private HashMap<Course, String> completedClasses;
     private ArrayList<Course> currentClasses;
     private ArrayList<String> notes;
 
@@ -27,7 +29,7 @@ public class Student extends User {
     
     public Student(String username, String password, String email, String uscid, Year gradeYear,
             Advisor advisor, Major major, double overallGrade, int credits,
-            ArrayList<Course> completedCourses, ArrayList<Course> currentCourses, ArrayList<String> notes, UUID uuid) {
+            HashMap<Course, String> completedCourses, ArrayList<Course> currentCourses, ArrayList<String> notes, UUID uuid) {
         super(username, password, email, uscid);
         this.major = major; 
         this.gradeYear = gradeYear; 
@@ -81,11 +83,11 @@ public class Student extends User {
         this.credits = credits;
     }
 
-    public ArrayList<Course> getCompletedClasses() {
+    public HashMap<Course, String> getCompletedClasses() {
         return completedClasses;
     }
 
-    public void setCompletedClasses(ArrayList<Course> completedClasses) {
+    public void setCompletedClasses(HashMap<Course, String> completedClasses) {
         this.completedClasses = completedClasses;
     }
 
@@ -117,8 +119,10 @@ public class Student extends User {
     }
     private void viewClassGrades(){
         System.out.println("These are your class grades:");
-        for(Course course: this.completedClasses){
-            System.out.println(course.getName()+": "+course.getUserGrade());
+        for (Map.Entry<Course, String> entry : completedClasses.entrySet()) {
+            Course course = entry.getKey();
+            String grade = entry.getValue();
+            System.out.println(course.getCourseSubject() + ", " + grade);
         }
     }
     public boolean riskOfFailure(){
@@ -144,12 +148,35 @@ public class Student extends User {
         this.advisor = advisor;
     }
     private void updateGrade(Course course, char grade){
-        course.setUserGrade(grade);
+        completedClasses.put(course, Character.toString(grade));
     }
 
     
+    private double toPointGrade(String grade){
+        double pointGrade;
+        if(grade == "A"){
+            grade = 4.0;
+        }else if(grade == "B"){
+            grade = 3.0;
+        }else if(grade == "C"){
+            grade = 2.0;
+        }else if(grade == "D"){
+            grade = 1.0;
+        }else if(grade == "F"){
+            grade = 0.0;
+        }
+        return grade;
+    }
+        return pointGrade;
+    }
+
     public void updateOverallGrade(){
         double totalGrade = 0.0;
+        for (Map.Entry<Course, String> entry : completedClasses.entrySet()) {
+            Course course = entry.getKey();
+            String grade = entry.getValue();
+            System.out.println(course.getCourseSubject() + ", " + grade);
+        }
         for(Course course: this.completedClasses){
             totalGrade += (course.getPointGrade() * course.getCourseHours());
         }
