@@ -305,7 +305,7 @@ public class DataLoader extends DataConstants {
 				if (Advisor.findAdvisor(advisors, advisorUUID)) {
 					advisor = Advisor.getAdvisor(advisors, advisorUUID);
 				} else {
-					System.out.println("Missing Advisor for "+ username);
+					//System.out.println("Missing Advisor for "+ username);
 				}
 
 
@@ -344,7 +344,7 @@ public class DataLoader extends DataConstants {
 					if (Course.findCourse(courses, courseUUID)) {
 						electiveCourses.add(Course.getCourse(courses, courseUUID));
 					} else {
-						System.out.println("Missing course for Elective " + electiveName);
+						//System.out.println("Missing course for Elective " + electiveName);
 					}
 				}
 				electives.add(new Elective(electiveCourses, electiveName, hours, uuid));
@@ -415,7 +415,7 @@ public class DataLoader extends DataConstants {
 					if (Student.findStudent(students, studentUUID)) {
 						assignedStudents.add(Student.getStudent(students, studentUUID));
 					} else {
-						System.out.println("Missing student for Advisor " + username);
+						//System.out.println("Missing student for Advisor " + username);
 					}
 				}
 
@@ -491,7 +491,7 @@ public class DataLoader extends DataConstants {
 					if (Requirement.findReq(requirements, courseUUID)) {
 						reqCourses.add(Requirement.getReq(requirements, courseUUID));
 					} else {
-						System.out.println("Missing Req");
+						//System.out.println("Missing Req");
 					}
 				}
 
@@ -502,7 +502,7 @@ public class DataLoader extends DataConstants {
 					if (Requirement.findReq(requirements, courseUUID)) {
 						coreqCourses.add(Requirement.getReq(requirements, courseUUID));
 					} else {
-						System.out.println("Missing Req");
+						//System.out.println("Missing Req");
 					}
 				}
 
@@ -545,7 +545,7 @@ public class DataLoader extends DataConstants {
 					if (Course.findCourse(courses, courseUUID)) {
 						reqCourses.add(Course.getCourse(courses, courseUUID));
 					} else {
-						System.out.println("Missing course for requirement " + requirementFor);
+						//System.out.println("Missing course for requirement " + requirementFor);
 					}
 				}
 				requirements.add(new Requirement(reqCourses, eitherOr, type, requirementFor, uuid));
