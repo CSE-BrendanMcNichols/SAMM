@@ -35,6 +35,17 @@ public abstract class User {
         this.type = type;
     }
 
+    User(){
+        this.uuid = UUID.randomUUID();
+        this.firstName = "null";
+        this.lastName = "null";
+        this.uscid = "null";
+        this.email = "null";
+        this.username = "null";
+        this.password = "null";
+        this.type = UserType.ADMINISTRATOR;
+    }
+
     /**
      * Constructor for User importing data from the database.
      * This constructor is used when user data is being loaded from an external source

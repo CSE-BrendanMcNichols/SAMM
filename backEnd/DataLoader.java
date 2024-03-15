@@ -46,9 +46,10 @@ public class DataLoader extends DataConstants {
 	}
 
 	public static ArrayList<Student> getStudents(){
+		ArrayList<Course> courses = getCourses();
 		ArrayList<Elective> electives = getElectives();
 		ArrayList<Major> majors = getMajors();
-		ArrayList<Student> students = getStudentNoAdvisor();
+		ArrayList<Student> students = getStudentNoAdvisor(majors, courses);
 		//ArrayList<Advisor> advisors = getAdvisor(students);
 		//students = addAdvisors(students, advisors);
 		//advisors = getAdvisor(students);
@@ -57,9 +58,10 @@ public class DataLoader extends DataConstants {
 	}
 
 	public static ArrayList<Advisor> getAdvisors(){
+		ArrayList<Course> courses = getCourses();
 		ArrayList<Elective> electives = getElectives();
 		ArrayList<Major> majors = getMajors();
-		ArrayList<Student> students = getStudentNoAdvisor(majors);
+		ArrayList<Student> students = getStudentNoAdvisor(majors, courses);
 		ArrayList<Advisor> advisors = getAdvisor(students);
 		students = addAdvisors(students, advisors);
 		advisors = getAdvisor(students);
@@ -97,7 +99,7 @@ public class DataLoader extends DataConstants {
 					}
 				}
 				
-				JSONObject coreReqJSON = (JSONObject) majorJSON.get("coreReq");
+				JSONObject coreReqJSON = (JSONObject) majorJSON.get(COREREQ);
 				HashMap<RequirementType, Integer> coreReq = new HashMap<>();
 				for (Object key : coreReqJSON.keySet()) {
    					RequirementType coreReqName = RequirementType.StringToType(((String) key));
@@ -117,7 +119,7 @@ public class DataLoader extends DataConstants {
 		return null;
 	}
 
-	public static ArrayList<Student> getStudentNoAdvisor(ArrayList<Major> majors) {
+	public static ArrayList<Student> getStudentNoAdvisor(ArrayList<Major> majors, ArrayList<Course> courses) {
 		ArrayList<Student> students = new ArrayList<Student>();
 
 		
@@ -153,11 +155,35 @@ public class DataLoader extends DataConstants {
 					String note = (String) notesJSON.get(j);
         			notes.add(note);
 				}
+				JSONArray coursesJSON = (JSONArray) studentJSON.get(CURRENTCOURSES);
+                ArrayList<Course> currentCourses = new ArrayList<Course>();
+				for(int j=0; j<coursesJSON.size(); j++){
+					UUID courseUUID = UUID.fromString((String) coursesJSON.get(j));
+					if(Course.findCourse(courses, courseUUID)){
+						currentCourses.add(Course.getCourse(courses, courseUUID));
+					}
+					else{
+						System.out.println("Missing current course for Student "+ username);
+					}
+				}
+				JSONObject completedClassesJSON = (JSONObject) studentJSON.get(COMPLETEDCOURSES);
+				HashMap<Course, String> completedCourses = new HashMap<>();
+				for (Object key : completedClassesJSON.keySet()) {
+   					String courseString = ((String) key);
+					UUID courseUUID = UUID.fromString(courseString);
+					Course course = new Course();
+					if(Course.findCourse(courses, courseUUID)){
+						course = Course.getCourse(courses, majorUUID);
+					}
+					else{
+						System.out.println("Missing completed course for Student adding dummy course"+ username);
+					}
+					String grade = (String)(completedClassesJSON.get(courseString));
+    				completedCourses.put(course, grade);
+				}
 
-				HashMap<Course, String> completedCourses = (HashMap<Course, String>)studentJSON.get(COMPLETEDCOURSES);
-				ArrayList<Course> currentCourses = (ArrayList<Course>)studentJSON.get(CURRENTCOURSES);
 
-				students.add( new Student());
+				students.add(firstName, lastName, uscid, email, username, password, gradeYear, advisor, major, overallGrade, credits, completedCourses, currentCourses, notes, uuid);
 			}
 			
 			return students;

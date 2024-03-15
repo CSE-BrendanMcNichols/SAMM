@@ -29,6 +29,11 @@ public class Advisor extends User {
         this.assignedStudents = new ArrayList<Student>();
     }
 
+    public Advisor(){
+        super();
+        this.assignedStudents = new ArrayList<Student>();
+    }
+
     /**
      * Constructor with Assigned Students
      * 

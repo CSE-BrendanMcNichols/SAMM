@@ -17,6 +17,10 @@ public class Course {
     private char minGrade;
     private CourseState courseStatus;
 
+    public Course(){
+        this.courseName = "EMPTY CLASS";
+    }
+
     public Course(String courseName, String courseSubject, int courseNumber,
                   ArrayList<Requirement> prerequisites, ArrayList<Requirement> corequisites,
                   ArrayList<Semester> courseAvailability, String courseDescription,

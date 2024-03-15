@@ -37,4 +37,16 @@ public class Elective {
     public UUID getUuid(){
         return this.uuid;
     }
+
+    public String getName(){
+        return this.electiveName;
+    }
+
+    public int getHours(){
+        return this.hours;
+    }
+
+    public ArrayList<Course> getCourses(){
+        return this.courses;
+    }
 }
