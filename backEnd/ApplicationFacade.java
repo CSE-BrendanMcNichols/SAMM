@@ -13,7 +13,7 @@ public class ApplicationFacade {
                 ArrayList<Student> students = DataLoader.getStudents();
                 if (students == null) students = new ArrayList<>();
                 students.add(student);
-                new DataWriter().saveStudents(students);
+                DataWriter.saveStudents(students);
                 break;
             case ADVISOR:
                 Advisor advisor = new Advisor(firstName, lastName, uscid, email, username, password);
@@ -21,7 +21,7 @@ public class ApplicationFacade {
                 ArrayList<Advisor> advisors = DataLoader.getAdvisors();
                 if (advisors == null) advisors = new ArrayList<>();
                 advisors.add(advisor);
-                new DataWriter().saveAdvisors(advisors);
+                DataWriter.saveAdvisors(advisors);
                 break;
             case ADMINISTRATOR:
                 Administrator administrator = new Administrator(firstName, lastName, uscid, email, username, password);
@@ -29,7 +29,7 @@ public class ApplicationFacade {
                 ArrayList<Administrator> administrators = DataLoader.getAdministrators();
                 if (administrators == null) administrators = new ArrayList<>();
                 administrators.add(administrator);
-                new DataWriter().saveAdministrators(administrators);
+                DataWriter.saveAdministrators(administrators);
                 break;
             default:
                 return false;
