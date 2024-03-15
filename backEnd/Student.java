@@ -153,20 +153,18 @@ public class Student extends User {
 
     
     private double toPointGrade(String grade){
-        double pointGrade;
+        double pointGrade = 0.0;
         if(grade == "A"){
-            grade = 4.0;
+            pointGrade = 4.0;
         }else if(grade == "B"){
-            grade = 3.0;
+            pointGrade = 3.0;
         }else if(grade == "C"){
-            grade = 2.0;
+            pointGrade = 2.0;
         }else if(grade == "D"){
-            grade = 1.0;
+            pointGrade = 1.0;
         }else if(grade == "F"){
-            grade = 0.0;
+            pointGrade = 0.0;
         }
-        return grade;
-    }
         return pointGrade;
     }
 
@@ -175,10 +173,7 @@ public class Student extends User {
         for (Map.Entry<Course, String> entry : completedClasses.entrySet()) {
             Course course = entry.getKey();
             String grade = entry.getValue();
-            System.out.println(course.getCourseSubject() + ", " + grade);
-        }
-        for(Course course: this.completedClasses){
-            totalGrade += (course.getPointGrade() * course.getCourseHours());
+            totalGrade += (toPointGrade(grade) * course.getCourseHours());
         }
         this.overallGrade = totalGrade/credits;
         System.out.println(this.overallGrade);
@@ -199,9 +194,11 @@ public class Student extends User {
      */
 
     
-    public void checkHours(ArrayList<Course> completedCourses){
+    public void checkHours(HashMap<Course, String> completedCourses){
         int creditTotal = 0;
-        for(Course course: this.completedClasses){
+        for (Map.Entry<Course, String> entry : completedClasses.entrySet()) {
+            Course course = entry.getKey();
+            String grade = entry.getValue();
             creditTotal += course.getCourseHours();
         }
         System.out.println("credit hours completed are: " + creditTotal);
@@ -212,14 +209,14 @@ public class Student extends User {
      */
 
     
-    public void updateCourseCompleted(Course updateCourse){
+    public void updateCourseCompleted(Course updateCourse, String courseGrade){
         System.out.println("updateCourseCompleted called. updateCourse: " + updateCourse);
         for(Course course: this.currentClasses){
             if(course.getUuid() == updateCourse.getUuid()){
                 currentClasses.remove(course);
             }
         }
-        this.completedClasses.add(updateCourse);
+        this.completedClasses.put(updateCourse, courseGrade);
         updateCredits();
         updateOverallGrade();
     }
@@ -231,7 +228,9 @@ public class Student extends User {
    
     private int getCreditsAccumulated(){
         int creditTotal = 0;
-        for(Course course: this.completedClasses){
+        for (Map.Entry<Course, String> entry : completedClasses.entrySet()) {
+            Course course = entry.getKey();
+            String grade = entry.getValue();
             creditTotal += course.getCourseHours();
         }
         return creditTotal;
