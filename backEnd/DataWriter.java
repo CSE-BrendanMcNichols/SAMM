@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 /**
- * This class will write or save the data
+ * This class will save the data to respective json files.
  */
 
 public class DataWriter {
@@ -16,32 +16,45 @@ public class DataWriter {
      * 
      * @param studentList
      */
-    public void saveStudents(ArrayList<Student> studentList) {
+    @SuppressWarnings("unchecked")
+    public static void saveStudents(ArrayList<Student> studentList) {
         // Convert ArrayList to JSON
-        JSONArray jsonArray = new JSONArray();
+        JSONArray studentsJSONArray = new JSONArray();
         for (Student student : studentList) {
             JSONObject studentJSON = new JSONObject();
+            studentJSON.put(DataConstants.FIRST_NAME, student.getFirstName());
+            studentJSON.put(DataConstants.LAST_NAME, student.getLastName());
             studentJSON.put(DataConstants.USERNAME, student.getUsername());
             studentJSON.put(DataConstants.PASSWORD, student.getPassword());
             studentJSON.put(DataConstants.EMAIL, student.getEmail());
             studentJSON.put(DataConstants.USCID, student.getUscid());
-            studentJSON.put(DataConstants.UUID, student.getUuid());
+            studentJSON.put(DataConstants.UUIDSTRING, student.getUuid().toString());
             studentJSON.put(DataConstants.GRADEYEAR, student.getGradeYear());
-            studentJSON.put(DataConstants.ADVISOR, student.getAdvisor());
-            studentJSON.put(DataConstants.MAJOR, student.getMajor());
-            studentJSON.put(DataConstants.OVERALLGRADE, student.getOverallGrade());
             studentJSON.put(DataConstants.CREDITS, student.getCredits());
-            studentJSON.put(DataConstants.COMPLETEDCOURSES, student.getcompletedCourses());
-            studentJSON.put(DataConstants.CURRENTCOURSES, student.getCurrentCourses());
+            studentJSON.put(DataConstants.OVERALLGRADE, student.getOverallGrade());
 
-            jsonArray.add(studentJSON);
+            // Only store the Advisor UUID/
+            // Todo. When reading from JSON file, it has to look up this id with the Advisor
+            // List and update Student with Advisor Object reference
+            studentJSON.put(DataConstants.ADVISOR, student.getAdvisor().getUuid().toString());
+
+            // Only store the Major Name
+            // Todo. When reading from JSON file, it has to look up this id with the Major
+            // List and update Student with Major Object reference
+            studentJSON.put(DataConstants.MAJOR, student.getMajor().getMajor());
+
+            // Convert the Course Objects to Course String arraylist and store
+            studentJSON.put(DataConstants.COMPLETEDCOURSES, student.getCompletedClasses());
+            studentJSON.put(DataConstants.CURRENTCOURSES, student.getCurrentClasses());
+
+            studentsJSONArray.add(studentJSON);
         }
 
         // Write JSON to file
         try (FileWriter file = new FileWriter(DataConstants.STUDENT_FILE_NAME)) {
-            file.write(jsonArray.toJSONString());
+            file.write(studentsJSONArray.toJSONString());
             file.flush();
-            System.out.println("Studnets JSON data is written to the file.");
+            System.out.println("Studnets JSON data is written to the file " + DataConstants.STUDENT_FILE_NAME);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -53,23 +66,36 @@ public class DataWriter {
      * 
      * @param advisorList
      */
-    public void saveAdvisors(ArrayList<Advisor> advisorList) {
+    @SuppressWarnings("unchecked")
+    public static void saveAdvisors(ArrayList<Advisor> advisorList) {
+
         // Convert ArrayList to JSON
-        JSONArray jsonArray = new JSONArray();
+        JSONArray advisorsJSONArray = new JSONArray();
         for (Advisor advisor : advisorList) {
             JSONObject advisorJSON = new JSONObject();
-            advisorJSON.put(DataConstants.ASSIGNED_STUDENTS, advisor.getAssignedStudents());
-            jsonArray.add(advisorJSON);
+            advisorJSON.put(DataConstants.FIRST_NAME, advisor.getFirstName());
+            advisorJSON.put(DataConstants.LAST_NAME, advisor.getLastName());
+            advisorJSON.put(DataConstants.USERNAME, advisor.getUsername());
+            advisorJSON.put(DataConstants.PASSWORD, advisor.getPassword());
+            advisorJSON.put(DataConstants.EMAIL, advisor.getEmail());
+            advisorJSON.put(DataConstants.USCID, advisor.getUscid());
+            advisorJSON.put(DataConstants.UUIDSTRING, advisor.getUuid().toString());
+
+            // Convert the Student Objects to Student String arraylist and store
+            advisorJSON.put(DataConstants.ASSIGNED_STUDENTS, getStudentJSONArray(advisor.getAssignedStudents()));
+
+            advisorsJSONArray.add(advisorJSON);
         }
 
         // Write JSON to file
         try (FileWriter file = new FileWriter(DataConstants.ADVISOR_FILE_NAME)) {
-            file.write(jsonArray.toJSONString());
+            file.write(advisorsJSONArray.toJSONString());
             file.flush();
-            System.out.println("Advisors JSON data is written to the file.");
+            System.out.println("Advisors JSON data is written to the file " + DataConstants.ADVISOR_FILE_NAME);
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
 
     /**
@@ -77,54 +103,141 @@ public class DataWriter {
      * 
      * @param administratorList
      */
-    public void saveAdministrators(ArrayList<Administrator> administratorList) {
+    @SuppressWarnings("unchecked")
+    public static void saveAdministrators(ArrayList<Administrator> administratorList) {
         // Convert ArrayList to JSON
-        JSONArray jsonArray = new JSONArray();
+        JSONArray administratorsJSONArray = new JSONArray();
         for (Administrator administrator : administratorList) {
             JSONObject administratorJSON = new JSONObject();
+
+            administratorJSON.put(DataConstants.FIRST_NAME, administrator.getFirstName());
+            administratorJSON.put(DataConstants.LAST_NAME, administrator.getLastName());
             administratorJSON.put(DataConstants.USERNAME, administrator.getUsername());
             administratorJSON.put(DataConstants.PASSWORD, administrator.getPassword());
             administratorJSON.put(DataConstants.EMAIL, administrator.getEmail());
             administratorJSON.put(DataConstants.USCID, administrator.getUscid());
-            administratorJSON.put(DataConstants.UUID, administrator.getUuid());
+            administratorJSON.put(DataConstants.UUIDSTRING, administrator.getUuid().toString());
 
-            jsonArray.add(administratorJSON);
+            administratorsJSONArray.add(administratorJSON);
         }
 
         // Write JSON to file
         try (FileWriter file = new FileWriter(DataConstants.ADMINISTRATOR_FILE_NAME)) {
-            file.write(jsonArray.toJSONString());
+            file.write(administratorsJSONArray.toJSONString());
             file.flush();
-            System.out.println("Administrator JSON data is written to the file.");
+            System.out.println(
+                    "Administrators JSON data is written to the file " + DataConstants.ADMINISTRATOR_FILE_NAME);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
     }
 
+    /**
+     * This method will save Majors list in a json file
+     * 
+     * @param majorList
+     */
+    @SuppressWarnings("unchecked")
     public static void saveMajors(ArrayList<Major> majorList) {
-       // Convert ArrayList to JSON
-       JSONArray jsonArray = new JSONArray();
-       for (Major major : majorList) {
-           JSONObject majorJSON = new JSONObject();
-           majorJSON.put(DataConstants.MAJOR, major.getMajor());
-           majorJSON.put(DataConstants.COREREQ, major.getCoreReq());
-           majorJSON.put(DataConstants.COURSES, major.getCourses());
-           majorJSON.put(DataConstants.ELECTIVE_COURSES, major.getElectiveCourses());
-           majorJSON.put(DataConstants.MAJOR, major.getMajor());
-          
-           jsonArray.add(majorJSON);
+        // Convert ArrayList to JSON
+        JSONArray jsonArray = new JSONArray();
+        for (Major major : majorList) {
+            JSONObject majorJSON = new JSONObject();
+            majorJSON.put(DataConstants.MAJOR, major.getMajor());
+            // TODO convert CoreREq to Hashmap
+            majorJSON.put(DataConstants.COREREQ, major.getCoreReq());
 
-       }
+            majorJSON.put(DataConstants.COURSES, getCourseJSONArray(major.getCourses()));
 
-       // Write JSON to file
-       try (FileWriter file = new FileWriter(DataConstants.ADVISOR_FILE_NAME)) {
-           file.write(jsonArray.toJSONString());
-           file.flush();
-           System.out.println("Majors JSON data is written to the file.");
-       } catch (IOException e) {
-           e.printStackTrace();
-       };
+            // TODO : Electives
+            majorJSON.put(DataConstants.ELECTIVE_COURSES, major.getElectiveCourses());
+            majorJSON.put(DataConstants.MAJOR, major.getMajor());
+
+            jsonArray.add(majorJSON);
+
+        }
+
+        // Write JSON to file
+        try (FileWriter file = new FileWriter(DataConstants.MAJORS_FILE_NAME)) {
+            file.write(jsonArray.toJSONString());
+            file.flush();
+            System.out.println("Majors JSON data is written to the file.");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        ;
+    }
+
+    /**
+     * This method will save Courses list in a json file
+     * 
+     * @param courseList
+     */
+    @SuppressWarnings("unchecked")
+    public static void saveCourses(ArrayList<Course> courseList) {
+        // Convert ArrayList to JSON
+        JSONArray coursesJSONArray = new JSONArray();
+        for (Course course : courseList) {
+            JSONObject courseJSON = new JSONObject();
+
+            courseJSON.put(DataConstants.COURSENAME, course.getCourseSubject());
+            courseJSON.put(DataConstants.COURSENUMBER, course.getCourseNumber());
+            courseJSON.put(DataConstants.COURSEDESCRIPTION, course.getCourseDescription());
+            courseJSON.put(DataConstants.COURSEHOURS, course.getCourseHours());
+            courseJSON.put(DataConstants.MINGRADE, "" + course.getMinGrade());
+            courseJSON.put(DataConstants.UUIDSTRING, course.getUuid().toString());
+            // Note: User Grade and course STATUS not required for the list of courses
+            // TODO : need to store pre and co requisites
+
+            coursesJSONArray.add(courseJSON);
+        }
+
+        // Write JSON to file
+        try (FileWriter file = new FileWriter(DataConstants.COURSE_FILE_NAME)) {
+            file.write(coursesJSONArray.toJSONString());
+            file.flush();
+            System.out.println("Courses JSON data is written to the file." + DataConstants.COURSE_FILE_NAME);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    /**
+     * This method converts Course Objects to JSON Array
+     * 
+     * @param completedClasses
+     * @return
+     */
+    private static JSONArray getCourseJSONArray(ArrayList<Course> courses) {
+
+        ArrayList<String> list = new ArrayList<String>();
+        for (Course course : courses) {
+            list.add(course.getCourseSubject());
+        }
+        JSONArray jsonArray = new JSONArray();
+        jsonArray.addAll(list);
+
+        return jsonArray;
+
+    }
+
+    /**
+     * This method converts Student Objects to JSON Array
+     * 
+     * @param students
+     * @return
+     */
+    private static JSONArray getStudentJSONArray(ArrayList<Student> students) {
+        ArrayList<String> list = new ArrayList<String>();
+        for (Student student : students) {
+            list.add(student.getUuid().toString());
+        }
+        JSONArray jsonArray = new JSONArray();
+        jsonArray.addAll(list);
+
+        return jsonArray;
     }
 
 }
