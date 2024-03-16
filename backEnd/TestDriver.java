@@ -61,6 +61,8 @@ public class TestDriver {
         }
     }
 
+    //TODO: Implement method to select GFL elective and choose Digital Design
+
     private static void generateSemesterPlan(Student braxWest) {
         try {
             FileWriter writer = new FileWriter("BraxWest_SemesterPlan.txt");

@@ -32,7 +32,9 @@ Added updateElectivesCompleted
     private ArrayList<Elective> completedElectives;
 
     // Updated Constructor
-    public Student(String firstName, String lastName, String uscid, String email, String username, String password, UserType type, Year gradeYear, Advisor advisor, Major major, double overallGrade, int credits, HashMap<Course, String> completedCourses, ArrayList<Course> currentCourses, ArrayList<String> notes) {
+    public Student(String firstName, String lastName, String uscid, String email, String username, String password, 
+    UserType type, Year gradeYear, Advisor advisor, Major major, double overallGrade, int credits, 
+    HashMap<Course, String> completedCourses, ArrayList<Course> currentCourses, ArrayList<String> notes) {
         super(firstName, lastName, uscid, email, username, password, type);
         this.gradeYear = gradeYear;
         this.advisor = advisor;
