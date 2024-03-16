@@ -11,15 +11,14 @@ import java.util.UUID;
  * @Author Sree
  */
 
-
- /*
- 3-15 Update log by Matthew Bojanowski
-Added completedElectives and currentElectives and applicationArea
-Added getters and setters for those
-Added addElective and removeElective
-Added updateElectivesCompleted
-*/
- public class Student extends User {
+/*
+ * 3-15 Update log by Matthew Bojanowski
+ * Added completedElectives and currentElectives and Elective
+ * Added getters and setters for those
+ * Added addElective and removeElective
+ * Added updateElectivesCompleted
+ */
+public class Student extends User {
     @Override
     public String toString() {
         return "Student [gradeYear=" + gradeYear + ", advisor=" + advisor + ", major=" + major + ", overallGrade="
@@ -27,6 +26,7 @@ Added updateElectivesCompleted
                 + currentCourses + ", notes=" + notes + ", applicationArea=" + applicationArea + ", currentElectives="
                 + currentElectives + ", completedElectives=" + completedElectives + ", uuid=" + uuid + "]";
     }
+
     private Year gradeYear;
     private Advisor advisor;
     private Major major;
@@ -41,7 +41,10 @@ Added updateElectivesCompleted
     private UUID uuid;
 
     // Updated Constructor
-    public Student(String firstName, String lastName, String uscid, String email, String username, String password, Year gradeYear, Advisor advisor, Major major, double overallGrade, int credits, HashMap<Course, String> completedCourses, ArrayList<Course> currentCourses, ArrayList<String> notes, ArrayList<Elective> currentElectives, ArrayList<Elective> completedElectives, String applicationArea) {
+    public Student(String firstName, String lastName, String uscid, String email, String username, String password,
+            Year gradeYear, Advisor advisor, Major major, double overallGrade, int credits,
+            HashMap<Course, String> completedCourses, ArrayList<Course> currentCourses, ArrayList<String> notes,
+            ArrayList<Elective> currentElectives, ArrayList<Elective> completedElectives, String applicationArea) {
         super(firstName, lastName, uscid, email, username, password, UserType.STUDENT);
         this.gradeYear = gradeYear;
         this.advisor = advisor;
@@ -58,9 +61,15 @@ Added updateElectivesCompleted
             this.currentElectives = currentElectives;
         this.notes = notes;
         this.uuid = UUID.randomUUID();
+        this.applicationArea = applicationArea;
     }
+
     // constructor for DataLoader final run through
-    public Student(String firstName, String lastName, String uscid, String email, String username, String password, Year gradeYear, Advisor advisor, Major major, double overallGrade, int credits, HashMap<Course, String> completedCourses, ArrayList<Course> currentCourses, ArrayList<String> notes, UUID uuid, ArrayList<Elective> currentElectives, ArrayList<Elective> completedElectives, String applicationArea) {
+    public Student(String firstName, String lastName, String uscid, String email, String username, String password,
+            Year gradeYear, Advisor advisor, Major major, double overallGrade, int credits,
+            HashMap<Course, String> completedCourses, ArrayList<Course> currentCourses, ArrayList<String> notes,
+            UUID uuid, ArrayList<Elective> currentElectives, ArrayList<Elective> completedElectives,
+            String applicationArea) {
         super(uuid, firstName, lastName, uscid, email, username, password, UserType.STUDENT);
         this.gradeYear = gradeYear;
         this.advisor = advisor;
@@ -70,7 +79,7 @@ Added updateElectivesCompleted
         this.notes = notes;
         this.uuid = uuid;
 
-         if (completedCourses != null)
+        if (completedCourses != null)
             this.completedCourses = completedCourses;
         if (currentCourses != null)
             this.currentCourses = currentCourses;
@@ -80,8 +89,12 @@ Added updateElectivesCompleted
             this.currentElectives = currentElectives;
         this.applicationArea = applicationArea;
     }
+
     // constructor for DataLoader first sweep
-    public Student(String firstName, String lastName, String uscid, String email, String username, String password, Year gradeYear, Major major, double overallGrade, int credits, HashMap<Course, String> completedCourses, ArrayList<Course> currentCourses, ArrayList<String> notes, UUID uuid, ArrayList<Elective> currentElectives, ArrayList<Elective> completedElectives, String applicationArea) {
+    public Student(String firstName, String lastName, String uscid, String email, String username, String password,
+            Year gradeYear, Major major, double overallGrade, int credits, HashMap<Course, String> completedCourses,
+            ArrayList<Course> currentCourses, ArrayList<String> notes, UUID uuid, ArrayList<Elective> currentElectives,
+            ArrayList<Elective> completedElectives, String applicationArea) {
         super(uuid, firstName, lastName, uscid, email, username, password, UserType.STUDENT);
         this.gradeYear = gradeYear;
         this.advisor = new Advisor();
@@ -98,12 +111,13 @@ Added updateElectivesCompleted
     }
 
     // Added Getters and setters methods
-    
+
     public Student(String firstName, String lastName, String uscid, String email, String username, String password,
             UserType student, Year freshman, Object object, Object object2, int i, int j, Object object3,
             Object object4, Object object5) {
-        //TODO Auto-generated constructor stub
+        // TODO Auto-generated constructor stub
     }
+
     public Year getGradeYear() {
         return gradeYear;
     }
@@ -156,7 +170,6 @@ Added updateElectivesCompleted
         return currentCourses;
     }
 
-
     public void setCurrentCourses(ArrayList<Course> currentCourses) {
         this.currentCourses = currentCourses;
     }
@@ -169,20 +182,20 @@ Added updateElectivesCompleted
         this.notes = notes;
     }
 
-    private double calculateGPA(){
+    private double calculateGPA() {
         double gpa = 0.0;
         for (Map.Entry<Course, String> entry : completedCourses.entrySet()) {
             Course course = entry.getKey();
             String grade = entry.getValue();
-            if(grade.equals("A")){
+            if (grade.equals("A")) {
                 gpa += 4.0;
-            }else if(grade.equals("B")){
+            } else if (grade.equals("B")) {
                 gpa += 3.0;
-            }else if(grade.equals("C")){
+            } else if (grade.equals("C")) {
                 gpa += 2.0;
-            }else if(grade.equals("D")){
+            } else if (grade.equals("D")) {
                 gpa += 1.0;
-            }else if(grade.equals("F")){
+            } else if (grade.equals("F")) {
                 gpa += 0.0;
             }
         }
@@ -192,7 +205,7 @@ Added updateElectivesCompleted
      * Calculates the students gpa
      */
 
-    private void viewClassGrades(){
+    private void viewClassGrades() {
         System.out.println("These are your class grades:");
         for (Map.Entry<Course, String> entry : completedCourses.entrySet()) {
             Course course = entry.getKey();
@@ -200,59 +213,64 @@ Added updateElectivesCompleted
             System.out.println(course.getCourseSubject() + ", " + grade);
         }
     }
-    public boolean riskOfFailure(){
-        if(overallGrade < 2.5){
+
+    public boolean riskOfFailure() {
+        if (overallGrade < 2.5) {
             return true;
         }
         return false;
     }
-    public Major viewFutureSchedule(){
+
+    public Major viewFutureSchedule() {
         major.getCourses();
         return null;
     }
-    public void viewCurrentSchedule(){
+
+    public void viewCurrentSchedule() {
         System.out.println("Current Schedule:");
-        for(Course course: this.currentCourses){
+        for (Course course : this.currentCourses) {
             System.out.println(course);
         }
         System.out.println("End of Current Schedule");
     }
-    private void assignAdvisor(Advisor advisor){
+
+    private void assignAdvisor(Advisor advisor) {
         this.advisor = advisor;
     }
-    private void updateGrade(Course course, char grade){
+
+    private void updateGrade(Course course, char grade) {
         completedCourses.put(course, Character.toString(grade));
     }
 
-    
-    private double toPointGrade(String grade){
+    private double toPointGrade(String grade) {
         double pointGrade = 0.0;
-        if(grade == "A"){
+        if (grade == "A") {
             pointGrade = 4.0;
-        }else if(grade == "B"){
+        } else if (grade == "B") {
             pointGrade = 3.0;
-        }else if(grade == "C"){
+        } else if (grade == "C") {
             pointGrade = 2.0;
-        }else if(grade == "D"){
+        } else if (grade == "D") {
             pointGrade = 1.0;
-        }else if(grade == "F"){
+        } else if (grade == "F") {
             pointGrade = 0.0;
         }
         return pointGrade;
     }
     /*
      * Calculate the students gpa
+     * 
      * @return the students gpa
      */
 
-    public void updateOverallGrade(){
+    public void updateOverallGrade() {
         double totalGrade = 0.0;
         for (Map.Entry<Course, String> entry : completedCourses.entrySet()) {
             Course course = entry.getKey();
             String grade = entry.getValue();
             totalGrade += (toPointGrade(grade) * course.getCourseHours());
         }
-        this.overallGrade = totalGrade/credits;
+        this.overallGrade = totalGrade / credits;
         System.out.println(this.overallGrade);
     }
     /*
@@ -260,36 +278,34 @@ Added updateElectivesCompleted
      * By Matt
      */
 
-    
-    private void updateCredits(){
+    private void updateCredits() {
         this.credits = getCreditsAccumulated();
-        //System.out.println("Credits updated to: " + this.credits);
+        // System.out.println("Credits updated to: " + this.credits);
     }
     /*
      * Updates the students credits and prints it out
      * By Matt
      */
 
-    
-    public void checkHours(HashMap<Course, String> completedCourses){
+    public void checkHours(HashMap<Course, String> completedCourses) {
         int creditTotal = 0;
         for (Map.Entry<Course, String> entry : completedCourses.entrySet()) {
             Course course = entry.getKey();
             String grade = entry.getValue();
             creditTotal += course.getCourseHours();
         }
-        //System.out.println("credit hours completed are: " + creditTotal);
+        // System.out.println("credit hours completed are: " + creditTotal);
     }
     /*
      * Checks the hours of completed courses and prints them out
      * By Matt
      */
 
-    
-    public void updateCourseCompleted(Course updateCourse, String courseGrade){
-        //System.out.println("updateCourseCompleted called. updateCourse: " + updateCourse);
-        for(Course course: this.currentCourses){
-            if(course.getUuid() == updateCourse.getUuid()){
+    public void updateCourseCompleted(Course updateCourse, String courseGrade) {
+        // System.out.println("updateCourseCompleted called. updateCourse: " +
+        // updateCourse);
+        for (Course course : this.currentCourses) {
+            if (course.getUuid() == updateCourse.getUuid()) {
                 currentCourses.remove(course);
                 break;
             }
@@ -303,8 +319,7 @@ Added updateElectivesCompleted
      * By Matt
      */
 
-   
-    private int getCreditsAccumulated(){
+    private int getCreditsAccumulated() {
         int creditTotal = 0;
         for (Map.Entry<Course, String> entry : completedCourses.entrySet()) {
             Course course = entry.getKey();
@@ -315,13 +330,13 @@ Added updateElectivesCompleted
     }
     /*
      * gets the credits accumulated
+     * 
      * @return the credits accumulated
      */
 
-    
-    private void updateCurrentCourses(Course course){
+    private void updateCurrentCourses(Course course) {
         ArrayList<Course> updatedclasses = currentCourses;
-        if(updatedclasses != null)
+        if (updatedclasses != null)
             updatedclasses.add(course);
         setCurrentCourses(updatedclasses);
     }
@@ -329,75 +344,78 @@ Added updateElectivesCompleted
      * updates the students current courses
      */
 
-
-     
-public ArrayList<Elective> getCurrentElectives(){
-    System.out.println("Current electives:");
-    for(Elective e : currentElectives){
-        System.out.println(e.getName());
-    }
-    return currentElectives;
-}
-public void setCurrentElectives(ArrayList<Elective> currentElectives){
-    this.currentElectives = currentElectives;
-}
-
-
-public ArrayList<Elective> getCompletedElectives(){
-    System.out.println("Completed electives:");
-    for(Elective e : completedElectives){
-        System.out.println(e.getName());
+    public ArrayList<Elective> getCurrentElectives() {
+        System.out.println("Current electives:");
+        for (Elective e : currentElectives) {
+            System.out.println(e.getName());
+        }
+        return currentElectives;
     }
 
-
-    return completedElectives;
-}
-public void setCompletedElectives(ArrayList<Elective> completedElectives){
-    this.completedElectives = completedElectives;
-}
-public void addElective(Elective elect){
-    if (currentElectives != null) {
-        currentElectives.add(elect);
-        //System.out.println("Added Elective: " + elect.getName());
+    public void setCurrentElectives(ArrayList<Elective> currentElectives) {
+        this.currentElectives = currentElectives;
     }
-}
-public void removeElective(Elective elect){
 
-    // Remove by name. in case if the objects are not fully loaded it may not be a good match
-    if (this.currentElectives != null) {
-        for(Elective elective: this.currentElectives) {
-            if (elective.getName().equals(elect.getName())) {
-                this.currentElectives.remove(elect);
-                //System.out.println("Removed Elective: " + elect.getName());
-                break;
+    public ArrayList<Elective> getCompletedElectives() {
+        System.out.println("Completed electives:");
+        for (Elective e : completedElectives) {
+            System.out.println(e.getName());
+        }
+
+        return completedElectives;
+    }
+
+    public void setCompletedElectives(ArrayList<Elective> completedElectives) {
+        this.completedElectives = completedElectives;
+    }
+
+    public void addElective(Elective elect) {
+        if (currentElectives != null) {
+            currentElectives.add(elect);
+            // System.out.println("Added Elective: " + elect.getName());
+        }
+    }
+
+    public void removeElective(Elective elect) {
+
+        // Remove by name. in case if the objects are not fully loaded it may not be a
+        // good match
+        if (this.currentElectives != null) {
+            for (Elective elective : this.currentElectives) {
+                if (elective.getName().equals(elect.getName())) {
+                    this.currentElectives.remove(elect);
+                    // System.out.println("Removed Elective: " + elect.getName());
+                    break;
+                }
             }
         }
     }
-}
 
-public void updateElectiveCompleted(Elective elect) {
-    
-    removeElective(elect);
-    
-    if (this.completedElectives != null) {
-        this.completedElectives = new ArrayList<Elective>();
-        this.completedElectives.add(elect);
-        //System.out.println("Elective: " + elect.getName() + " is added tp completed electives list");
-    }
-}
-public void setApplicationArea(String area){
-    applicationArea = area;
-}
-public String getApplicationArea(){
-    return applicationArea;
-}
+    public void updateElectiveCompleted(Elective elect) {
 
-public String getAdvisorName(){
-    if (advisor != null) {
-        return advisor.getFirstName() + " " + advisor.getLastName();
+        removeElective(elect);
+
+        if (this.completedElectives != null) {
+            this.completedElectives = new ArrayList<Elective>();
+            this.completedElectives.add(elect);
+            // System.out.println("Elective: " + elect.getName() + " is added tp completed
+            // electives list");
+        }
     }
-    else {
-        return "No Advisor assigned";
+
+    public void setApplicationArea(String area) {
+        applicationArea = area;
     }
-}
+
+    public String getApplicationArea() {
+        return applicationArea;
+    }
+
+    public String getAdvisorName() {
+        if (advisor != null) {
+            return advisor.getFirstName() + " " + advisor.getLastName();
+        } else {
+            return "No Advisor assigned";
+        }
+    }
 }

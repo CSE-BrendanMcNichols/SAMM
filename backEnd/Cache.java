@@ -12,6 +12,8 @@ public class Cache {
     private static CourseList courseListInstance;
 
     private static ArrayList<Elective> electiveList = new ArrayList<Elective>();
+    private static ArrayList<ApplicationArea> areaList = new ArrayList<ApplicationArea>();
+
     private static ArrayList<Requirement> requirementList = new ArrayList<Requirement>();
 
     public static Cache getInstance() {
@@ -57,6 +59,13 @@ public class Cache {
         electiveList = DataLoader.loadElectives();
         for (Elective elective : electiveList) {
             // System.out.println(elective+"\n");
+        }
+    }
+
+    public void initializeApplicationAreas() {
+        areaList = DataLoader.loadApplicaitonAreas();
+        for (ApplicationArea area : areaList) {
+            //System.out.println(area+"\n");
         }
     }
 

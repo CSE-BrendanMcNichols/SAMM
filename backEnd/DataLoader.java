@@ -423,7 +423,51 @@ public class DataLoader extends DataConstants {
 	}
 
 	/**
-	 * This method loads the Majors from database(json file)
+	 * Load ApplicationArea from database (json file)
+	 * 
+	 * @return
+	 */
+
+	 public static ArrayList<ApplicationArea> loadApplicaitonAreas() {
+		ArrayList<ApplicationArea> areas = new ArrayList<ApplicationArea>();
+		try {
+			FileReader reader = new FileReader(AREA_FILE_NAME);
+			JSONParser parser = new JSONParser();
+			JSONArray areasJSON = (JSONArray) parser.parse(reader);
+
+			for (int i = 0; i < areasJSON.size(); i++) {
+				JSONObject areaJSON = (JSONObject) areasJSON.get(i);
+				String area = (String) areaJSON.get(AREANAME);
+				int hours = ((Long) areaJSON.get(HOURS)).intValue();
+				//System.out.println(areaJSON.get(UUIDSTRING));
+
+				UUID uuid = UUID.fromString((String) areaJSON.get(UUIDSTRING));
+				JSONArray coursesJSON = (JSONArray) areaJSON.get(COURSES);
+				ArrayList<Course> courses = new ArrayList<Course>();
+				for (int j = 0; j < coursesJSON.size(); j++) {
+					UUID courseUUID = UUID.fromString((String) coursesJSON.get(j));
+					if (CourseList.getInstance().findCourse(courseUUID)) {
+						courses.add(CourseList.getInstance().getCourse(courseUUID));
+					} else {
+						System.out.println("Warning: While loading ApplicationArea, Course Id: " + courseUUID + " is not in the Course List.");
+					}
+				}
+				areas.add(new ApplicationArea(courses, area, hours, uuid));
+			}
+			System.out.println("*** Successfully Loaded ApplicaitonAreas.");
+
+			return areas;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return null;
+	}
+	
+	
+
+	/* This method loads the Majors from database(json file)
 	 * 
 	 * @return
 	 */

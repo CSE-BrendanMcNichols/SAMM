@@ -12,6 +12,9 @@ public class ApplicationFacade {
         Cache.getInstance().initializeRequirements();
         //initialize with Course Requirements
         Cache.getInstance().initializeCourseRequirements();
+
+        Cache.getInstance().initializeApplicationAreas();
+        /*
         Cache.getInstance().initializeElectives();
         Cache.getInstance().initializeMajors();
         
@@ -20,6 +23,7 @@ public class ApplicationFacade {
         Cache.getInstance().initializeAdvisors();
         // initialize with Advisor
         Cache.getInstance().initializeStudentsAdvisor();
+        */
         
     }
 
