@@ -21,11 +21,11 @@ public class Course {
         this.courseName = "EMPTY CLASS";
     }
 
-    public Course(String courseName, String courseSubject, int courseNumber,
+    public Course(String courseName, int courseNumber,
                   ArrayList<Requirement> prerequisites, ArrayList<Requirement> corequisites,
                   ArrayList<Semester> courseAvailability, String courseDescription,
-                  int courseHours, char minGrade, CourseState courseStatus) {
-        this.courseSubject = courseSubject;
+                  int courseHours, char minGrade, CourseState courseStatus,UUID uuid) {
+
         this.courseName = courseName;
         this.courseNumber = courseNumber;
         this.prerequisites = new ArrayList<>(prerequisites);
@@ -35,16 +35,15 @@ public class Course {
         this.courseHours = courseHours;
         this.minGrade = minGrade;
         this.courseStatus = courseStatus;
+        this.uuid = uuid;
     }
-    Course(String courseSubject, ArrayList<Semester> courseSemester, int courseNumber,
-            String courseDescription, int courseHours, char minGrade,
-            CourseState courseStatus, UUID uuid) {
-        this.courseSubject = courseSubject;
-        this.courseName = courseSubject;
-        this.courseAvailability = courseSemester;
+  
+    public Course(String courseName, int courseNumber, ArrayList<Semester> courseAvailability, String courseDescription,
+            int courseHours, char minGrade, CourseState courseStatus, UUID uuid) {
+
+        this.courseName = courseName;
         this.courseNumber = courseNumber;
-        this.prerequisites = new ArrayList<Requirement>();
-        this.corequisites = new ArrayList<Requirement>();
+        this.courseAvailability = new ArrayList<>(courseAvailability);
         this.courseDescription = courseDescription;
         this.courseHours = courseHours;
         this.minGrade = minGrade;
@@ -133,12 +132,24 @@ public class Course {
         this.courseStatus = courseStatus;
     }
 
-    public String toString(){
-        return "Course name:" + courseName + " Course description:" + courseDescription + "\n";
+    public String toString1String(){
+        return "Course UUID " + uuid.toString() + "\n" + "Course name:" + courseName + "\nCourse description:" + courseDescription + "\n";
         //return courseName;
     }
+    
+
+
 
     
+    @Override
+    public String toString() {
+        return "Course [uuid=" + uuid + ", courseName=" + courseName + ", courseSubject=" + courseSubject
+                + ", courseNumber=" + courseNumber + ", prerequisites=" + prerequisites + ", corequisites="
+                + corequisites + ", courseAvailability=" + courseAvailability + ", courseDescription="
+                + courseDescription + ", courseHours=" + courseHours + ", minGrade=" + minGrade + ", courseStatus="
+                + courseStatus + "]";
+    }
+
     // Methods for managing prerequisites and corequisites
     public void addPrerequisite(Requirement prerequisite) {
         if (!prerequisites.contains(prerequisite)) {

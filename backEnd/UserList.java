@@ -8,7 +8,7 @@ import java.util.ArrayList;
  */
 public class UserList {
     private static UserList userList; // Singleton instance of UserList
-    private ArrayList<User> users; // List to store all users
+    private ArrayList<User> users =new ArrayList<>(); // List to store all users
 
     private static ArrayList<Student>  students = new ArrayList<Student>();
     private static ArrayList<Advisor>  advisors = new ArrayList<Advisor>();
@@ -20,8 +20,8 @@ public class UserList {
      * Initializes the list of users.
      */
     private UserList() {
-        users = new ArrayList<>();
-        loadUsers();
+        //users = new ArrayList<>();
+        //loadUsers();
     }
 
     /**
@@ -35,13 +35,36 @@ public class UserList {
         return userList;
     }
 
+    
+    public void initializeAdminstrators() {
+        administrators = DataLoader.loadAdministrators();
+        if (administrators != null)
+            administrators.forEach(this::addUser);
+
+    }
+
+    public void initializeStudentsNoAdvisor() {
+        students = DataLoader.loadStudentsNoAdvisor();
+        if (students != null)
+            students.forEach(this::addUser);
+
+    }
+
+    public void initializeAdvisors() {
+        advisors = DataLoader.loadAdvisors();
+        if (advisors != null)
+            advisors.forEach(this::addUser);
+
+    }
+
     /**
      * Loads users from the data source into the users list.
      */
     private void loadUsers() {
-        students = DataLoader.getStudents();
-        advisors = DataLoader.getAdvisors();
-        administrators = DataLoader.getAdministrators();
+        
+        administrators = DataLoader.loadAdministrators();
+        //students = DataLoader.loadStudents();
+        advisors = DataLoader.loadAdvisors();
         
         if (students != null) students.forEach(this::addUser);
         if (advisors != null) advisors.forEach(this::addUser);
@@ -123,17 +146,23 @@ public class UserList {
         return false;
     }
 
-    public static ArrayList<Student> getStudents() {
+    public ArrayList<Student> getStudents() {
         return students;
     }
 
-    public static ArrayList<Advisor> getAdvisors() {
+    public ArrayList<Advisor> getAdvisors() {
         return advisors;
     }
 
-    public static ArrayList<Administrator> getAdministrators() {
+    public  ArrayList<Administrator> getAdministrators() {
         return administrators;
     }
+
+    public ArrayList<User> getUsers() {
+        return users;
+    }
+
+    
 
     
 }

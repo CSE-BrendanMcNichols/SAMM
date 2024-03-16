@@ -15,113 +15,8 @@ import java.util.UUID;
 
 public class DataLoader extends DataConstants {
 
-	public static ArrayList<Course> getCourses() {
-		ArrayList<Course> courses = getCoursesNoReq();
-		ArrayList<Requirement> requirements = getRequirements(courses);
-		courses = addReqs(courses, requirements);
-		requirements = getRequirements(courses);
-		courses = addReqs(courses, requirements);
-		return courses;
-	}
 
-	public static ArrayList<Requirement> getRequirements() {
-		ArrayList<Course> courses = getCoursesNoReq();
-		ArrayList<Requirement> requirements = getRequirements(courses);
-		courses = addReqs(courses, requirements);
-		requirements = getRequirements(courses);
-		return requirements;
-	}
-
-	public static ArrayList<Elective> getElectives() {
-		ArrayList<Course> courses = getCourses();
-		ArrayList<Elective> electives = getElective(courses);
-		return electives;
-	}
-
-	public static ArrayList<Major> getMajors() {
-		ArrayList<Course> courses = getCourses();
-		ArrayList<Elective> electives = getElectives();
-		ArrayList<Major> majors = getMajor(courses, electives);
-		return majors;
-	}
-
-	public static ArrayList<Student> getStudents() {
-		ArrayList<Course> courses = getCourses();
-		ArrayList<Elective> electives = getElectives();
-		ArrayList<Major> majors = getMajors();
-		ArrayList<Student> students = getStudentNoAdvisor(majors, courses, electives);
-		ArrayList<Advisor> advisors = getAdvisor(students);
-		students = addAdvisors(majors, courses, electives, students, advisors);
-		advisors = getAdvisor(students);
-		students = addAdvisors(majors, courses, electives, students, advisors);
-		return students;
-	}
-
-	public static ArrayList<Advisor> getAdvisors() {
-		ArrayList<Course> courses = getCourses();
-		ArrayList<Elective> electives = getElectives();
-		ArrayList<Major> majors = getMajors();
-		ArrayList<Student> students = getStudentNoAdvisor(majors, courses, electives);
-		ArrayList<Advisor> advisors = getAdvisor(students);
-		students = addAdvisors(majors, courses, electives, students, advisors);
-		advisors = getAdvisor(students);
-		return advisors;
-	}
-
-	public static ArrayList<Major> getMajor(ArrayList<Course> courses,
-			ArrayList<Elective> electives) {
-		ArrayList<Major> majors = new ArrayList<Major>();
-
-		try {
-			FileReader reader = new FileReader(MAJORS_FILE_NAME);
-			JSONParser parser = new JSONParser();
-			JSONArray majorsJSON = (JSONArray) new JSONParser().parse(reader);
-
-			for (int i = 0; i < majorsJSON.size(); i++) {
-				JSONObject majorJSON = (JSONObject) majorsJSON.get(i);
-				String major = (String) majorJSON.get(MAJOR);
-				UUID uuid = UUID.fromString((String) majorJSON.get(UUIDSTRING));
-				JSONArray coursesJSON = (JSONArray) majorJSON.get(COURSES);
-				ArrayList<Course> electiveCourses = new ArrayList<Course>();
-				for (int j = 0; j < coursesJSON.size(); j++) {
-					UUID courseUUID = UUID.fromString((String) coursesJSON.get(j));
-					if (Course.findCourse(courses, courseUUID)) {
-						electiveCourses.add(Course.getCourse(courses, courseUUID));
-					} else {
-						System.out.println("Missing course for Major " + major);
-					}
-				}
-				Elective majorElective = new Elective();
-				UUID electiveUuid = UUID.fromString((String) majorJSON.get(ELECTIVE_COURSES));
-				for (Elective elective : electives) {
-					if (electiveUuid.equals(elective.getUuid())) {
-						majorElective = elective;
-					}
-				}
-
-				JSONObject coreReqJSON = (JSONObject) majorJSON.get(COREREQ);
-				HashMap<RequirementType, Integer> coreReq = new HashMap<>();
-				for (Object key : coreReqJSON.keySet()) {
-					RequirementType coreReqName = RequirementType.StringToType(((String) key));
-					int coreReqValue =
-							Integer.parseInt(coreReqJSON.get(coreReqName.toString()).toString());
-					coreReq.put(coreReqName, coreReqValue);
-				}
-
-				majors.add(new Major(electiveCourses, coreReq, majorElective, major, uuid));
-			}
-
-			return majors;
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		return null;
-	}
-
-	public static ArrayList<Student> getStudentNoAdvisor(ArrayList<Major> majors,
-			ArrayList<Course> courses, ArrayList<Elective> electives) {
+	public static ArrayList<Student> loadStudentsNoAdvisor() {
 		ArrayList<Student> students = new ArrayList<Student>();
 
 
@@ -144,12 +39,14 @@ public class DataLoader extends DataConstants {
 				int credits = ((Long) studentJSON.get(CREDITS)).intValue();
 				double overallGrade = (double) studentJSON.get(OVERALLGRADE);
 				UUID majorUUID = UUID.fromString((String) studentJSON.get(MAJOR));
-				Major major = new Major("test");
-				if (Major.findMajor(majors, majorUUID)) {
-					major = Major.getMajor(majors, majorUUID);
+				Major major = null;
+				if (Cache.getInstance().findMajor(majorUUID)) {
+					major = Cache.getInstance().getMajor(majorUUID);
 				} else {
-					System.out.println("Missing Major");
+					System.out.println("Major Id: " + majorUUID + " not found in Major List");
 				}
+
+				
 				JSONArray notesJSON = (JSONArray) studentJSON.get(NOTES);
 				ArrayList<String> notes = new ArrayList<String>();
 				for (int j = 0; j < notesJSON.size(); j++) {
@@ -160,10 +57,10 @@ public class DataLoader extends DataConstants {
 				ArrayList<Course> currentCourses = new ArrayList<Course>();
 				for (int j = 0; j < coursesJSON.size(); j++) {
 					UUID courseUUID = UUID.fromString((String) coursesJSON.get(j));
-					if (Course.findCourse(courses, courseUUID)) {
-						currentCourses.add(Course.getCourse(courses, courseUUID));
+					if (Cache.getInstance().findCourse(courseUUID)) {
+						currentCourses.add(Cache.getInstance().getCourse(courseUUID));
 					} else {
-						System.out.println("Missing current course for Student " + username);
+						System.out.println("Course Id: " + courseUUID + " not found in Course List");
 					}
 				}
 				JSONObject completedClassesJSON = (JSONObject) studentJSON.get(COMPLETEDCOURSES);
@@ -171,13 +68,11 @@ public class DataLoader extends DataConstants {
 				for (Object key : completedClassesJSON.keySet()) {
 					String courseString = ((String) key);
 					UUID courseUUID = UUID.fromString(courseString);
-					Course course = new Course();
-					if (Course.findCourse(courses, courseUUID)) {
-						course = Course.getCourse(courses, majorUUID);
+					Course course = null;
+					if (Cache.getInstance().findCourse(courseUUID)) {
+						course = Cache.getInstance().getCourse(majorUUID);
 					} else {
-						System.out
-								.println("Missing completed course for Student adding dummy course"
-										+ username);
+						System.out.println("Course Id: " + courseUUID + " not found in Course List");
 					}
 					String grade = (String) (completedClassesJSON.get(courseString));
 					completedCourses.put(course, grade);
@@ -186,20 +81,20 @@ public class DataLoader extends DataConstants {
 				ArrayList<Elective> currentElectives = new ArrayList<Elective>();
 				for (int j = 0; j < electivesJSON.size(); j++) {
 					UUID electiveUUID = UUID.fromString((String) electivesJSON.get(j));
-					if (Elective.findElective(electives, electiveUUID)) {
-						currentElectives.add(Elective.getElective(electives, electiveUUID));
+					if (Cache.getInstance().findElective(electiveUUID)) {
+						currentElectives.add(Cache.getInstance().getElective(electiveUUID));
 					} else {
-						System.out.println("Missing current elective for Student " + username);
+						System.out.println("Course Id: " + electiveUUID + " not found in Elective List");
 					}
 				}
 				JSONArray completedElectivesJSON = (JSONArray) studentJSON.get(COMPLETEDELECTIVES);
 				ArrayList<Elective> completedElectives = new ArrayList<Elective>();
 				for (int j = 0; j < electivesJSON.size(); j++) {
 					UUID electiveUUID = UUID.fromString((String) completedElectivesJSON.get(j));
-					if (Elective.findElective(electives, electiveUUID)) {
-						currentElectives.add(Elective.getElective(electives, electiveUUID));
+					if (Cache.getInstance().findElective(electiveUUID)) {
+						currentElectives.add(Cache.getInstance().getElective(electiveUUID));
 					} else {
-						System.out.println("Missing ccompleted elective for Student " + username);
+						System.out.println("Course Id: " + electiveUUID + " not found in Elective List");
 					}
 				}
 
@@ -207,6 +102,9 @@ public class DataLoader extends DataConstants {
 						gradeYear, major, overallGrade, credits, completedCourses, currentCourses,
 						notes, uuid, currentElectives, completedElectives, applicationArea));
 			}
+
+			System.out.println("*** Successfully Loaded Students");
+
 
 			return students;
 
@@ -217,180 +115,8 @@ public class DataLoader extends DataConstants {
 		return null;
 	}
 
-	private static ArrayList<Student> addAdvisors(ArrayList<Major> majors,
-			ArrayList<Course> courses, ArrayList<Elective> electives, ArrayList<Student> students,
-			ArrayList<Advisor> advisors) {
-		ArrayList<Student> newStudents = new ArrayList<Student>();
 
-
-		try {
-			FileReader reader = new FileReader(STUDENT_FILE_NAME);
-			JSONParser parser = new JSONParser();
-			JSONArray studentsJSON = (JSONArray) new JSONParser().parse(reader);
-
-			for (int i = 0; i < studentsJSON.size(); i++) {
-				JSONObject studentJSON = (JSONObject) studentsJSON.get(i);
-				String username = (String) studentJSON.get(USERNAME);
-				String applicationArea = (String) studentJSON.get(APPLICATIONAREA);
-				String firstName = (String) studentJSON.get(FIRST_NAME);
-				String lastName = (String) studentJSON.get(LAST_NAME);
-				String password = (String) studentJSON.get(PASSWORD);
-				String email = (String) studentJSON.get(EMAIL);
-				String uscid = (String) studentJSON.get(USCID);
-				UUID uuid = UUID.fromString((String) studentJSON.get(UUIDSTRING));
-				Year gradeYear = Year.StringToYear((String) studentJSON.get(GRADEYEAR));
-				int credits = ((Long) studentJSON.get(CREDITS)).intValue();
-				double overallGrade = (double) studentJSON.get(OVERALLGRADE);
-				UUID majorUUID = UUID.fromString((String) studentJSON.get(MAJOR));
-				Major major = new Major("test");
-				if (Major.findMajor(majors, majorUUID)) {
-					major = Major.getMajor(majors, majorUUID);
-				} else {
-					System.out.println("Missing Major for"+ username);
-				}
-				JSONArray notesJSON = (JSONArray) studentJSON.get(NOTES);
-				ArrayList<String> notes = new ArrayList<String>();
-				for (int j = 0; j < notesJSON.size(); j++) {
-					String note = (String) notesJSON.get(j);
-					notes.add(note);
-				}
-				JSONArray coursesJSON = (JSONArray) studentJSON.get(CURRENTCOURSES);
-				ArrayList<Course> currentCourses = new ArrayList<Course>();
-				for (int j = 0; j < coursesJSON.size(); j++) {
-					UUID courseUUID = UUID.fromString((String) coursesJSON.get(j));
-					if (Course.findCourse(courses, courseUUID)) {
-						currentCourses.add(Course.getCourse(courses, courseUUID));
-					} else {
-						System.out.println("Missing current course for Student " + username);
-					}
-				}
-				JSONObject completedClassesJSON = (JSONObject) studentJSON.get(COMPLETEDCOURSES);
-				HashMap<Course, String> completedCourses = new HashMap<>();
-				for (Object key : completedClassesJSON.keySet()) {
-					String courseString = ((String) key);
-					UUID courseUUID = UUID.fromString(courseString);
-					Course course = new Course();
-					if (Course.findCourse(courses, courseUUID)) {
-						course = Course.getCourse(courses, majorUUID);
-					} else {
-						System.out
-								.println("Missing completed course for Student adding dummy course"
-										+ username);
-					}
-					String grade = (String) (completedClassesJSON.get(courseString));
-					completedCourses.put(course, grade);
-				}
-				JSONArray electivesJSON = (JSONArray) studentJSON.get(CURRENTELECTIVES);
-				ArrayList<Elective> currentElectives = new ArrayList<Elective>();
-				for (int j = 0; j < electivesJSON.size(); j++) {
-					UUID electiveUUID = UUID.fromString((String) electivesJSON.get(j));
-					if (Elective.findElective(electives, electiveUUID)) {
-						currentElectives.add(Elective.getElective(electives, electiveUUID));
-					} else {
-						System.out.println("Missing current elective for Student " + username);
-					}
-				}
-				JSONArray completedElectivesJSON = (JSONArray) studentJSON.get(COMPLETEDELECTIVES);
-				ArrayList<Elective> completedElectives = new ArrayList<Elective>();
-				for (int j = 0; j < electivesJSON.size(); j++) {
-					UUID electiveUUID = UUID.fromString((String) completedElectivesJSON.get(j));
-					if (Elective.findElective(electives, electiveUUID)) {
-						currentElectives.add(Elective.getElective(electives, electiveUUID));
-					} else {
-						System.out.println("Missing ccompleted elective for Student " + username);
-					}
-				}
-				UUID advisorUUID = UUID.fromString((String) studentJSON.get(MAJOR));
-				Advisor advisor = new Advisor();
-				if (Advisor.findAdvisor(advisors, advisorUUID)) {
-					advisor = Advisor.getAdvisor(advisors, advisorUUID);
-				} else {
-					//System.out.println("Missing Advisor for "+ username);
-				}
-
-
-				newStudents.add(new Student(firstName, lastName, uscid, email, username, password,
-						gradeYear, advisor, major, overallGrade, credits, completedCourses, currentCourses,
-						notes, uuid, currentElectives, completedElectives, applicationArea));
-			}
-
-			return newStudents;
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		return null;
-	}
-
-
-	public static ArrayList<Elective> getElective(ArrayList<Course> courses) {
-		ArrayList<Elective> electives = new ArrayList<Elective>();
-
-		try {
-			FileReader reader = new FileReader(ELECTIVE_FILE_NAME);
-			JSONParser parser = new JSONParser();
-			JSONArray electivesJSON = (JSONArray) new JSONParser().parse(reader);
-
-			for (int i = 0; i < electivesJSON.size(); i++) {
-				JSONObject electiveJSON = (JSONObject) electivesJSON.get(i);
-				String electiveName = (String) electiveJSON.get(ELECTIVENAME);
-				int hours = ((Long) electiveJSON.get(HOURS)).intValue();
-				UUID uuid = UUID.fromString((String) electiveJSON.get(UUIDSTRING));
-				JSONArray coursesJSON = (JSONArray) electiveJSON.get(COURSES);
-				ArrayList<Course> electiveCourses = new ArrayList<Course>();
-				for (int j = 0; j < coursesJSON.size(); j++) {
-					UUID courseUUID = UUID.fromString((String) coursesJSON.get(j));
-					if (Course.findCourse(courses, courseUUID)) {
-						electiveCourses.add(Course.getCourse(courses, courseUUID));
-					} else {
-						//System.out.println("Missing course for Elective " + electiveName);
-					}
-				}
-				electives.add(new Elective(electiveCourses, electiveName, hours, uuid));
-			}
-
-			return electives;
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		return null;
-	}
-
-	public static ArrayList<Administrator> getAdministrators() {
-		ArrayList<Administrator> administrators = new ArrayList<Administrator>();
-
-
-		try {
-			FileReader reader = new FileReader(ADMINISTRATOR_FILE_NAME);
-			JSONParser parser = new JSONParser();
-			JSONArray administratorsJSON = (JSONArray) new JSONParser().parse(reader);
-
-			for (int i = 0; i < administratorsJSON.size(); i++) {
-				JSONObject administratorJSON = (JSONObject) administratorsJSON.get(i);
-				String firstName = (String) administratorJSON.get(FIRST_NAME);
-				String lastName = (String) administratorJSON.get(LAST_NAME);
-				String username = (String) administratorJSON.get(USERNAME);
-				String password = (String) administratorJSON.get(PASSWORD);
-				String email = (String) administratorJSON.get(EMAIL);
-				String uscid = (String) administratorJSON.get(USCID);
-				UUID uuid = UUID.fromString((String) administratorJSON.get(UUIDSTRING));
-				administrators.add(new Administrator(firstName, lastName, uscid, email, username,
-						password, uuid));
-			}
-
-			return administrators;
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		return null;
-	}
-
-	public static ArrayList<Advisor> getAdvisor(ArrayList<Student> students) {
+	public static ArrayList<Advisor> loadAdvisors() {
 		ArrayList<Advisor> advisors = new ArrayList<Advisor>();
 
 
@@ -412,20 +138,21 @@ public class DataLoader extends DataConstants {
 				ArrayList<Student> assignedStudents = new ArrayList<Student>();
 				for (int j = 0; j < studentsJSON.size(); j++) {
 					UUID studentUUID = UUID.fromString((String) studentsJSON.get(j));
-					if (Student.findStudent(students, studentUUID)) {
-						assignedStudents.add(Student.getStudent(students, studentUUID));
+					if (Cache.getInstance().findStudent(studentUUID)) {
+						assignedStudents.add(Cache.getInstance().getStudent(studentUUID));
 					} else {
-						//System.out.println("Missing student for Advisor " + username);
+						System.out.println("Warning: While loading Advisor for Student record, Student Id: " + studentUUID + " from is not in the Student List.");
 					}
 				}
-
-
 
 				advisors.add(new Advisor(firstName, lastName, username, password, email, uscid,
 						assignedStudents, uuid));
 			}
+			System.out.println("*** Successfully Loaded Advisors");
+
 
 			return advisors;
+
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -434,14 +161,151 @@ public class DataLoader extends DataConstants {
 		return null;
 	}
 
-	public static ArrayList<Course> getCoursesNoReq() {
-		ArrayList<Course> courses = new ArrayList<Course>();
+
+	public static ArrayList<Administrator> loadAdministrators() {
+
+		
+		ArrayList<Administrator> administrators = new ArrayList<Administrator>();
 
 
 		try {
+			FileReader reader = new FileReader(ADMINISTRATOR_FILE_NAME);
+			JSONParser parser = new JSONParser();
+			JSONArray administratorsJSON = (JSONArray)  parser.parse(reader);
+
+			for (int i = 0; i < administratorsJSON.size(); i++) {
+				JSONObject administratorJSON = (JSONObject) administratorsJSON.get(i);
+				String firstName = (String) administratorJSON.get(FIRST_NAME);
+				String lastName = (String) administratorJSON.get(LAST_NAME);
+				String username = (String) administratorJSON.get(USERNAME);
+				String password = (String) administratorJSON.get(PASSWORD);
+				String email = (String) administratorJSON.get(EMAIL);
+				String uscid = (String) administratorJSON.get(USCID);
+				UUID uuid = UUID.fromString((String) administratorJSON.get(UUIDSTRING));
+				administrators.add(new Administrator(firstName, lastName, uscid, email, username,
+						password, uuid));
+			}
+			System.out.println("*** Successfully Loaded Administrators");
+
+
+			return administrators;
+
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	
+	
+
+	public static void loadStudentsAdvisor() {
+
+
+		try {
+			FileReader reader = new FileReader(STUDENT_FILE_NAME);
+			JSONParser parser = new JSONParser();
+			JSONArray studentsJSON = (JSONArray) parser.parse(reader);
+
+			for (int i = 0; i < studentsJSON.size(); i++) {
+				JSONObject studentJSON = (JSONObject) studentsJSON.get(i);
+				UUID studentUUID = UUID.fromString((String) studentJSON.get(UUIDSTRING));
+				UUID advisorUUID = UUID.fromString((String) studentJSON.get(ADVISOR));
+				Advisor advisor = null;
+				if (Cache.getInstance().findAdvisor(advisorUUID)) {
+					advisor = Cache.getInstance().getAdvisor(advisorUUID);
+				} else {
+					System.out.println("Warning: While loading Advisor for Student record, Advisor Id: " + advisorUUID + " is not in the Advisor List.");
+				}
+
+				Student student = null;
+				if (Cache.getInstance().findStudent(studentUUID)) {
+					student = Cache.getInstance().getStudent(studentUUID);
+					//update the student's Advisor. It will update the central instance of Student in Cache
+					student.setAdvisor(advisor);
+				} else {
+					System.out.println("Warning: While loading Advisor for Student record, Student Id: " + studentUUID + " is not in the student List.");
+				}			
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	
+	public static void loadCoursesWithRequirements() {
+		try {
 			FileReader reader = new FileReader(COURSE_FILE_NAME);
 			JSONParser parser = new JSONParser();
-			JSONArray coursesJSON = (JSONArray) new JSONParser().parse(reader);
+			JSONArray coursesJSON = (JSONArray) parser.parse(reader);
+
+			for (int i = 0; i < coursesJSON.size(); i++) {
+				JSONObject courseJSON = (JSONObject) coursesJSON.get(i);
+				UUID courseUuid = UUID.fromString((String) courseJSON.get(UUIDSTRING));
+				Course course = null;
+
+				// read prerequisites
+				JSONArray prereqsJSON = (JSONArray) courseJSON.get(PREREQUISITES);
+				ArrayList<Requirement> prerequisites = new ArrayList<Requirement>();
+				for (int j = 0; j < prereqsJSON.size(); j++) {
+					UUID reqUUID = UUID.fromString((String) prereqsJSON.get(j));
+					if (Cache.getInstance().findRequirement(reqUUID)) {
+						prerequisites.add(Cache.getInstance().getRequirement(reqUUID));
+					} else {
+						System.out.println("Warning: While loading Requirment for Course record, Requirement Id: " + reqUUID + " is not in the Requirement List.");
+					}
+				}
+				//System.out.println("updating Course Id: " + courseUuid + " with pre and co requisites");
+
+
+				// read corequisites
+				JSONArray coreqsJSON = (JSONArray) courseJSON.get(COREQUISITES);
+				ArrayList<Requirement> corequisites = new ArrayList<Requirement>();
+				for (int j = 0; j < coreqsJSON.size(); j++) {
+					UUID reqUUID = UUID.fromString((String) coreqsJSON.get(j));
+					if (Cache.getInstance().findRequirement(reqUUID)) {
+						corequisites.add(Cache.getInstance().getRequirement(reqUUID));
+					} else {
+						System.out.println("Warning: While loading Requirement for Course record, Requirement Id: " + reqUUID + " is not in the Requirement List.");
+					}
+				}
+				//System.out.println("updating Course Id: " + courseUuid + " with co requisites" + "\n" );
+
+
+				// update course with Pre and Co Requisites
+				// *This should update the central Cache.getInstance() Course References.*
+				if (Cache.getInstance().findCourse(courseUuid)) {
+					//System.out.println("updating Course Id: " + courseUuid + " with pre and co requisites"+ prerequisites + "\n" + corequisites);
+
+					course = Cache.getInstance().getCourse(courseUuid);
+					course.setPrerequisites(prerequisites);
+					course.setCorequisites(corequisites);
+				} else {
+					System.out.println("Warning: While loading Requirement for course record, Course Id: " + courseUuid + " is not in the Course List.");
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		System.out.println("*** Successfully Loaded Courses with Requirements");
+
+	}
+
+	/**
+	 * Load Courses from json file without requirements
+	 * 
+	 * @return
+	 */
+	public static ArrayList<Course> loadCoursesMinusRequirements() {
+		System.out.println("*** Loading Courses without Requirements");
+
+		ArrayList<Course> courses = new ArrayList<Course>();
+		try {
+			FileReader reader = new FileReader(COURSE_FILE_NAME);
+			JSONParser parser = new JSONParser();
+			JSONArray coursesJSON = (JSONArray) parser.parse(reader);
 
 			for (int i = 0; i < coursesJSON.size(); i++) {
 				JSONObject courseJSON = (JSONObject) coursesJSON.get(i);
@@ -456,13 +320,13 @@ public class DataLoader extends DataConstants {
 				String courseDescription = (String) courseJSON.get(COURSEDESCRIPTION);
 				int courseHours = ((Long) courseJSON.get(COURSEHOURS)).intValue();
 				char minGrade = ((String) courseJSON.get(MINGRADE)).charAt(0);
-				CourseState courseState =
-						CourseState.StringToCourseState((String) courseJSON.get(COURSESTATUS));
+				CourseState courseState = CourseState.StringToCourseState((String) courseJSON.get(COURSESTATUS));
 				UUID uuid = UUID.fromString((String) courseJSON.get(UUIDSTRING));
 
-				courses.add(new Course(courseName, courseSemester, courseNumber, courseDescription,
-						courseHours, minGrade, courseState, uuid));
+				courses.add(new Course(courseName, courseNumber, courseSemester,
+						courseDescription, courseHours, minGrade, courseState, uuid));
 			}
+			System.out.println("*** Successfully Loaded Courses without Requirements");
 
 			return courses;
 
@@ -473,83 +337,39 @@ public class DataLoader extends DataConstants {
 		return null;
 	}
 
-	public static ArrayList<Course> addReqs(ArrayList<Course> courses,
-			ArrayList<Requirement> requirements) {
-
-		try {
-			FileReader reader = new FileReader(COURSE_FILE_NAME);
-			JSONParser parser = new JSONParser();
-			JSONArray coursesJSON = (JSONArray) new JSONParser().parse(reader);
-
-			for (int i = 0; i < coursesJSON.size(); i++) {
-				JSONObject courseJSON = (JSONObject) coursesJSON.get(i);
-
-				JSONArray prereqsJSON = (JSONArray) courseJSON.get(PREREQUISITES);
-				ArrayList<Requirement> reqCourses = new ArrayList<Requirement>();
-				for (int j = 0; j < prereqsJSON.size(); j++) {
-					UUID courseUUID = UUID.fromString((String) prereqsJSON.get(j));
-					if (Requirement.findReq(requirements, courseUUID)) {
-						reqCourses.add(Requirement.getReq(requirements, courseUUID));
-					} else {
-						//System.out.println("Missing Req");
-					}
-				}
-
-				JSONArray coreqsJSON = (JSONArray) courseJSON.get(COREQUISITES);
-				ArrayList<Requirement> coreqCourses = new ArrayList<Requirement>();
-				for (int j = 0; j < coreqsJSON.size(); j++) {
-					UUID courseUUID = UUID.fromString((String) coreqsJSON.get(j));
-					if (Requirement.findReq(requirements, courseUUID)) {
-						coreqCourses.add(Requirement.getReq(requirements, courseUUID));
-					} else {
-						//System.out.println("Missing Req");
-					}
-				}
-
-				for (Requirement requirement : reqCourses) {
-					courses.get(i).addPrerequisite(requirement);
-				}
-
-				for (Requirement requirement : coreqCourses) {
-					courses.get(i).addPrerequisite(requirement);
-				}
-			}
-
-			return courses;
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return courses;
-	}
-
-	public static ArrayList<Requirement> getRequirements(ArrayList<Course> courses) {
+	/**
+	 * Load Requirements from database (json file)
+	 * 
+	 * @return
+	 */
+	public static ArrayList<Requirement> loadRequirements() {
 		ArrayList<Requirement> requirements = new ArrayList<Requirement>();
 
 		try {
 			FileReader reader = new FileReader(REQUIREMENT_FILE_NAME);
 			JSONParser parser = new JSONParser();
-			JSONArray requirementsJSON = (JSONArray) new JSONParser().parse(reader);
+			JSONArray requirementsJSON = (JSONArray) parser.parse(reader);
 
 			for (int i = 0; i < requirementsJSON.size(); i++) {
 				JSONObject requirementJSON = (JSONObject) requirementsJSON.get(i);
 				Boolean eitherOr = (Boolean) requirementJSON.get(EITHEROR);
-				RequirementType type =
-						RequirementType.StringToType((String) requirementJSON.get(TYPETEST));
+				RequirementType type = RequirementType.StringToType((String) requirementJSON.get(TYPETEST));
 				String requirementFor = (String) requirementJSON.get(REQUIREMENTFOR);
 				UUID uuid = UUID.fromString((String) requirementJSON.get(UUIDSTRING));
 				JSONArray coursesJSON = (JSONArray) requirementJSON.get(COURSES);
 				ArrayList<Course> reqCourses = new ArrayList<Course>();
 				for (int j = 0; j < coursesJSON.size(); j++) {
 					UUID courseUUID = UUID.fromString((String) coursesJSON.get(j));
-					if (Course.findCourse(courses, courseUUID)) {
-						reqCourses.add(Course.getCourse(courses, courseUUID));
+					if (Cache.getInstance().findCourse(courseUUID)) {
+						reqCourses.add(Cache.getInstance().getCourse(courseUUID));
 					} else {
-						//System.out.println("Missing course for requirement " + requirementFor);
+						System.out.println("Warning: While loading Requirement record, Course Id: " + courseUUID + " is not in the Course List.");
 					}
 				}
 				requirements.add(new Requirement(reqCourses, eitherOr, type, requirementFor, uuid));
 			}
+
+			System.out.println("*** Successfully Loaded Requirements");
 
 			return requirements;
 
@@ -559,5 +379,111 @@ public class DataLoader extends DataConstants {
 
 		return null;
 	}
+
+	/**
+	 * Load Electives from database (json file)
+	 * 
+	 * @return
+	 */
+
+	public static ArrayList<Elective> loadElectives() {
+
+		ArrayList<Elective> electives = new ArrayList<Elective>();
+		try {
+			FileReader reader = new FileReader(ELECTIVE_FILE_NAME);
+			JSONParser parser = new JSONParser();
+			JSONArray electivesJSON = (JSONArray) parser.parse(reader);
+
+			for (int i = 0; i < electivesJSON.size(); i++) {
+				JSONObject electiveJSON = (JSONObject) electivesJSON.get(i);
+				String electiveName = (String) electiveJSON.get(ELECTIVENAME);
+				int hours = ((Long) electiveJSON.get(HOURS)).intValue();
+				UUID uuid = UUID.fromString((String) electiveJSON.get(UUIDSTRING));
+				JSONArray coursesJSON = (JSONArray) electiveJSON.get(COURSES);
+				ArrayList<Course> courses = new ArrayList<Course>();
+				for (int j = 0; j < coursesJSON.size(); j++) {
+					UUID courseUUID = UUID.fromString((String) coursesJSON.get(j));
+					if (Cache.getInstance().findCourse(courseUUID)) {
+						courses.add(Cache.getInstance().getCourse(courseUUID));
+					} else {
+						System.out.println("Warning: While loading Elective record, Course Id: " + courseUUID + " is not in the Course List.");
+					}
+				}
+				electives.add(new Elective(courses, electiveName, hours, uuid));
+			}
+			System.out.println("*** Successfully Loaded Electives");
+
+			return electives;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return null;
+	}
+
+	/**
+	 * This method loads the Majors from database(json file)
+	 * 
+	 * @return
+	 */
+	public static ArrayList<Major> loadMajors() {
+
+		ArrayList<Major> majors = new ArrayList<Major>();
+		try {
+			FileReader reader = new FileReader(MAJORS_FILE_NAME);
+			JSONParser parser = new JSONParser();
+			JSONArray majorsJSON = (JSONArray) parser.parse(reader);
+
+			for (int i = 0; i < majorsJSON.size(); i++) {
+				JSONObject majorJSON = (JSONObject) majorsJSON.get(i);
+				// read "major"
+				String major = (String) majorJSON.get(MAJOR);
+				// read "uuid"
+				UUID uuid = UUID.fromString((String) majorJSON.get(UUIDSTRING));
+				// read courses UUID array
+				JSONArray coursesJSON = (JSONArray) majorJSON.get(COURSES);
+				ArrayList<Course> courses = new ArrayList<Course>();
+				for (int j = 0; j < coursesJSON.size(); j++) {
+					UUID courseUUID = UUID.fromString((String) coursesJSON.get(j));
+					if (Cache.getInstance().findCourse(courseUUID)) {
+						courses.add(Cache.getInstance().getCourse(courseUUID));
+					} else {
+						System.out.println("Warning: While loading Major record, Course Id: " + courseUUID + " is not in the Course List.");
+					}
+				}
+
+				// read elective
+				Elective majorElective = new Elective();
+				UUID electiveUuid = UUID.fromString((String) majorJSON.get(ELECTIVE_COURSES));
+				if (Cache.getInstance().findElective(electiveUuid)) {
+					majorElective = Cache.getInstance().getElective(electiveUuid);
+				} else {
+					System.out.println("Warning: While loading Major3 record, Elective Id: " + electiveUuid + " is not in the Elective List.");
+				}
+
+				// read core req
+				JSONObject coreReqJSON = (JSONObject) majorJSON.get(COREREQ);
+				HashMap<RequirementType, Integer> coreReq = new HashMap<>();
+				for (Object key : coreReqJSON.keySet()) {
+					RequirementType coreReqName = RequirementType.StringToType(((String) key));
+					int coreReqValue = Integer.parseInt(coreReqJSON.get(coreReqName.toString()).toString());
+					coreReq.put(coreReqName, coreReqValue);
+				}
+
+				majors.add(new Major(courses, coreReq, majorElective, major, uuid));
+			}
+
+			System.out.println("*** Successfully Loaded Majors");
+
+			return majors;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return null;
+	}
+
 }
 // Made no changes

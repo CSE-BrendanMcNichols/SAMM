@@ -67,4 +67,12 @@ public class Elective {
         }
         return null;
     }
+
+    @Override
+    public String toString() {
+        return "Elective [courses=" + courses + ", electiveName=" + electiveName + ", hours=" + hours + ", uuid=" + uuid
+                + "]";
+    }
+
+    
 }

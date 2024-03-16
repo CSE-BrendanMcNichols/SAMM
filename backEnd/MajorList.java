@@ -21,7 +21,7 @@ public class MajorList {
      * It loads the majors using DataLoader
      */
     private MajorList() {
-        majors = DataLoader.getMajors();
+        majors = DataLoader.loadMajors();
         // just safe side
         if (majors == null) {
             majors = new ArrayList<Major>();
@@ -86,6 +86,13 @@ public class MajorList {
             majors.set(mIndex, major);
         }
 
+    }
+
+
+    
+
+    public ArrayList<Major> getMajors() {
+        return majors;
     }
 
     /**

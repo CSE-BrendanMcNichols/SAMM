@@ -308,4 +308,11 @@ public class Advisor extends User {
         }
         return null;
     }
+
+    @Override
+    public String toString() {
+        return "Advisor [UUID:" + uuid + "\n"+  super.toString() + "]";
+    }
+
+    
 }

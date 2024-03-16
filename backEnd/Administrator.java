@@ -32,4 +32,11 @@ public class Administrator extends User {
         
         return false;
     }
+    @Override
+    public String toString() {
+        return super.toString();
+    }
+
+
+    
 }

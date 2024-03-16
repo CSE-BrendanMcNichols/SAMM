@@ -147,4 +147,14 @@ public abstract class User {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    @Override
+    public String toString() {
+        return "User [type=" + type + ", uuid=" + uuid + ", uscid=" + uscid + ", firstName=" + firstName + ", lastName="
+                + lastName + ", username=" + username + ", email=" + email + ", password=" + password + "]";
+    }
+
+    
+
+
 }

@@ -30,8 +30,18 @@ public class Requirement {
         }
     }
 
+    
+
+
+
+    @Override
     public String toString() {
-        return "description";
+        return "Requirement [eitherOr=" + eitherOr + ", requirementFor=" + requirementFor + ", type=" + type
+                 + ", uuid=" + uuid + "]";
+    }
+
+    public String toString1() {
+        return "Requirement\n Uuid=" + uuid + "\n" + "Courses=" + courses +"]";
     }
 
     public RequirementType getType() {

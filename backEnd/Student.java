@@ -20,6 +20,13 @@ Added addElective and removeElective
 Added updateElectivesCompleted
 */
  public class Student extends User {
+    @Override
+    public String toString() {
+        return "Student [gradeYear=" + gradeYear + ", advisor=" + advisor + ", major=" + major + ", overallGrade="
+                + overallGrade + ", credits=" + credits + ", completedCourses=" + completedCourses + ", currentCourses="
+                + currentCourses + ", notes=" + notes + ", applicationArea=" + applicationArea + ", currentElectives="
+                + currentElectives + ", completedElectives=" + completedElectives + ", uuid=" + uuid + "]";
+    }
     private Year gradeYear;
     private Advisor advisor;
     private Major major;

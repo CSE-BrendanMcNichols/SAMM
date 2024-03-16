@@ -121,8 +121,10 @@ public class Major {
         System.out.println("addElective called");
     }
 
+    @Override
     public String toString() {
-        return "toString called. String: " + major;
+        return "Major [courses=" + courses + ", coreReq=" + coreReq + ", electiveCourses=" + electiveCourses
+                + ", major=" + major + ", uuid=" + uuid + "]";
     }
 
     public void printRoadmap() {
@@ -160,4 +162,6 @@ public class Major {
         }
         return null;
     }
+
+    
 }
