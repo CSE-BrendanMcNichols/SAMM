@@ -17,14 +17,15 @@ public abstract class User {
      * This constructor generates a new unique UUID for the user.
      *
      * @param firstName User's first name.
-     * @param lastName User's last name.
-     * @param uscid User's University ID.
-     * @param email User's email address.
-     * @param username User's username.
-     * @param password User's password.
-     * @param type User's type (STUDENT, ADVISOR, etc.).
+     * @param lastName  User's last name.
+     * @param uscid     User's University ID.
+     * @param email     User's email address.
+     * @param username  User's username.
+     * @param password  User's password.
+     * @param type      User's type (STUDENT, ADVISOR, etc.).
      */
-    public User(String firstName, String lastName, String uscid, String email, String username, String password, UserType type) {
+    public User(String firstName, String lastName, String uscid, String email, String username, String password,
+            UserType type) {
         this.uuid = UUID.randomUUID(); // Automatically generates a unique identifier for a new user
         this.firstName = firstName;
         this.lastName = lastName;
@@ -35,21 +36,34 @@ public abstract class User {
         this.type = type;
     }
 
+    public User() {
+        this.uuid = UUID.randomUUID();
+        this.firstName = "null";
+        this.lastName = "null";
+        this.uscid = "null";
+        this.email = "null";
+        this.username = "null";
+        this.password = "null";
+        this.type = UserType.ADMINISTRATOR;
+    }
+
     /**
      * Constructor for User importing data from the database.
-     * This constructor is used when user data is being loaded from an external source
+     * This constructor is used when user data is being loaded from an external
+     * source
      * where the UUID is already defined.
      *
-     * @param uuid User's UUID.
+     * @param uuid      User's UUID.
      * @param firstName User's first name.
-     * @param lastName User's last name.
-     * @param uscid User's University ID.
-     * @param email User's email address.
-     * @param username User's username.
-     * @param password User's password.
-     * @param type User's type (STUDENT, ADVISOR, etc.).
+     * @param lastName  User's last name.
+     * @param uscid     User's University ID.
+     * @param email     User's email address.
+     * @param username  User's username.
+     * @param password  User's password.
+     * @param type      User's type (STUDENT, ADVISOR, etc.).
      */
-    public User(UUID uuid, String firstName, String lastName, String uscid, String email, String username, String password, UserType type) {
+    public User(UUID uuid, String firstName, String lastName, String uscid, String email, String username,
+            String password, UserType type) {
         this.uuid = uuid; // Uses the provided UUID, for existing users loaded from a database
         this.firstName = firstName;
         this.lastName = lastName;
@@ -69,7 +83,7 @@ public abstract class User {
     }
 
     // Getter methods
-     public UserType getType() {
+    public UserType getType() {
         return type;
     }
 
@@ -133,4 +147,14 @@ public abstract class User {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    @Override
+    public String toString() {
+        return "User [type=" + type + ", uuid=" + uuid + ", uscid=" + uscid + ", firstName=" + firstName + ", lastName="
+                + lastName + ", username=" + username + ", email=" + email + ", password=" + password + "]";
+    }
+
+    
+
+
 }

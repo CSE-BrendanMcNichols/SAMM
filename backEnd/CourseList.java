@@ -11,7 +11,7 @@ public class CourseList {
     private static CourseList courseList;
 
     private CourseList() {
-        courses = DataLoader.getCourses();
+        courses = DataLoader.loadCoursesMinusRequirements();
         coursesByUuid = new HashMap<>();
         uuidsBySubjectAndNumber = new HashMap<>();
     }
@@ -27,7 +27,12 @@ public class CourseList {
         return courses;
     }
 
-    public Course getCourse(UUID uuid) {
+
+    public void setCourses(ArrayList<Course> courses) {
+        this.courses = courses;
+    }
+
+    public Course getCoursesByUuid(UUID uuid) {
         return coursesByUuid.get(uuid);
     }
 
@@ -71,5 +76,23 @@ public class CourseList {
         uuidsBySubjectAndNumber.put(course.getCourseSubject() + " " + course.getCourseNumber(), course.getUuid());
 
         return true;
+    }
+
+    public Boolean findCourse(UUID uuid) {
+        for (Course course : courses) {
+            if (course.getUuid().equals(uuid)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Course getCourse(UUID uuid) {
+        for (Course course : courses) {
+            if (course.getUuid().equals(uuid)) {
+                return course;
+            }
+        }
+        return null;
     }
 }

@@ -1,40 +1,66 @@
 package backEnd;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ApplicationFacade {
     private UserList userList = UserList.getInstance();
+    private static ApplicationFacade applicationFacade;
 
-    public boolean registerUser(UserType type, String firstName, String lastName, String uscid, String email, String username, String password) {
+    private ApplicationFacade() {
+        Cache.getInstance().initializeCourses();
+        Cache.getInstance().initializeRequirements();
+        //initialize with Course Requirements
+        Cache.getInstance().initializeCourseRequirements();
+
+        Cache.getInstance().initializeApplicationAreas();
+        /*
+        Cache.getInstance().initializeElectives();
+        Cache.getInstance().initializeMajors();
+        
+        Cache.getInstance().initializeAdminstrators();
+        Cache.getInstance().initializeStudentsNoAdvisor();
+        Cache.getInstance().initializeAdvisors();
+        // initialize with Advisor
+        Cache.getInstance().initializeStudentsAdvisor();
+        */
+        
+    }
+
+    public static ApplicationFacade getInstance() {
+        if (applicationFacade == null) {
+            applicationFacade = new ApplicationFacade();
+        }
+        return applicationFacade;
+    }
+
+    public boolean registerUser(UserType type, String firstName, String lastName, String uscid, String email,
+            String username, String password) {
+        
+        System.out.println("type:" + type);
+
         switch (type) {
             case STUDENT:
-                Student student = new Student(firstName, lastName, uscid, email, username, password);
-                userList.addUser(student);
-                ArrayList<Student> students = DataLoader.getStudents();
-                if (students == null) students = new ArrayList<>();
-                students.add(student);
-                new DataWriter().saveStudents(students);
+                Student student = new Student(firstName, lastName, uscid, email,  username, password, 
+                Year.Freshman, null, null, 0, 0, null, null, null,null,null,"");
+
+                userList.addStudent(student);
+                DataWriter.saveStudents(userList.getStudents());
                 break;
             case ADVISOR:
                 Advisor advisor = new Advisor(firstName, lastName, uscid, email, username, password);
-                userList.addUser(advisor);
-                ArrayList<Advisor> advisors = DataLoader.getAdvisors();
-                if (advisors == null) advisors = new ArrayList<>();
-                advisors.add(advisor);
-                new DataWriter().saveAdvisors(advisors);
+                userList.addAdvisor(advisor);
+                DataWriter.saveAdvisors(userList.getAdvisors());
                 break;
             case ADMINISTRATOR:
                 Administrator administrator = new Administrator(firstName, lastName, uscid, email, username, password);
-                userList.addUser(administrator);
-                ArrayList<Administrator> administrators = DataLoader.getAdministrators();
-                if (administrators == null) administrators = new ArrayList<>();
-                administrators.add(administrator);
-                new DataWriter().saveAdministrators(administrators);
+                userList.addAdministrator(administrator);
+                DataWriter.saveAdministrators(userList.getAdministrators());
                 break;
             default:
                 return false;
-        } 
-        userList.loadUsers();
+        }
+        // userList.loadUsers();
         return true;
     }
 
@@ -54,20 +80,18 @@ public class ApplicationFacade {
     }
 
     public void accessUserActions() {
-        //make a boolean that is quit and in the logout case you set quit to true;
-        //The printing should be all in the UI and the 
+        // make a boolean that is quit and in the logout case you set quit to true;
+        // The printing should be all in the UI and the
         boolean exit = false;
         System.out.println("These are your user Actions");
         while (!exit) {
-            if(user.getRole() == "Student"){
-                //swtich cases with all student actions
-            }
-            else if(user.getRole() == "Advisor") {
-                //swtich case with all advisor actions
-            }
-            else if(user.getRole() == "Administrator") {
-                //swtich case with all administrator actions
-                
+            if (user.getRole() == "Student") {
+                // swtich cases with all student actions
+            } else if (user.getRole() == "Advisor") {
+                // swtich case with all advisor actions
+            } else if (user.getRole() == "Administrator") {
+                // swtich case with all administrator actions
+
             }
         }
     }

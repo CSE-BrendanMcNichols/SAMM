@@ -1,1 +1,21 @@
 [{"firstName":"John","lastName":"Doe","password":"Password123","uscid":"HE82021","uuid":"747d28b3-42a3-40b4-8001-554dc044696c","email":"JohnDoe@email.sc.edu","username":"JohnDoe"},{"firstName":"John","lastName":"Smith","password":"Password321","uscid":"JY88081","uuid":"c6743835-9a22-46fd-8df2-b7ce0c4ae7db","email":"JohnSmith@email.sc.edu","username":"JohnSmith"}]
+[
+    {
+      "username": "JohnDoe",
+      "firstName": "John",
+      "lastName": "Doe",
+      "password": "Password123",
+      "email": "JohnDoe@email.sc.edu",
+      "uscid": "HE82021",
+      "uuid": "886c33a5-a9c1-4314-8284-ec73d657a973"
+    },
+    {
+      "username": "JohnSmith",
+      "firstName": "John",
+      "lastName": "Smith",
+      "password": "Password321",
+      "email": "JohnSmith@email.sc.edu",
+      "uscid": "JY88081",
+      "uuid": "f792f8c0-054e-4dc1-87d6-56890f8b5b78"
+    }
+  ]

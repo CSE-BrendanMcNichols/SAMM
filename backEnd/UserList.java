@@ -1,6 +1,7 @@
 package backEnd;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 /**
  * Manages a collection of users, including students, advisors, and administrators.
@@ -8,15 +9,20 @@ import java.util.ArrayList;
  */
 public class UserList {
     private static UserList userList; // Singleton instance of UserList
-    private ArrayList<User> users; // List to store all users
+    private ArrayList<User> users =new ArrayList<>(); // List to store all users
+
+    private static ArrayList<Student>  students = new ArrayList<Student>();
+    private static ArrayList<Advisor>  advisors = new ArrayList<Advisor>();
+    private static ArrayList<Administrator>  administrators = new ArrayList<Administrator>();
+
 
     /**
      * Private constructor to prevent instantiation.
      * Initializes the list of users.
      */
     private UserList() {
-        users = new ArrayList<>();
-        loadUsers();
+        //users = new ArrayList<>();
+        //loadUsers();
     }
 
     /**
@@ -30,13 +36,36 @@ public class UserList {
         return userList;
     }
 
+    
+    public void initializeAdminstrators() {
+        administrators = DataLoader.loadAdministrators();
+        if (administrators != null)
+            administrators.forEach(this::addUser);
+
+    }
+
+    public void initializeStudentsNoAdvisor() {
+        students = DataLoader.loadStudentsNoAdvisor();
+        if (students != null)
+            students.forEach(this::addUser);
+
+    }
+
+    public void initializeAdvisors() {
+        advisors = DataLoader.loadAdvisors();
+        if (advisors != null)
+            advisors.forEach(this::addUser);
+
+    }
+
     /**
      * Loads users from the data source into the users list.
      */
-    public void loadUsers() {
-        ArrayList<Student> students = DataLoader.getStudents();
-        ArrayList<Advisor> advisors = DataLoader.getAdvisors();
-        ArrayList<Administrator> administrators = DataLoader.getAdministrators();
+    private void loadUsers() {
+        
+        administrators = DataLoader.loadAdministrators();
+        //students = DataLoader.loadStudents();
+        advisors = DataLoader.loadAdvisors();
         
         if (students != null) students.forEach(this::addUser);
         if (advisors != null) advisors.forEach(this::addUser);
@@ -74,14 +103,59 @@ public class UserList {
     /**
      * Adds a new user to the list if they don't already exist.
      * @param user The user to add.
-     * @return true if the user was added, false if the user already exists.
+     * @return true if the user was added, false if the Error::: User already exists.
      */
     public boolean addUser(User user) {
         if (getUserByUsername(user.getUsername()) != null || getUserByUscId(user.getUscid()) != null) {
-            System.out.println("User already exists.");
+            System.out.println("Error::: User already exists.");
             return false;
         }
         users.add(user);
+        return true;
+    }
+
+    /**
+     * Adds a new student to the list if they don't already exist.
+     */
+    public boolean addStudent(Student student) {
+        if (getUserByUsername(student.getUsername()) != null || getUserByUscId(student.getUscid()) != null) {
+            System.out.println("Error::: User already exists.");
+            return false;
+        }
+        students.add(student);
+        System.out.println("Student:" + student.getFirstName() + " " + student.getLastName() + " added successfully " + student);
+        //also add to usersList.
+        addUser(student);
+        return true;
+    }
+
+    /**
+     * Adds a new Advisor to the list if they don't already exist.
+     */
+    public boolean addAdvisor(Advisor advisor) {
+        if (getUserByUsername(advisor.getUsername()) != null || getUserByUscId(advisor.getUscid()) != null) {
+            System.out.println("Error::: User already exists.");
+            return false;
+        }
+        advisors.add(advisor);
+        System.out.println("Advisor:" + advisor.getFirstName() + " " + advisor.getLastName() + " added successfully.");
+        //also add to usersList.
+        addUser(advisor);
+        return true;
+    }
+
+    /**
+     * Adds a new Advisor to the list if they don't already exist.
+     */
+    public boolean addAdministrator(Administrator administrator) {
+        if (getUserByUsername(administrator.getUsername()) != null || getUserByUscId(administrator.getUscid()) != null) {
+            System.out.println("Error::: User already exists.");
+            return false;
+        }
+        administrators.add(administrator);
+        System.out.println("Administrator:" + administrator.getFirstName() + " " + administrator.getLastName() + " added successfully.");
+        //also add to usersList.
+        addUser(administrator);
         return true;
     }
 
@@ -117,4 +191,79 @@ public class UserList {
         }
         return false;
     }
+
+    public ArrayList<Student> getStudents() {
+        return students;
+    }
+
+    public ArrayList<Advisor> getAdvisors() {
+        return advisors;
+    }
+
+    public  ArrayList<Administrator> getAdministrators() {
+        return administrators;
+    }
+
+    public ArrayList<User> getUsers() {
+        return users;
+    }
+
+
+     public Boolean findStudent(UUID uuid){
+        for (Student student : students){
+            if(student.getUuid().equals(uuid)){
+                return true;
+            }
+        }
+        return false;
+    }
+    public Student getStudent(UUID uuid){
+        for (Student student : students){
+            if(student.getUuid().equals(uuid)){
+                return student;
+            }
+        }
+        return null;
+    }
+
+    public Boolean findAdvisor(UUID uuid){
+        for (Advisor advisor : advisors){
+            if(advisor.getUuid().equals(uuid)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Advisor getAdvisor(UUID uuid){
+        for (Advisor advisor : advisors){
+            if(advisor.getUuid().equals(uuid)){
+                return advisor;
+            }
+        }
+        return null;
+    }
+
+    public Boolean findAdministrator(UUID uuid){
+        for (Administrator administrator : administrators){
+            if(administrator.getUuid().equals(uuid)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Administrator getAdministrator(UUID uuid){
+        for (Administrator administrator : administrators){
+            if(administrator.getUuid().equals(uuid)){
+                return administrator;
+            }
+        }
+        return null;
+    }
+
+   
+    
+
+    
 }

@@ -1,6 +1,7 @@
 package backEnd;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 /**
  * This is a MajorList singleton class
@@ -21,7 +22,11 @@ public class MajorList {
      * It loads the majors using DataLoader
      */
     private MajorList() {
-        majors = DataLoader.loadMajorList();
+        majors = DataLoader.loadMajors();
+        // just safe side
+        if (majors == null) {
+            majors = new ArrayList<Major>();
+        }
     }
 
     /**
@@ -84,11 +89,37 @@ public class MajorList {
 
     }
 
+
+    
+
+    public ArrayList<Major> getMajors() {
+        return majors;
+    }
+
     /**
      * This method will use DataWriter to store the updated major objects to json file
      */
     public void saveMajors() {
         DataWriter.saveMajors(majors);
+    }
+
+     public Boolean findMajor(UUID uuid) {
+        for (Major major : majors) {
+            if (major.getUuid().equals(uuid)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+
+    public  Major getMajor(UUID uuid) {
+        for (Major major : majors) {
+            if (major.getUuid().equals(uuid)) {
+                return major;
+            }
+        }
+        return null;
     }
 
 }

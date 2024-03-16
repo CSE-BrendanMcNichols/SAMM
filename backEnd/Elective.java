@@ -37,4 +37,46 @@ public class Elective {
     public UUID getUuid(){
         return this.uuid;
     }
+
+    public String getUuidString() {
+        return uuid.toString();
+    }
+
+    public String getName(){
+        return this.electiveName;
+    }
+
+    public int getHours(){
+        return this.hours;
+    }
+
+    public ArrayList<Course> getCourses(){
+        return this.courses;
+    }
+
+    public static Boolean findElective(ArrayList<Elective> electives, UUID uuid ){
+        for (Elective elective : electives){
+            if(elective.getUuid().equals(uuid)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static Elective getElective(ArrayList<Elective> electives, UUID uuid ){
+        for (Elective elective : electives){
+            if(elective.getUuid().equals(uuid)){
+                return elective;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public String toString() {
+        return "Elective [courses=" + courses + ", electiveName=" + electiveName + ", hours=" + hours + ", uuid=" + uuid
+                + "]";
+    }
+
+    
 }

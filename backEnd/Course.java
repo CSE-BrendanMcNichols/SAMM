@@ -17,11 +17,16 @@ public class Course {
     private char minGrade;
     private CourseState courseStatus;
 
-    public Course(String courseName, String courseSubject, int courseNumber,
+    public Course(){
+        this.courseName = "EMPTY CLASS";
+    }
+
+    public Course(String courseName, int courseNumber,
                   ArrayList<Requirement> prerequisites, ArrayList<Requirement> corequisites,
                   ArrayList<Semester> courseAvailability, String courseDescription,
-                  int courseHours, char minGrade, CourseState courseStatus) {
-        this.courseSubject = courseSubject;
+                  int courseHours, char minGrade, CourseState courseStatus,UUID uuid) {
+
+        this.courseName = courseName;
         this.courseNumber = courseNumber;
         this.prerequisites = new ArrayList<>(prerequisites);
         this.corequisites = new ArrayList<>(corequisites);
@@ -30,15 +35,15 @@ public class Course {
         this.courseHours = courseHours;
         this.minGrade = minGrade;
         this.courseStatus = courseStatus;
+        this.uuid = uuid;
     }
-    Course(String courseSubject, ArrayList<Semester> courseSemester, int courseNumber,
-            String courseDescription, int courseHours, char minGrade,
-            CourseState courseStatus, UUID uuid) {
-        this.courseSubject = courseSubject;
-        this.courseAvailability = courseSemester;
+  
+    public Course(String courseName, int courseNumber, ArrayList<Semester> courseAvailability, String courseDescription,
+            int courseHours, char minGrade, CourseState courseStatus, UUID uuid) {
+
+        this.courseName = courseName;
         this.courseNumber = courseNumber;
-        this.prerequisites = new ArrayList<Requirement>();
-        this.corequisites = new ArrayList<Requirement>();
+        this.courseAvailability = new ArrayList<>(courseAvailability);
         this.courseDescription = courseDescription;
         this.courseHours = courseHours;
         this.minGrade = minGrade;
@@ -62,6 +67,10 @@ public class Course {
 
     public UUID getUuid() {
         return uuid;
+    }
+
+    public String getUuidString() {
+        return uuid.toString();
     }
 
     public String getCourseSubject() {
@@ -127,12 +136,24 @@ public class Course {
         this.courseStatus = courseStatus;
     }
 
-    public String toString(){
-        return "Course name:" + courseName + " Course description:" + courseDescription + "\n";
+    public String toString1String(){
+        return "Course UUID " + uuid.toString() + "\n" + "Course name:" + courseName + "\nCourse description:" + courseDescription + "\n";
         //return courseName;
     }
+    
+
+
 
     
+    @Override
+    public String toString() {
+        return "Course [uuid=" + uuid + ", courseName=" + courseName + ", courseSubject=" + courseSubject
+                + ", courseNumber=" + courseNumber + ", prerequisites=" + prerequisites + ", corequisites="
+                + corequisites + ", courseAvailability=" + courseAvailability + ", courseDescription="
+                + courseDescription + ", courseHours=" + courseHours + ", minGrade=" + minGrade + ", courseStatus="
+                + courseStatus + "]";
+    }
+
     // Methods for managing prerequisites and corequisites
     public void addPrerequisite(Requirement prerequisite) {
         if (!prerequisites.contains(prerequisite)) {
@@ -165,23 +186,7 @@ public class Course {
         courseAvailability.remove(semester);
     }
 
-    public static Boolean findCourse(ArrayList<Course> courses, UUID uuid ){
-        for (Course course : courses){
-            if(course.getUuid().equals(uuid)){
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public static Course getCourse(ArrayList<Course> courses, UUID uuid ){
-        for (Course course : courses){
-            if(course.getUuid().equals(uuid)){
-                return course;
-            }
-        }
-        return null;
-    }
+    
 
     public void printSemester(){
         for( Semester semester: courseAvailability){

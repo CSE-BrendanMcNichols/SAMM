@@ -1,0 +1,31 @@
+[
+  {
+    "username": "JaneWhite",
+    "password": "word123pass",
+    "email": "JaneWhite@email.sc.edu",
+    "uscid": "SE83331",
+    "uuid": "daa77ead-9fcb-47f0-964d-3cff541591cd",
+    "gradeYear": "Sophomore",
+    "advisor": "2c29e60d-c02e-450a-8ac1-0c65266cabac",
+    "major": "CSCE",
+    "overallGrade": 3.5,
+    "credits": 27,
+    "completedClasses": ["MATH 111 Basic College Mathematics", "CSCE 145 Algorithmic Design I", "CSCE 205 Business Applications Programming"],
+    "currentClasses": ["CSCE 190 Computing in the Modern World"]
+  },
+  {
+    "username": "StanBrown",
+    "password": "NoGuessing123",
+    "email": "StanBrown@email.sc.edu",
+    "uscid": "KO84467",
+    "uuid": "f38c8813-86b8-463d-af4d-e5a0255ab679",
+    "gradeYear": "Freshman",
+    "advisor": "2c29e60d-c02e-450a-8ac1-0c65266cabac",
+    "major": "CSCE",
+    "overallGrade": 3.3,
+    "credits": 15,
+    "completedClasses": ["MATH 111 Basic College Mathematics"],
+    "currentClasses": ["CSCE 145 Algorithmic Design I"]
+  }
+    
+]

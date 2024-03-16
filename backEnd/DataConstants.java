@@ -13,6 +13,15 @@ public abstract class DataConstants {
 	protected static final String REQUIREMENT_FILE_NAME = "json/Requirements.json";
 	protected static final String ELECTIVE_FILE_NAME = "json/Electives.json";
 	protected static final String MAJORS_FILE_NAME = "json/Majors.json";
+	protected static final String AREA_FILE_NAME = "json/ApplicationAreas.json";
+	
+	protected static final String STUDENT_FILE_NAME_TEST = "json/StudentUsers_test.json";
+	protected static final String ADVISOR_FILE_NAME_TEST = "json/AdvisorUsers_test.json";
+	protected static final String COURSE_FILE_NAME_TEST = "json/Courses_test.json";
+	protected static final String ADMINISTRATOR_FILE_NAME_TEST = "json/AdministratorUsers_test.json";
+	protected static final String REQUIREMENT_FILE_NAME_TEST = "json/Requirements_test.json";
+	protected static final String ELECTIVE_FILE_NAME_TEST = "json/Electives_test.json";
+	protected static final String MAJORS_FILE_NAME_TEST = "json/Majors_test.json";
 	
 	protected static final String ELECTIVENAME = "electiveName";
 	protected static final String HOURS = "hours";
@@ -41,6 +50,10 @@ public abstract class DataConstants {
     protected static final String ADVISOR = "advisor";
     protected static final String OVERALLGRADE = "overallGrade";
     protected static final String CREDITS = "credits";
+	protected static final String CURRENTELECTIVES = "currentElectives";
+	protected static final String COMPLETEDELECTIVES = "completedElectives";
+	protected static final String Elective = "Elective";
+	
 
     protected static final String COMPLETEDCOURSES = "completedClasses";
     protected static final String CURRENTCOURSES = "currentClasses";
@@ -52,8 +65,6 @@ public abstract class DataConstants {
 	protected static final String COREREQ = "coreReq";
 	protected static final String COURSES = "courses";
 	protected static final String ELECTIVE_COURSES = "electiveCourses";
-
-
-
-
+	protected static final String AREANAME = "area";
+	
 }

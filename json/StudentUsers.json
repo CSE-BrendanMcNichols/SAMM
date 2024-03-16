@@ -1,31 +1,34 @@
 [
   {
     "username": "JaneWhite",
+    "firstName": "Jane",
+    "lastName": "White",
     "password": "word123pass",
     "email": "JaneWhite@email.sc.edu",
     "uscid": "SE83331",
     "uuid": "daa77ead-9fcb-47f0-964d-3cff541591cd",
     "gradeYear": "Sophomore",
     "advisor": "2c29e60d-c02e-450a-8ac1-0c65266cabac",
-    "major": "CSCE",
+    "major": "29e4b605-07c5-4c46-bca3-c4e2ed618e4d",
     "overallGrade": 3.5,
     "credits": 27,
-    "completedClasses": ["MATH 111 Basic College Mathematics", "CSCE 145 Algorithmic Design I", "CSCE 205 Business Applications Programming"],
-    "currentClasses": ["CSCE 190 Computing in the Modern World"]
-  },
-  {
-    "username": "StanBrown",
-    "password": "NoGuessing123",
-    "email": "StanBrown@email.sc.edu",
-    "uscid": "KO84467",
-    "uuid": "f38c8813-86b8-463d-af4d-e5a0255ab679",
-    "gradeYear": "Freshman",
-    "advisor": "2c29e60d-c02e-450a-8ac1-0c65266cabac",
-    "major": "CSCE",
-    "overallGrade": 3.3,
-    "credits": 15,
-    "completedClasses": ["MATH 111 Basic College Mathematics"],
-    "currentClasses": ["CSCE 145 Algorithmic Design I"]
+    "completedClasses": { 
+      "afa23cd7-71ce-42b0-9d84-0c89db525f73": "A",
+      "29e4b605-07c5-4c46-bca3-c4e2ed618e8d": "A",
+      "3bf30a0a-8716-46e6-9798-3faa579b7829": "B"
+    },
+    "currentClasses": [
+      "afa23cd7-71ce-42b0-9d84-0c89db525f73",
+      "29e4b605-07c5-4c46-bca3-c4e2ed618e8d",
+      "3bf30a0a-8716-46e6-9798-3faa579b7829"
+    ],
+    "notes":[
+      "note1",
+      "note2",
+      "note3"
+    ],
+    "completedElectives": ["dbf91385-3def-4028-baa6-66dcae051c6c","dbf91385-3def-4028-baa6-66dcae051c7c","dbf91385-3def-4028-baa6-66dcae051c8c"],
+    "currentElectives": ["dbf91385-3def-4028-baa6-66dcae051c6c","dbf91385-3def-4028-baa6-66dcae051c8c","dbf91385-3def-4028-baa6-66dcae051c7c"],
+    "applicationArea": "Test Area"
   }
-    
 ]
