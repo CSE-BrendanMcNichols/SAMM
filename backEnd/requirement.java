@@ -3,14 +3,14 @@ package backEnd;
 import java.util.ArrayList;
 import java.util.UUID;
 
-public class Requirement{
+public class Requirement {
     private Boolean eitherOr;
     private String requirementFor;
     private RequirementType type;
     private ArrayList<Course> courses;
     private UUID uuid;
 
-    Requirement(ArrayList<Course> courses, Boolean eitherOr, RequirementType type, String requirementFor, UUID uuid){
+    Requirement(ArrayList<Course> courses, Boolean eitherOr, RequirementType type, String requirementFor, UUID uuid) {
         this.eitherOr = eitherOr;
         this.requirementFor = requirementFor;
         this.type = type;
@@ -18,49 +18,61 @@ public class Requirement{
         this.uuid = uuid;
     }
 
-    public void addCourse(Course course){
-        courses.add(course);
+    public void addCourse(Course course) {
+        if (course != null) {
+            if (courses == null) {
+                courses = new ArrayList<Course>();
+            }
+            courses.add(course);
+        }
+        else {
+            System.out.println("addCourse::Invalid parameter:" + course);
+        }
     }
 
-    public String toString(){
-        return"description";
+    public String toString() {
+        return "description";
     }
 
-    public RequirementType getType(){
+    public RequirementType getType() {
         return this.type;
     }
 
-    public Boolean getEitherOr(){
+    public Boolean getEitherOr() {
         return this.eitherOr;
     }
 
-    public String getRequirementFor(){
+    public String getRequirementFor() {
         return this.requirementFor;
     }
 
-    public ArrayList<Course> getCourses(){
+    public ArrayList<Course> getCourses() {
         return this.courses;
     }
 
-    public UUID getUuid(){
-        return this.uuid;
+    public void setEitherOr(Boolean eitherOr) {
+        this.eitherOr = eitherOr;
     }
 
-    public static Boolean findReq(ArrayList<Requirement> requirements, UUID uuid ){
-        for (Requirement requirement : requirements){
-            if(requirement.getUuid().equals(uuid)){
-                return true;
-            }
-        }
-        return false;
+    public void setRequirementFor(String requirementFor) {
+        this.requirementFor = requirementFor;
     }
 
-    public static Requirement getReq(ArrayList<Requirement> requirements, UUID uuid ){
-        for (Requirement requirement : requirements){
-            if(requirement.getUuid().equals(uuid)){
-                return requirement;
-            }
-        }
-        return null;
+    public void setType(RequirementType type) {
+        this.type = type;
     }
+
+    public void setCourses(ArrayList<Course> courses) {
+        this.courses = courses;
+    }
+
+    public UUID getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid;
+    }
+
+    
 }
