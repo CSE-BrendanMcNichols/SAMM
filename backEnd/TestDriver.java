@@ -78,6 +78,7 @@ public class TestDriver {
             notee.add("");
             s1.setNotes(notee);
             
+            
             s1.getCurrentElectives();
             s1.getCompletedElectives();
             ArrayList<String> newnotes = s1.getNotes();

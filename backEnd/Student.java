@@ -312,6 +312,7 @@ public ArrayList<Elective> getCurrentElectives(){
     for(Elective e : currentElectives){
         System.out.println(e.getName());
     }
+    
 
     return currentElectives;
 }
