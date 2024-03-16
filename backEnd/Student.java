@@ -29,8 +29,8 @@ Added updateElectivesCompleted
     private ArrayList<Course> currentCourses;
     private ArrayList<String> notes;
     private String applicationArea;
-    private ArrayList<Elective> currentElectives;
-    private ArrayList<Elective> completedElectives;
+    private ArrayList<Elective> currentElectives = new ArrayList<Elective>();
+    private ArrayList<Elective> completedElectives = new ArrayList<Elective>();
     private UUID uuid;
 
     // Updated Constructor
@@ -187,10 +187,11 @@ Added updateElectivesCompleted
         return null;
     }
     public void viewCurrentSchedule(){
-        System.out.println("This is Your Current Schedule:");
+        System.out.println("Current Schedule:");
         for(Course course: this.currentCourses){
             System.out.println(course);
         }
+        System.out.println("End of Current Schedule");
     }
     private void assignAdvisor(Advisor advisor){
         this.advisor = advisor;
@@ -238,7 +239,7 @@ Added updateElectivesCompleted
     
     private void updateCredits(){
         this.credits = getCreditsAccumulated();
-        System.out.println("Credits updated to: " + this.credits);
+        //System.out.println("Credits updated to: " + this.credits);
     }
     /*
      * Updates the students credits and prints it out
@@ -253,7 +254,7 @@ Added updateElectivesCompleted
             String grade = entry.getValue();
             creditTotal += course.getCourseHours();
         }
-        System.out.println("credit hours completed are: " + creditTotal);
+        //System.out.println("credit hours completed are: " + creditTotal);
     }
     /*
      * Checks the hours of completed courses and prints them out
@@ -262,7 +263,7 @@ Added updateElectivesCompleted
 
     
     public void updateCourseCompleted(Course updateCourse, String courseGrade){
-        System.out.println("updateCourseCompleted called. updateCourse: " + updateCourse);
+        //System.out.println("updateCourseCompleted called. updateCourse: " + updateCourse);
         for(Course course: this.currentCourses){
             if(course.getUuid() == updateCourse.getUuid()){
                 currentCourses.remove(course);
@@ -307,21 +308,32 @@ Added updateElectivesCompleted
 
      
 public ArrayList<Elective> getCurrentElectives(){
+    System.out.println("Current electives:");
+    for(Elective e : currentElectives){
+        System.out.println(e.getName());
+    }
+
     return currentElectives;
 }
 public void setCurrentElectives(ArrayList<Elective> currentElectives){
     this.currentElectives = currentElectives;
 }
 public ArrayList<Elective> getCompletedElectives(){
+    System.out.println("Completed electives:");
+    for(Elective e : completedElectives){
+        System.out.println(e.getName());
+    }
+
+
     return completedElectives;
 }
 public void setCompletedElectives(ArrayList<Elective> completedElectives){
     this.completedElectives = completedElectives;
 }
 public void addElective(Elective elect){
-    if (this.currentElectives != null) {
-        this.currentElectives.add(elect);
-        System.out.println("Added Elective: " + elect.getName())
+    if (currentElectives != null) {
+        currentElectives.add(elect);
+        //System.out.println("Added Elective: " + elect.getName());
     }
 }
 public void removeElective(Elective elect){
@@ -331,7 +343,7 @@ public void removeElective(Elective elect){
         for(Elective elective: this.currentElectives) {
             if (elective.getName().equals(elect.getName())) {
                 this.currentElectives.remove(elect);
-                System.out.println("Removed Elective: " + elect.getName());
+                //System.out.println("Removed Elective: " + elect.getName());
                 break;
             }
         }
@@ -345,7 +357,7 @@ public void updateElectiveCompleted(Elective elect) {
     if (this.completedElectives != null) {
         this.completedElectives = new ArrayList<Elective>();
         this.completedElectives.add(elect);
-        System.out.println("Elective: " + elect.getName() + " is added tp completed electives list");
+        //System.out.println("Elective: " + elect.getName() + " is added tp completed electives list");
     }
 }
 public void setApplicationArea(String area){
