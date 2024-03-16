@@ -115,6 +115,51 @@ public class UserList {
     }
 
     /**
+     * Adds a new student to the list if they don't already exist.
+     */
+    public boolean addStudent(Student student) {
+        if (getUserByUsername(student.getUsername()) != null || getUserByUscId(student.getUscid()) != null) {
+            System.out.println("User already exists.");
+            return false;
+        }
+        students.add(student);
+        System.out.println("STudent:" + student.getFirstName() + " " + student.getLastName() + " Added successfully");
+        //also add to usersList.
+        addUser(student);
+        return true;
+    }
+
+    /**
+     * Adds a new Advisor to the list if they don't already exist.
+     */
+    public boolean addAdvisor(Advisor advisor) {
+        if (getUserByUsername(advisor.getUsername()) != null || getUserByUscId(advisor.getUscid()) != null) {
+            System.out.println("User already exists.");
+            return false;
+        }
+        advisors.add(advisor);
+        System.out.println("Advisor:" + advisor.getFirstName() + " " + advisor.getLastName() + " Added successfully");
+        //also add to usersList.
+        addUser(advisor);
+        return true;
+    }
+
+    /**
+     * Adds a new Advisor to the list if they don't already exist.
+     */
+    public boolean addAdministrator(Administrator administrator) {
+        if (getUserByUsername(administrator.getUsername()) != null || getUserByUscId(administrator.getUscid()) != null) {
+            System.out.println("User already exists.");
+            return false;
+        }
+        administrators.add(administrator);
+        System.out.println("Advisor:" + administrator.getFirstName() + " " + administrator.getLastName() + " Added successfully");
+        //also add to usersList.
+        addUser(administrator);
+        return true;
+    }
+
+    /**
      * Deletes a user by their username.
      * @param username The username of the user to delete.
      * @return true if the user was deleted, false otherwise.

@@ -1,9 +1,10 @@
 package backEnd;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ApplicationFacade {
-    private UserList userList;// = UserList.getInstance();
+    private UserList userList = UserList.getInstance();
     private static ApplicationFacade applicationFacade;
 
     private ApplicationFacade() {
@@ -31,10 +32,17 @@ public class ApplicationFacade {
 
     public boolean registerUser(UserType type, String firstName, String lastName, String uscid, String email,
             String username, String password) {
+        
+        System.out.println("type:" + type);
+
         switch (type) {
             case STUDENT:
-                Student student = new Student(firstName, lastName, uscid, email, username, password);
-                userList.addUser(student);
+                //Student student = new Student(firstName, lastName, uscid, email, username, password);
+
+                Student student = new Student(firstName, lastName, uscid, email,  username, password, UserType.STUDENT, 
+                Year.Freshman, null, null, 0, 0, null, null, null);
+
+                userList.addStudent(student);
 
                 // Please see the commented code. istead of loading the students every time a
                 // registerUSer method is called
@@ -44,26 +52,30 @@ public class ApplicationFacade {
                 // if (students == null) students = new ArrayList<>();
                 // students.add(student);
                 // DataWriter.saveStudents(students);
-                UserList.getInstance().addUser(student);
-                DataWriter.saveStudents(UserList.getStudents());
+                //UserList.getInstance().addUser(student);
+                DataWriter.saveStudents(userList.getStudents());
                 break;
             case ADVISOR:
                 Advisor advisor = new Advisor(firstName, lastName, uscid, email, username, password);
-                userList.addUser(advisor);
+                userList.addAdvisor(advisor);
+                /* 
                 ArrayList<Advisor> advisors = DataLoader.getAdvisors();
                 if (advisors == null)
                     advisors = new ArrayList<>();
                 advisors.add(advisor);
-                DataWriter.saveAdvisors(advisors);
+                */
+                DataWriter.saveAdvisors(userList.getAdvisors());
                 break;
             case ADMINISTRATOR:
                 Administrator administrator = new Administrator(firstName, lastName, uscid, email, username, password);
-                userList.addUser(administrator);
+                userList.addAdministrator(administrator);
+                /*
                 ArrayList<Administrator> administrators = DataLoader.getAdministrators();
                 if (administrators == null)
                     administrators = new ArrayList<>();
                 administrators.add(administrator);
-                DataWriter.saveAdministrators(administrators);
+                */
+                DataWriter.saveAdministrators(userList.getAdministrators());
                 break;
             default:
                 return false;

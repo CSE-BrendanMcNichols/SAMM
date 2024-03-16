@@ -140,6 +140,7 @@ Added updateElectivesCompleted
         return currentCourses;
     }
 
+
     public void setCurrentCourses(ArrayList<Course> currentCourses) {
         this.currentCourses = currentCourses;
     }
@@ -319,13 +320,13 @@ public ArrayList<Elective> getCurrentElectives(){
     for(Elective e : currentElectives){
         System.out.println(e.getName());
     }
-    
-
     return currentElectives;
 }
 public void setCurrentElectives(ArrayList<Elective> currentElectives){
     this.currentElectives = currentElectives;
 }
+
+
 public ArrayList<Elective> getCompletedElectives(){
     System.out.println("Completed electives:");
     for(Elective e : completedElectives){

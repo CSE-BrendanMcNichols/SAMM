@@ -5,6 +5,8 @@ import org.json.simple.JSONObject;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * This class will save the data to respective json files.
@@ -22,39 +24,65 @@ public class DataWriter {
         JSONArray studentsJSONArray = new JSONArray();
         for (Student student : studentList) {
             JSONObject studentJSON = new JSONObject();
+
+            studentJSON.put(DataConstants.UUIDSTRING, student.getUuid().toString());
             studentJSON.put(DataConstants.FIRST_NAME, student.getFirstName());
             studentJSON.put(DataConstants.LAST_NAME, student.getLastName());
             studentJSON.put(DataConstants.USERNAME, student.getUsername());
             studentJSON.put(DataConstants.PASSWORD, student.getPassword());
             studentJSON.put(DataConstants.EMAIL, student.getEmail());
             studentJSON.put(DataConstants.USCID, student.getUscid());
-            studentJSON.put(DataConstants.UUIDSTRING, student.getUuid().toString());
-            studentJSON.put(DataConstants.GRADEYEAR, student.getGradeYear());
+            studentJSON.put(DataConstants.GRADEYEAR, student.getGradeYear().toString());
             studentJSON.put(DataConstants.CREDITS, student.getCredits());
             studentJSON.put(DataConstants.OVERALLGRADE, student.getOverallGrade());
+            studentJSON.put(DataConstants.APPLICATIONAREA, student.getApplicationArea());
 
             // Only store the Advisor UUID/
-            // Todo. When reading from JSON file, it has to look up this id with the Advisor
-            // List and update Student with Advisor Object reference
-            studentJSON.put(DataConstants.ADVISOR, student.getAdvisor().getUuid().toString());
+            if (student.getAdvisor() != null) {
+                studentJSON.put(DataConstants.ADVISOR, student.getAdvisor().getUuid().toString());
+            }
 
             // Only store the Major Name
             // Todo. When reading from JSON file, it has to look up this id with the Major
             // List and update Student with Major Object reference
-            studentJSON.put(DataConstants.MAJOR, student.getMajor().getMajor());
+            if (student.getMajor() != null) {
+                studentJSON.put(DataConstants.MAJOR, student.getMajor().getMajor());
+            }
 
-            // Convert the Course Objects to Course String arraylist and store
             studentJSON.put(DataConstants.COMPLETEDCOURSES, student.getCompletedCourses());
-            studentJSON.put(DataConstants.CURRENTCOURSES, student.getCurrentCourses());
+
+            // Convert the Objects to UUID arraylist and store
+            if (student.getCurrentCourses() != null) {
+                List<String> currentCourseUuids = student.getCurrentCourses().stream().map(Course::getUuidString)
+                        .collect(Collectors.toList());
+                studentJSON.put(DataConstants.CURRENTCOURSES, currentCourseUuids);
+            }
+
+            // Convert the Objects to UUID arraylist and store
+            if (student.getCompletedElectives() != null) {
+
+                List<String> completedElectiveUuids = student.getCompletedElectives().stream()
+                        .map(Elective::getUuidString).collect(Collectors.toList());
+                studentJSON.put(DataConstants.COMPLETEDELECTIVES, completedElectiveUuids);
+            }
+
+            if (student.getCurrentElectives() != null) {
+
+                List<String> currentElectiveUuids = student.getCurrentElectives().stream().map(Elective::getUuidString)
+                        .collect(Collectors.toList());
+                studentJSON.put(DataConstants.CURRENTELECTIVES, currentElectiveUuids);
+            }
+
+            studentJSON.put(DataConstants.NOTES, student.getNotes());
 
             studentsJSONArray.add(studentJSON);
         }
 
         // Write JSON to file
-        try (FileWriter file = new FileWriter(DataConstants.STUDENT_FILE_NAME)) {
+        try (FileWriter file = new FileWriter(DataConstants.STUDENT_FILE_NAME_TEST)) {
             file.write(studentsJSONArray.toJSONString());
             file.flush();
-            System.out.println("Studnets JSON data is written to the file " + DataConstants.STUDENT_FILE_NAME);
+            System.out.println("Studnets JSON data is written to the file " + DataConstants.STUDENT_FILE_NAME_TEST);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -88,10 +116,10 @@ public class DataWriter {
         }
 
         // Write JSON to file
-        try (FileWriter file = new FileWriter(DataConstants.ADVISOR_FILE_NAME)) {
+        try (FileWriter file = new FileWriter(DataConstants.ADVISOR_FILE_NAME_TEST)) {
             file.write(advisorsJSONArray.toJSONString());
             file.flush();
-            System.out.println("Advisors JSON data is written to the file " + DataConstants.ADVISOR_FILE_NAME);
+            System.out.println("Advisors JSON data is written to the file " + DataConstants.ADVISOR_FILE_NAME_TEST);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -122,11 +150,11 @@ public class DataWriter {
         }
 
         // Write JSON to file
-        try (FileWriter file = new FileWriter(DataConstants.ADMINISTRATOR_FILE_NAME)) {
+        try (FileWriter file = new FileWriter(DataConstants.ADMINISTRATOR_FILE_NAME_TEST)) {
             file.write(administratorsJSONArray.toJSONString());
             file.flush();
             System.out.println(
-                    "Administrators JSON data is written to the file " + DataConstants.ADMINISTRATOR_FILE_NAME);
+                    "Administrators JSON data is written to the file " + DataConstants.ADMINISTRATOR_FILE_NAME_TEST);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -159,7 +187,7 @@ public class DataWriter {
         }
 
         // Write JSON to file
-        try (FileWriter file = new FileWriter(DataConstants.MAJORS_FILE_NAME)) {
+        try (FileWriter file = new FileWriter(DataConstants.MAJORS_FILE_NAME_TEST)) {
             file.write(jsonArray.toJSONString());
             file.flush();
             System.out.println("Majors JSON data is written to the file.");
@@ -194,10 +222,10 @@ public class DataWriter {
         }
 
         // Write JSON to file
-        try (FileWriter file = new FileWriter(DataConstants.COURSE_FILE_NAME)) {
+        try (FileWriter file = new FileWriter(DataConstants.COURSE_FILE_NAME_TEST)) {
             file.write(coursesJSONArray.toJSONString());
             file.flush();
-            System.out.println("Courses JSON data is written to the file." + DataConstants.COURSE_FILE_NAME);
+            System.out.println("Courses JSON data is written to the file." + DataConstants.COURSE_FILE_NAME_TEST);
         } catch (IOException e) {
             e.printStackTrace();
         }

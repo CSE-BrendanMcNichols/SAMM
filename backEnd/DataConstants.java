@@ -13,6 +13,15 @@ public abstract class DataConstants {
 	protected static final String REQUIREMENT_FILE_NAME = "json/Requirements.json";
 	protected static final String ELECTIVE_FILE_NAME = "json/Electives.json";
 	protected static final String MAJORS_FILE_NAME = "json/Majors.json";
+
+	protected static final String STUDENT_FILE_NAME_TEST = "json/StudentUsers_test.json";
+	protected static final String ADVISOR_FILE_NAME_TEST = "json/AdvisorUsers_test.json";
+	protected static final String COURSE_FILE_NAME_TEST = "json/Courses_test.json";
+	protected static final String ADMINISTRATOR_FILE_NAME_TEST = "json/AdministratorUsers_test.json";
+	protected static final String REQUIREMENT_FILE_NAME_TEST = "json/Requirements_test.json";
+	protected static final String ELECTIVE_FILE_NAME_TEST = "json/Electives_test.json";
+	protected static final String MAJORS_FILE_NAME_TEST = "json/Majors_test.json";
+	
 	
 	protected static final String ELECTIVENAME = "electiveName";
 	protected static final String HOURS = "hours";

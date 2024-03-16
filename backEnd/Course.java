@@ -69,6 +69,10 @@ public class Course {
         return uuid;
     }
 
+    public String getUuidString() {
+        return uuid.toString();
+    }
+
     public String getCourseSubject() {
         return courseSubject;
     }

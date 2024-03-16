@@ -38,6 +38,10 @@ public class Elective {
         return this.uuid;
     }
 
+    public String getUuidString() {
+        return uuid.toString();
+    }
+
     public String getName(){
         return this.electiveName;
     }
