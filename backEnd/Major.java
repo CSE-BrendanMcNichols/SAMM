@@ -145,23 +145,7 @@ public class Major {
         }
     }
 
-    public static Boolean findMajor(ArrayList<Major> majors, UUID uuid) {
-        for (Major major : majors) {
-            if (major.getUuid().equals(uuid)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public static Major getMajor(ArrayList<Major> majors, UUID uuid) {
-        for (Major major : majors) {
-            if (major.getUuid().equals(uuid)) {
-                return major;
-            }
-        }
-        return null;
-    }
+    
 
     
 }

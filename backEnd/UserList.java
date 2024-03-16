@@ -1,6 +1,7 @@
 package backEnd;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 /**
  * Manages a collection of users, including students, advisors, and administrators.
@@ -162,6 +163,61 @@ public class UserList {
         return users;
     }
 
+
+     public Boolean findStudent(UUID uuid){
+        for (Student student : students){
+            if(student.getUuid().equals(uuid)){
+                return true;
+            }
+        }
+        return false;
+    }
+    public Student getStudent(UUID uuid){
+        for (Student student : students){
+            if(student.getUuid().equals(uuid)){
+                return student;
+            }
+        }
+        return null;
+    }
+
+    public Boolean findAdvisor(UUID uuid){
+        for (Advisor advisor : advisors){
+            if(advisor.getUuid().equals(uuid)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Advisor getAdvisor(UUID uuid){
+        for (Advisor advisor : advisors){
+            if(advisor.getUuid().equals(uuid)){
+                return advisor;
+            }
+        }
+        return null;
+    }
+
+    public Boolean findAdministrator(UUID uuid){
+        for (Administrator administrator : administrators){
+            if(administrator.getUuid().equals(uuid)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Administrator getAdministrator(UUID uuid){
+        for (Administrator administrator : administrators){
+            if(administrator.getUuid().equals(uuid)){
+                return administrator;
+            }
+        }
+        return null;
+    }
+
+   
     
 
     

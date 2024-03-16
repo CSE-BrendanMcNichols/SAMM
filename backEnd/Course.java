@@ -182,23 +182,7 @@ public class Course {
         courseAvailability.remove(semester);
     }
 
-    public static Boolean findCourse(ArrayList<Course> courses, UUID uuid ){
-        for (Course course : courses){
-            if(course.getUuid().equals(uuid)){
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public static Course getCourse(ArrayList<Course> courses, UUID uuid ){
-        for (Course course : courses){
-            if(course.getUuid().equals(uuid)){
-                return course;
-            }
-        }
-        return null;
-    }
+    
 
     public void printSemester(){
         for( Semester semester: courseAvailability){

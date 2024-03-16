@@ -374,22 +374,7 @@ public void setApplicationArea(String area){
 public String getApplicationArea(){
     return applicationArea;
 }
-public static Boolean findStudent(ArrayList<Student> students, UUID uuid){
-    for (Student student : students){
-        if(student.getUuid().equals(uuid)){
-            return true;
-        }
-    }
-    return false;
-}
-public static Student getStudent(ArrayList<Student> students, UUID uuid){
-    for (Student student : students){
-        if(student.getUuid().equals(uuid)){
-            return student;
-        }
-    }
-    return null;
-}
+
 public String getAdvisorName(){
     if (advisor != null) {
         return advisor.getFirstName() + " " + advisor.getLastName();

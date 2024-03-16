@@ -1,6 +1,7 @@
 package backEnd;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 /**
  * This is a MajorList singleton class
@@ -100,6 +101,25 @@ public class MajorList {
      */
     public void saveMajors() {
         DataWriter.saveMajors(majors);
+    }
+
+     public Boolean findMajor(UUID uuid) {
+        for (Major major : majors) {
+            if (major.getUuid().equals(uuid)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+
+    public  Major getMajor(UUID uuid) {
+        for (Major major : majors) {
+            if (major.getUuid().equals(uuid)) {
+                return major;
+            }
+        }
+        return null;
     }
 
 }

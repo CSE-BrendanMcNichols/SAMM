@@ -40,8 +40,8 @@ public class DataLoader extends DataConstants {
 				double overallGrade = (double) studentJSON.get(OVERALLGRADE);
 				UUID majorUUID = UUID.fromString((String) studentJSON.get(MAJOR));
 				Major major = null;
-				if (Cache.getInstance().findMajor(majorUUID)) {
-					major = Cache.getInstance().getMajor(majorUUID);
+				if (MajorList.getInstance().findMajor(majorUUID)) {
+					major = MajorList.getInstance().getMajor(majorUUID);
 				} else {
 					System.out.println("Major Id: " + majorUUID + " not found in Major List");
 				}
@@ -57,8 +57,8 @@ public class DataLoader extends DataConstants {
 				ArrayList<Course> currentCourses = new ArrayList<Course>();
 				for (int j = 0; j < coursesJSON.size(); j++) {
 					UUID courseUUID = UUID.fromString((String) coursesJSON.get(j));
-					if (Cache.getInstance().findCourse(courseUUID)) {
-						currentCourses.add(Cache.getInstance().getCourse(courseUUID));
+					if (CourseList.getInstance().findCourse(courseUUID)) {
+						currentCourses.add(CourseList.getInstance().getCourse(courseUUID));
 					} else {
 						System.out.println("Course Id: " + courseUUID + " not found in Course List");
 					}
@@ -69,8 +69,8 @@ public class DataLoader extends DataConstants {
 					String courseString = ((String) key);
 					UUID courseUUID = UUID.fromString(courseString);
 					Course course = null;
-					if (Cache.getInstance().findCourse(courseUUID)) {
-						course = Cache.getInstance().getCourse(majorUUID);
+					if (CourseList.getInstance().findCourse(courseUUID)) {
+						course = CourseList.getInstance().getCourse(majorUUID);
 					} else {
 						System.out.println("Course Id: " + courseUUID + " not found in Course List");
 					}
@@ -138,8 +138,8 @@ public class DataLoader extends DataConstants {
 				ArrayList<Student> assignedStudents = new ArrayList<Student>();
 				for (int j = 0; j < studentsJSON.size(); j++) {
 					UUID studentUUID = UUID.fromString((String) studentsJSON.get(j));
-					if (Cache.getInstance().findStudent(studentUUID)) {
-						assignedStudents.add(Cache.getInstance().getStudent(studentUUID));
+					if (UserList.getInstance().findStudent(studentUUID)) {
+						assignedStudents.add(UserList.getInstance().getStudent(studentUUID));
 					} else {
 						System.out.println("Warning: While loading Advisor for Student record, Student Id: " + studentUUID + " from is not in the Student List.");
 					}
@@ -213,15 +213,15 @@ public class DataLoader extends DataConstants {
 				UUID studentUUID = UUID.fromString((String) studentJSON.get(UUIDSTRING));
 				UUID advisorUUID = UUID.fromString((String) studentJSON.get(ADVISOR));
 				Advisor advisor = null;
-				if (Cache.getInstance().findAdvisor(advisorUUID)) {
-					advisor = Cache.getInstance().getAdvisor(advisorUUID);
+				if (UserList.getInstance().findAdvisor(advisorUUID)) {
+					advisor = UserList.getInstance().getAdvisor(advisorUUID);
 				} else {
 					System.out.println("Warning: While loading Advisor for Student record, Advisor Id: " + advisorUUID + " is not in the Advisor List.");
 				}
 
 				Student student = null;
-				if (Cache.getInstance().findStudent(studentUUID)) {
-					student = Cache.getInstance().getStudent(studentUUID);
+				if (UserList.getInstance().findStudent(studentUUID)) {
+					student = UserList.getInstance().getStudent(studentUUID);
 					//update the student's Advisor. It will update the central instance of Student in Cache
 					student.setAdvisor(advisor);
 				} else {
@@ -276,10 +276,10 @@ public class DataLoader extends DataConstants {
 
 				// update course with Pre and Co Requisites
 				// *This should update the central Cache.getInstance() Course References.*
-				if (Cache.getInstance().findCourse(courseUuid)) {
+				if (CourseList.getInstance().findCourse(courseUuid)) {
 					//System.out.println("updating Course Id: " + courseUuid + " with pre and co requisites"+ prerequisites + "\n" + corequisites);
 
-					course = Cache.getInstance().getCourse(courseUuid);
+					course = CourseList.getInstance().getCourse(courseUuid);
 					course.setPrerequisites(prerequisites);
 					course.setCorequisites(corequisites);
 				} else {
@@ -360,8 +360,8 @@ public class DataLoader extends DataConstants {
 				ArrayList<Course> reqCourses = new ArrayList<Course>();
 				for (int j = 0; j < coursesJSON.size(); j++) {
 					UUID courseUUID = UUID.fromString((String) coursesJSON.get(j));
-					if (Cache.getInstance().findCourse(courseUUID)) {
-						reqCourses.add(Cache.getInstance().getCourse(courseUUID));
+					if (CourseList.getInstance().findCourse(courseUUID)) {
+						reqCourses.add(CourseList.getInstance().getCourse(courseUUID));
 					} else {
 						System.out.println("Warning: While loading Requirement record, Course Id: " + courseUUID + " is not in the Course List.");
 					}
@@ -403,8 +403,8 @@ public class DataLoader extends DataConstants {
 				ArrayList<Course> courses = new ArrayList<Course>();
 				for (int j = 0; j < coursesJSON.size(); j++) {
 					UUID courseUUID = UUID.fromString((String) coursesJSON.get(j));
-					if (Cache.getInstance().findCourse(courseUUID)) {
-						courses.add(Cache.getInstance().getCourse(courseUUID));
+					if (CourseList.getInstance().findCourse(courseUUID)) {
+						courses.add(CourseList.getInstance().getCourse(courseUUID));
 					} else {
 						System.out.println("Warning: While loading Elective record, Course Id: " + courseUUID + " is not in the Course List.");
 					}
@@ -446,8 +446,8 @@ public class DataLoader extends DataConstants {
 				ArrayList<Course> courses = new ArrayList<Course>();
 				for (int j = 0; j < coursesJSON.size(); j++) {
 					UUID courseUUID = UUID.fromString((String) coursesJSON.get(j));
-					if (Cache.getInstance().findCourse(courseUUID)) {
-						courses.add(Cache.getInstance().getCourse(courseUUID));
+					if (CourseList.getInstance().findCourse(courseUUID)) {
+						courses.add(CourseList.getInstance().getCourse(courseUUID));
 					} else {
 						System.out.println("Warning: While loading Major record, Course Id: " + courseUUID + " is not in the Course List.");
 					}

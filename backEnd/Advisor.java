@@ -291,23 +291,7 @@ public class Advisor extends User {
         }
     }
 
-    public static Boolean findAdvisor(ArrayList<Advisor> advisors, UUID uuid){
-        for (Advisor advisor : advisors){
-            if(advisor.getUuid().equals(uuid)){
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public static Advisor getAdvisor(ArrayList<Advisor> advisors, UUID uuid){
-        for (Advisor advisor : advisors){
-            if(advisor.getUuid().equals(uuid)){
-                return advisor;
-            }
-        }
-        return null;
-    }
+   
 
     @Override
     public String toString() {
