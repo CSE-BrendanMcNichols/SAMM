@@ -37,44 +37,20 @@ public class ApplicationFacade {
 
         switch (type) {
             case STUDENT:
-                //Student student = new Student(firstName, lastName, uscid, email, username, password);
-
                 Student student = new Student(firstName, lastName, uscid, email,  username, password, 
                 Year.Freshman, null, null, 0, 0, null, null, null,null,null,"");
 
                 userList.addStudent(student);
-
-                // Please see the commented code. istead of loading the students every time a
-                // registerUSer method is called
-                // do it once in bootstrap class and use it everywhere
-
-                // ArrayList<Student> students = DataLoader.getStudents();
-                // if (students == null) students = new ArrayList<>();
-                // students.add(student);
-                // DataWriter.saveStudents(students);
-                //UserList.getInstance().addUser(student);
                 DataWriter.saveStudents(userList.getStudents());
                 break;
             case ADVISOR:
                 Advisor advisor = new Advisor(firstName, lastName, uscid, email, username, password);
                 userList.addAdvisor(advisor);
-                /* 
-                ArrayList<Advisor> advisors = DataLoader.getAdvisors();
-                if (advisors == null)
-                    advisors = new ArrayList<>();
-                advisors.add(advisor);
-                */
                 DataWriter.saveAdvisors(userList.getAdvisors());
                 break;
             case ADMINISTRATOR:
                 Administrator administrator = new Administrator(firstName, lastName, uscid, email, username, password);
                 userList.addAdministrator(administrator);
-                /*
-                ArrayList<Administrator> administrators = DataLoader.getAdministrators();
-                if (administrators == null)
-                    administrators = new ArrayList<>();
-                administrators.add(administrator);
-                */
                 DataWriter.saveAdministrators(userList.getAdministrators());
                 break;
             default:

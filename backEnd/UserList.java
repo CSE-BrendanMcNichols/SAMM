@@ -103,11 +103,11 @@ public class UserList {
     /**
      * Adds a new user to the list if they don't already exist.
      * @param user The user to add.
-     * @return true if the user was added, false if the user already exists.
+     * @return true if the user was added, false if the Error::: User already exists.
      */
     public boolean addUser(User user) {
         if (getUserByUsername(user.getUsername()) != null || getUserByUscId(user.getUscid()) != null) {
-            System.out.println("User already exists.");
+            System.out.println("Error::: User already exists.");
             return false;
         }
         users.add(user);
@@ -119,11 +119,11 @@ public class UserList {
      */
     public boolean addStudent(Student student) {
         if (getUserByUsername(student.getUsername()) != null || getUserByUscId(student.getUscid()) != null) {
-            System.out.println("User already exists.");
+            System.out.println("Error::: User already exists.");
             return false;
         }
         students.add(student);
-        System.out.println("STudent:" + student.getFirstName() + " " + student.getLastName() + " Added successfully");
+        System.out.println("Student:" + student.getFirstName() + " " + student.getLastName() + " added successfully " + student);
         //also add to usersList.
         addUser(student);
         return true;
@@ -134,11 +134,11 @@ public class UserList {
      */
     public boolean addAdvisor(Advisor advisor) {
         if (getUserByUsername(advisor.getUsername()) != null || getUserByUscId(advisor.getUscid()) != null) {
-            System.out.println("User already exists.");
+            System.out.println("Error::: User already exists.");
             return false;
         }
         advisors.add(advisor);
-        System.out.println("Advisor:" + advisor.getFirstName() + " " + advisor.getLastName() + " Added successfully");
+        System.out.println("Advisor:" + advisor.getFirstName() + " " + advisor.getLastName() + " added successfully.");
         //also add to usersList.
         addUser(advisor);
         return true;
@@ -149,11 +149,11 @@ public class UserList {
      */
     public boolean addAdministrator(Administrator administrator) {
         if (getUserByUsername(administrator.getUsername()) != null || getUserByUscId(administrator.getUscid()) != null) {
-            System.out.println("User already exists.");
+            System.out.println("Error::: User already exists.");
             return false;
         }
         administrators.add(administrator);
-        System.out.println("Advisor:" + administrator.getFirstName() + " " + administrator.getLastName() + " Added successfully");
+        System.out.println("Administrator:" + administrator.getFirstName() + " " + administrator.getLastName() + " added successfully.");
         //also add to usersList.
         addUser(administrator);
         return true;

@@ -19,7 +19,7 @@ import java.util.UUID;
  */
 public class Advisor extends User {
 
-    private ArrayList<Student> assignedStudents;
+    private ArrayList<Student> assignedStudents = new ArrayList<Student>();
     private UUID uuid;
 
     /**
@@ -27,12 +27,10 @@ public class Advisor extends User {
      */
     public Advisor(String firstName, String lastName, String uscid, String email, String username, String password) {
         super(firstName, lastName, uscid, email, username, password, UserType.ADVISOR);
-        this.assignedStudents = new ArrayList<Student>();
     }
 
     public Advisor(){
         super();
-        this.assignedStudents = new ArrayList<Student>();
     }
 
     /**
