@@ -2,6 +2,9 @@ package backEnd;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -49,7 +52,9 @@ public class DataWriter {
                 studentJSON.put(DataConstants.MAJOR, student.getMajor().getMajor());
             }
 
-            studentJSON.put(DataConstants.COMPLETEDCOURSES, student.getCompletedCourses());
+            if (student.getCompletedCourses() != null) {
+                studentJSON.put(DataConstants.COMPLETEDCOURSES, student.getCompletedCourses());
+            }
 
             // Convert the Objects to UUID arraylist and store
             if (student.getCurrentCourses() != null) {
@@ -80,7 +85,7 @@ public class DataWriter {
 
         // Write JSON to file
         try (FileWriter file = new FileWriter(DataConstants.STUDENT_FILE_NAME_TEST)) {
-            file.write(studentsJSONArray.toJSONString());
+            file.write(prettyPrint(studentsJSONArray));
             file.flush();
             System.out.println("Studnets JSON data is written to the file " + DataConstants.STUDENT_FILE_NAME_TEST);
         } catch (IOException e) {
@@ -266,6 +271,13 @@ public class DataWriter {
         jsonArray.addAll(list);
 
         return jsonArray;
+    }
+
+    private static String prettyPrint(JSONArray jsonArray) {
+
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        return gson.toJson(jsonArray);
+
     }
 
 }

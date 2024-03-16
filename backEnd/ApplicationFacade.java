@@ -39,8 +39,8 @@ public class ApplicationFacade {
             case STUDENT:
                 //Student student = new Student(firstName, lastName, uscid, email, username, password);
 
-                Student student = new Student(firstName, lastName, uscid, email,  username, password, UserType.STUDENT, 
-                Year.Freshman, null, null, 0, 0, null, null, null);
+                Student student = new Student(firstName, lastName, uscid, email,  username, password, 
+                Year.Freshman, null, null, 0, 0, null, null, null,null,null,"");
 
                 userList.addStudent(student);
 

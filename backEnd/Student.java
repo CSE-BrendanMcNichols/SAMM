@@ -32,24 +32,30 @@ Added updateElectivesCompleted
     private Major major;
     private double overallGrade;
     private int credits;
-    private HashMap<Course, String> completedCourses;
-    private ArrayList<Course> currentCourses;
-    private ArrayList<String> notes;
+    private HashMap<Course, String> completedCourses = new HashMap<Course, String>();
+    private ArrayList<Course> currentCourses = new ArrayList<Course>();
+    private ArrayList<String> notes = new ArrayList<String>();
     private String applicationArea;
     private ArrayList<Elective> currentElectives = new ArrayList<Elective>();
     private ArrayList<Elective> completedElectives = new ArrayList<Elective>();
     private UUID uuid;
 
     // Updated Constructor
-    public Student(String firstName, String lastName, String uscid, String email, String username, String password, UserType type, Year gradeYear, Advisor advisor, Major major, double overallGrade, int credits, HashMap<Course, String> completedCourses, ArrayList<Course> currentCourses, ArrayList<String> notes) {
-        super(firstName, lastName, uscid, email, username, password, type);
+    public Student(String firstName, String lastName, String uscid, String email, String username, String password, Year gradeYear, Advisor advisor, Major major, double overallGrade, int credits, HashMap<Course, String> completedCourses, ArrayList<Course> currentCourses, ArrayList<String> notes, ArrayList<Elective> currentElectives, ArrayList<Elective> completedElectives, String applicationArea) {
+        super(firstName, lastName, uscid, email, username, password, UserType.STUDENT);
         this.gradeYear = gradeYear;
         this.advisor = advisor;
         this.major = major;
         this.overallGrade = overallGrade;
         this.credits = credits;
-        this.completedCourses = completedCourses;
-        this.currentCourses = currentCourses;
+        if (completedCourses != null)
+            this.completedCourses = completedCourses;
+        if (currentCourses != null)
+            this.currentCourses = currentCourses;
+        if (completedElectives != null)
+            this.completedElectives = completedElectives;
+        if (currentElectives != null)
+            this.currentElectives = currentElectives;
         this.notes = notes;
         this.uuid = UUID.randomUUID();
     }
@@ -61,12 +67,17 @@ Added updateElectivesCompleted
         this.major = major;
         this.overallGrade = overallGrade;
         this.credits = credits;
-        this.completedCourses = completedCourses;
-        this.currentCourses = currentCourses;
         this.notes = notes;
         this.uuid = uuid;
-        this.completedElectives = completedElectives;
-        this.currentElectives = currentElectives;
+
+         if (completedCourses != null)
+            this.completedCourses = completedCourses;
+        if (currentCourses != null)
+            this.currentCourses = currentCourses;
+        if (completedElectives != null)
+            this.completedElectives = completedElectives;
+        if (currentElectives != null)
+            this.currentElectives = currentElectives;
         this.applicationArea = applicationArea;
     }
     // constructor for DataLoader first sweep
@@ -88,6 +99,11 @@ Added updateElectivesCompleted
 
     // Added Getters and setters methods
     
+    public Student(String firstName, String lastName, String uscid, String email, String username, String password,
+            UserType student, Year freshman, Object object, Object object2, int i, int j, Object object3,
+            Object object4, Object object5) {
+        //TODO Auto-generated constructor stub
+    }
     public Year getGradeYear() {
         return gradeYear;
     }
