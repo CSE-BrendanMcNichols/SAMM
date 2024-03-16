@@ -43,8 +43,7 @@ public class TestDriver {
         Elective Stats1 = new Elective(current, "Stats1", 4, null);
         Elective Stats2 = new Elective(current, "Stats2", 3, null);
         Student s1 = new Student("Twanie", "Hill", "111", "email@email.com", "null", "pass", UserType.STUDENT, Year.Junior, null, null, 0, 0, null, null, null);
-        s1.addElective(Stats1);
-        s1.addElective(Stats2);
+        
         s1.setApplicationArea("Not Stats");
         
         s1.setCurrentCourses(current);
@@ -86,6 +85,7 @@ public class TestDriver {
             s1.setNotes(newnotes);
             System.out.println("\n\ns1 notes: " + s1.getNotes());
 
+            
 
         }else if(input.equals("QUIT")){
             System.out.println("Goodbye!");
