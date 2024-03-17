@@ -13,8 +13,8 @@ public class ApplicationFacade {
         //initialize with Course Requirements
         Cache.getInstance().initializeCourseRequirements();
 
-        Cache.getInstance().initializeApplicationAreas();
-        /*
+        //Cache.getInstance().initializeApplicationAreas();
+        
         Cache.getInstance().initializeElectives();
         Cache.getInstance().initializeMajors();
         
@@ -23,7 +23,7 @@ public class ApplicationFacade {
         Cache.getInstance().initializeAdvisors();
         // initialize with Advisor
         Cache.getInstance().initializeStudentsAdvisor();
-        */
+        
         
     }
 
@@ -48,7 +48,7 @@ public class ApplicationFacade {
                 DataWriter.saveStudents(userList.getStudents());
                 break;
             case ADVISOR:
-                Advisor advisor = new Advisor(firstName, lastName, uscid, email, username, password);
+                Advisor advisor = new Advisor(firstName, lastName, uscid, email, username, password,"CIS");
                 userList.addAdvisor(advisor);
                 DataWriter.saveAdvisors(userList.getAdvisors());
                 break;
@@ -73,12 +73,15 @@ public class ApplicationFacade {
      */
     public User loginUser(String username, String password) {
         User user = userList.getUserByUsername(username);
+        //System.out.println("Login user " + user);
+
         if (user != null && user.getPassword().equals(password)) {
             return user;
         }
         return null;
     }
 
+    /* 
     public void accessUserActions() {
         // make a boolean that is quit and in the logout case you set quit to true;
         // The printing should be all in the UI and the
@@ -95,4 +98,5 @@ public class ApplicationFacade {
             }
         }
     }
+    */
 }

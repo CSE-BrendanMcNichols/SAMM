@@ -32,6 +32,8 @@ public abstract class DataConstants {
 	protected static final String PASSWORD = "password";
 	protected static final String EMAIL = "email";
 	protected static final String USCID = "uscid";
+	protected static final String DEPARTMENT = "department";
+
 	protected static final String COURSENAME = "courseName";
 	protected static final String COURSESEMESTER = "courseSemester";
 	protected static final String COURSENUMBER = "courseNumber";
@@ -66,5 +68,7 @@ public abstract class DataConstants {
 	protected static final String COURSES = "courses";
 	protected static final String ELECTIVE_COURSES = "electiveCourses";
 	protected static final String AREANAME = "area";
+	protected static final String APPLICATIONAREA = "applicationArea";
+
 	
 }

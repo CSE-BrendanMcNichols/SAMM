@@ -19,13 +19,7 @@ import java.util.UUID;
  * Added updateElectivesCompleted
  */
 public class Student extends User {
-    @Override
-    public String toString() {
-        return "Student [gradeYear=" + gradeYear + ", advisor=" + advisor + ", major=" + major + ", overallGrade="
-                + overallGrade + ", credits=" + credits + ", completedCourses=" + completedCourses + ", currentCourses="
-                + currentCourses + ", notes=" + notes + ", applicationArea=" + applicationArea + ", currentElectives="
-                + currentElectives + ", completedElectives=" + completedElectives + ", uuid=" + uuid + "]";
-    }
+   
 
     private Year gradeYear;
     private Advisor advisor;
@@ -41,18 +35,11 @@ public class Student extends User {
     private UUID uuid;
 
     // Updated Constructor
-<<<<<<< HEAD
-    public Student(String firstName, String lastName, String uscid, String email, String username, String password, 
-    UserType type, Year gradeYear, Advisor advisor, Major major, double overallGrade, int credits, 
-    HashMap<Course, String> completedCourses, ArrayList<Course> currentCourses, ArrayList<String> notes) {
-        super(firstName, lastName, uscid, email, username, password, type);
-=======
     public Student(String firstName, String lastName, String uscid, String email, String username, String password,
             Year gradeYear, Advisor advisor, Major major, double overallGrade, int credits,
             HashMap<Course, String> completedCourses, ArrayList<Course> currentCourses, ArrayList<String> notes,
             ArrayList<Elective> currentElectives, ArrayList<Elective> completedElectives, String applicationArea) {
         super(firstName, lastName, uscid, email, username, password, UserType.STUDENT);
->>>>>>> 7d51a55dce6bf6153c18a7d7407b841f482e4192
         this.gradeYear = gradeYear;
         this.advisor = advisor;
         this.major = major;
@@ -104,7 +91,6 @@ public class Student extends User {
             ArrayList<Elective> completedElectives, String applicationArea) {
         super(uuid, firstName, lastName, uscid, email, username, password, UserType.STUDENT);
         this.gradeYear = gradeYear;
-        this.advisor = new Advisor();
         this.major = major;
         this.overallGrade = overallGrade;
         this.credits = credits;
@@ -120,7 +106,7 @@ public class Student extends User {
     // Added Getters and setters methods
 
     public Student(String firstName, String lastName, String uscid, String email, String username, String password,
-            UserType student, Year freshman, Object object, Object object2, int i, int j, Object object3,
+            UserType student, Year freshman, Object object, Object object2, double d, int j, Object object3,
             Object object4, Object object5) {
         // TODO Auto-generated constructor stub
     }
@@ -234,11 +220,23 @@ public class Student extends User {
     }
 
     public void viewCurrentSchedule() {
-        System.out.println("Current Schedule:");
+        System.out.println("--------------------------");
+        System.out.println("Current Courses:");
         for (Course course : this.currentCourses) {
-            System.out.println(course);
+            System.out.println(course.displayCourse());
         }
-        System.out.println("End of Current Schedule");
+        System.out.println("Current Electives");
+        for (Elective elective : this.currentElectives) {
+            System.out.println(elective.getName());
+            if (elective.getCourses() != null) {
+                for (Course course : elective.getCourses()) {
+                    System.out.println(course.displayCourse());
+                }
+            }
+        }
+        System.out.println("--------------------------");
+
+        // System.out.println("End of Current Schedule");
     }
 
     private void assignAdvisor(Advisor advisor) {
@@ -352,10 +350,12 @@ public class Student extends User {
      */
 
     public ArrayList<Elective> getCurrentElectives() {
-        System.out.println("Current electives:");
-        for (Elective e : currentElectives) {
-            System.out.println(e.getName());
-        }
+        /*
+         * System.out.println("Current electives:");
+         * for (Elective e : currentElectives) {
+         * System.out.println(e.getName());
+         * }
+         */
         return currentElectives;
     }
 
@@ -364,10 +364,12 @@ public class Student extends User {
     }
 
     public ArrayList<Elective> getCompletedElectives() {
-        System.out.println("Completed electives:");
-        for (Elective e : completedElectives) {
-            System.out.println(e.getName());
-        }
+        /*
+         * System.out.println("Completed electives:");
+         * for (Elective e : completedElectives) {
+         * System.out.println(e.getName());
+         * }
+         */
 
         return completedElectives;
     }
@@ -424,5 +426,25 @@ public class Student extends User {
         } else {
             return "No Advisor assigned";
         }
+    }
+
+    public void addNotes(String note) {
+        if (notes == null) {
+            this.notes = new ArrayList<String>();
+        }
+        notes.add(note);
+    }
+
+    public String displayStudent() {
+        return "Student:: " + this.getUscid() + " : " + this.getFirstName() + " " + this.getLastName();
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + "Student [gradeYear=" + gradeYear + ", advisor=" + advisor + ", major=" + major
+                + ", overallGrade="
+                + overallGrade + ", credits=" + credits + ", completedCourses=" + completedCourses + ", currentCourses="
+                + currentCourses + ", notes=" + notes + ", applicationArea=" + applicationArea + ", currentElectives="
+                + currentElectives + ", completedElectives=" + completedElectives + ", uuid=" + uuid + "]";
     }
 }

@@ -1,14 +1,13 @@
 package backEnd;
 
 import java.util.ArrayList;
-import java.util.Random;
 import java.util.UUID;
 
 public class Course {
     private UUID uuid;
     private String courseName;
     private String courseSubject;
-    private int courseNumber;
+    private String courseNumber;
     private ArrayList<Requirement> prerequisites;
     private ArrayList<Requirement> corequisites;
     private ArrayList<Semester> courseAvailability;
@@ -21,7 +20,7 @@ public class Course {
         this.courseName = "EMPTY CLASS";
     }
 
-    public Course(String courseName, int courseNumber,
+    public Course(String courseName, String courseNumber,
                   ArrayList<Requirement> prerequisites, ArrayList<Requirement> corequisites,
                   ArrayList<Semester> courseAvailability, String courseDescription,
                   int courseHours, char minGrade, CourseState courseStatus,UUID uuid) {
@@ -38,7 +37,7 @@ public class Course {
         this.uuid = uuid;
     }
   
-    public Course(String courseName, int courseNumber, ArrayList<Semester> courseAvailability, String courseDescription,
+    public Course(String courseName, String courseNumber, ArrayList<Semester> courseAvailability, String courseDescription,
             int courseHours, char minGrade, CourseState courseStatus, UUID uuid) {
 
         this.courseName = courseName;
@@ -51,19 +50,7 @@ public class Course {
         this.uuid = uuid;
     }
 
-    //DELETE CODE BELOW AFTER TESTING IT
-    public Course(String string, int i, String string2, String string3, String string4) {
-        courseName = string;
-        courseNumber = i;
-        courseDescription = string2;
-        Random rng = new Random();
-        courseHours = rng.nextInt(15-0+1)+1;
-        System.out.println("Course " + courseName + " has " + courseHours + "hours");
-        minGrade = string4.charAt(0);
-        
-        courseStatus = CourseState.NOT_STARTED;
-    }
-    // DELETE CODE ABOVE AFTER TESTING
+    
 
     public UUID getUuid() {
         return uuid;
@@ -77,7 +64,7 @@ public class Course {
         return courseSubject;
     }
 
-    public int getCourseNumber() {
+    public String getCourseNumber() {
         return courseNumber;
     }
 
@@ -115,7 +102,7 @@ public class Course {
         this.courseSubject = courseSubject;
     }
 
-    public void setCourseNumber(int courseNumber) {
+    public void setCourseNumber(String courseNumber) {
         this.courseNumber = courseNumber;
     }
 
@@ -136,23 +123,11 @@ public class Course {
         this.courseStatus = courseStatus;
     }
 
-    public String toString1String(){
-        return "Course UUID " + uuid.toString() + "\n" + "Course name:" + courseName + "\nCourse description:" + courseDescription + "\n";
+    public String displayCourse(){
+        return "Course Number:" + courseNumber + " Course Name:" + courseName + "\n"; 
         //return courseName;
     }
     
-
-
-
-    
-    @Override
-    public String toString() {
-        return "Course [uuid=" + uuid + ", courseName=" + courseName + ", courseSubject=" + courseSubject
-                + ", courseNumber=" + courseNumber + ", prerequisites=" + prerequisites + ", corequisites="
-                + corequisites + ", courseAvailability=" + courseAvailability + ", courseDescription="
-                + courseDescription + ", courseHours=" + courseHours + ", minGrade=" + minGrade + ", courseStatus="
-                + courseStatus + "]";
-    }
 
     // Methods for managing prerequisites and corequisites
     public void addPrerequisite(Requirement prerequisite) {

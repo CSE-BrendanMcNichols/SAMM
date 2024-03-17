@@ -1,4 +1,3 @@
-[{"firstName":"John","lastName":"Doe","password":"Password123","uscid":"HE82021","uuid":"747d28b3-42a3-40b4-8001-554dc044696c","email":"JohnDoe@email.sc.edu","username":"JohnDoe"},{"firstName":"John","lastName":"Smith","password":"Password321","uscid":"JY88081","uuid":"c6743835-9a22-46fd-8df2-b7ce0c4ae7db","email":"JohnSmith@email.sc.edu","username":"JohnSmith"}]
 [
     {
       "username": "JohnDoe",

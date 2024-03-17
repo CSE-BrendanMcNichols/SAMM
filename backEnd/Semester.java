@@ -11,6 +11,8 @@ public enum Semester {
                 return  Fall;
             case "Spring":
                 return Spring;
+            case "Summer":
+                return Summer;
             default:
                 throw new IllegalArgumentException("Invalid semester " + semesterString);
         }

@@ -4,15 +4,6 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 /**
- * Modification History
- * 
- * 1) Sree - 03/13 - implemented searchStudent, updateStudentGrade, updateStudentCredits, riskOfFailure, makeNote
- * //See TODO for pending stub methods
- * 
- * 
- */
-
-/**
  * This is a Advisor class
  * 
  * @author sree
@@ -20,17 +11,15 @@ import java.util.UUID;
 public class Advisor extends User {
 
     private ArrayList<Student> assignedStudents = new ArrayList<Student>();
+    private String department;
     private UUID uuid;
 
     /**
      * Constuctor
      */
-    public Advisor(String firstName, String lastName, String uscid, String email, String username, String password) {
+    public Advisor(String firstName, String lastName, String uscid, String email, String username, String password,String department) {
         super(firstName, lastName, uscid, email, username, password, UserType.ADVISOR);
-    }
-
-    public Advisor(){
-        super();
+        this.department = department;
     }
 
     /**
@@ -38,8 +27,9 @@ public class Advisor extends User {
      * 
      */
     public Advisor(String firstName, String lastName, String uscid, String email, String username, String password,
-            ArrayList<Student> assignedStudents) {
+            ArrayList<Student> assignedStudents, String department) {
         super(firstName, lastName, uscid, email, username, password, UserType.ADVISOR);
+        this.department = department;
         if (assignedStudents != null) {
             this.assignedStudents = assignedStudents;
         } else
@@ -48,8 +38,9 @@ public class Advisor extends User {
     }
 
     public Advisor(String firstName, String lastName, String uscid, String email, String username, String password,
-            ArrayList<Student> assignedStudents, UUID uuid) {
+            ArrayList<Student> assignedStudents, UUID uuid,String department) {
         super(uuid, firstName, lastName, uscid, email, username, password, UserType.ADVISOR);
+        this.department = department;
         if (assignedStudents != null) {
             this.assignedStudents = assignedStudents;
         } else
@@ -295,6 +286,16 @@ public class Advisor extends User {
     public String toString() {
         return "Advisor [UUID:" + uuid + "\n"+  super.toString() + "]";
     }
+
+    public String getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department;
+    }
+
+    
 
     
 }
