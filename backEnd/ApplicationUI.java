@@ -93,7 +93,7 @@ public class ApplicationUI {
         System.out.println("\n Science \n Math \n Digital Design \n Robotics \n Speech \n");
         System.out.println("Please enter which application area you would like to choose: ");
         String applicationInput = scanner.nextLine();
-        ApplicationArea.setArea(applicationInput);
+        //ApplicationArea.setArea(applicationInput);
     }
 
     private static User login() {
