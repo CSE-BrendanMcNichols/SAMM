@@ -2,7 +2,8 @@ package backEnd;
 
 public enum Semester {
     Fall,
-    Spring;
+    Spring,
+    Summer;
 
     public static Semester StringToSemester(String semesterString) {
         switch(semesterString) {
