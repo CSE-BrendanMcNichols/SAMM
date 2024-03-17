@@ -44,6 +44,14 @@ public class ApplicationUI {
                     break;
                 case 5:
                     displayRoadmap(student);
+                    System.out.println("Would you like to check the courses for any of the requirements? Y/N");
+                    String check = scanner.next();
+                    if(check.equalsIgnoreCase("N")){
+                        break;
+                    }
+                    System.out.println("Please enter the Code for the requirement");
+                    check = scanner.next();
+                    displayRequirement(RequirementType.StringToType(check));
                     break;
                 case 6:
                     displayRoadmap(student);
@@ -56,7 +64,6 @@ public class ApplicationUI {
             }
         }
     }
-
 
     private static void checkProgress(Student student){
         Student.checkProgress(student);
@@ -189,5 +196,10 @@ public class ApplicationUI {
         System.out.print("Your are successfully logged out! Good Bye!");
         System.exit(0);
     }
+
+    private static void displayRequirement(RequirementType type){
+        applicationFacade.displayRequirement(type);
+    }
+
 
 }
