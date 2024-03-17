@@ -7,7 +7,6 @@ import java.util.UUID;
 public class ApplicationFacade {
     private UserList userList = UserList.getInstance();
     private static ApplicationFacade applicationFacade;
-    private Cache cache = Cache.getInstance();
 
     private ApplicationFacade() {
         Cache.getInstance().initializeCourses();
@@ -88,8 +87,10 @@ public class ApplicationFacade {
         return student;
     }
 
-    public static void displayRequirement(RequirementType type){
-        for(Requirement requirement: );
+    public void displayRequirement(RequirementType type){
+       Requirement requirement = cache.getInstance().getRequirementByType(type);
+       requirement.displayRequirement(requirement);
+       //Requirement.displayRequirement(requirement);
     }
 
     /* 
