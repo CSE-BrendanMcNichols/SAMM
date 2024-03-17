@@ -472,11 +472,12 @@ public class Student extends User {
 
     public static void generateSemesterPlan(User user) {
         try {
+
             if(user.getType() != UserType.STUDENT){
                 return;
             }
             Student student = UserList.getInstance().getStudent(user.getUuid());
-            FileWriter writer = new FileWriter(student.getFirstName() + student.getLastName() + "_SemesterPlan.txt");
+            FileWriter writer = new FileWriter("backEnd/" + student.getFirstName() + student.getLastName() + "_SemesterPlan.txt");
             writer.write(student.getFirstName() + " " + student.getLastName() + "'s 8-Semester Plan:\n\n");
             ArrayList<Course> coursesToTake = new ArrayList<>(student.getCurrentCourses());
             for (int i = 1; i <= 8; i++) {

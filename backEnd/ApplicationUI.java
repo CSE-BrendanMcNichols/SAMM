@@ -11,14 +11,19 @@ public class ApplicationUI {
     public static void main(String[] args) {
         applicationFacade = ApplicationFacade.getInstance();
         User user = null;
+        ApplicationArea applicationArea = null;
+
         while (true) {
             System.out.println("\nWelcome to the Application\n");
             System.out.println("1. Login");
             System.out.println("2. Create New Account");
-            System.out.println("3. View Student Information as Advisor");
-            System.out.println("4. Check progress as Student");
-            System.out.println("5. Display roadmap as Student");
-            System.out.println("6. Logout");
+            System.out.println("3. View Student Information as advisor");
+            System.out.println("4. Check progress as student");
+            System.out.println("5. Display roadmap as student");
+            System.out.println("6. Display GFL Classes as student");
+            System.out.println("7. Display application areas as student");
+            System.out.println("8. Logout");
+
             System.out.print("Choose an option: ");
 
             int choice = scanner.nextInt();
@@ -38,8 +43,22 @@ public class ApplicationUI {
                     break;
                 case 5:
                     displayRoadmap(user);
+                    System.out.println("Would you like to check the courses for any of the requirements? Y/N");
+                    String check = scanner.next();
+                    if(check.equalsIgnoreCase("N")){
+                        break;
+                    }
+                    System.out.println("Please enter the Code for the requirement");
+                    check = scanner.next();
+                    displayRequirement(RequirementType.StringToType(check));
                     break;
                 case 6:
+                    //need GFL function
+                    break;
+                case 7:
+                    applicationArea(user);
+                    break;
+                case 8:
                     logout();
                     saveData();
                     System.exit(0);
@@ -69,9 +88,12 @@ public class ApplicationUI {
         Student.generateSemesterPlan(student);
     }
 
-    private static Student loginStudent(UUID uuid){
-        Student student = applicationFacade.loginStudent(uuid);
-        return student;
+    private static void applicationArea(User student) {
+        System.out.println("Possible Application Areas: ");
+        System.out.println("\n Science \n Math \n Digital Design \n Robotics \n Speech \n");
+        System.out.println("Please enter which application area you would like to choose: ");
+        String applicationInput = scanner.nextLine();
+        ApplicationArea.setArea(applicationInput);
     }
 
     private static User login() {
@@ -188,5 +210,10 @@ public class ApplicationUI {
     private static void logout() {
         loggedIn = false;
     }
+
+    private static void displayRequirement(RequirementType type){
+        applicationFacade.displayRequirement(type);
+    }
+
 
 }
