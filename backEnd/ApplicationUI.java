@@ -94,6 +94,11 @@ public class ApplicationUI {
         System.out.println("Please enter which application area you would like to choose: ");
         String applicationInput = scanner.nextLine();
         ApplicationArea.setArea(applicationInput);
+        System.out.println("Would you like to see your application area? Y/N");
+        String check = scanner.nextLine();
+        if(check.equalsIgnoreCase("Y")); {
+            System.out.println(ApplicationArea.getArea());
+        }
     }
 
     private static User login() {
