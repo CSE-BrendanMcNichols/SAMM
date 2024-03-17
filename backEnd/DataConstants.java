@@ -35,6 +35,7 @@ public abstract class DataConstants {
 	protected static final String DEPARTMENT = "department";
 
 	protected static final String COURSENAME = "courseName";
+	protected static final String COURSESUBJECT = "courseSubject";
 	protected static final String COURSESEMESTER = "courseSemester";
 	protected static final String COURSENUMBER = "courseNumber";
 	protected static final String PREREQUISITES = "prerequisites";

@@ -87,6 +87,15 @@ public class CourseList {
         return false;
     }
 
+    public Course findCourseByName(String name) {
+        for (Course course : courses) {
+            if (course.getCourseName().equals(name)) {
+                return course;
+            }
+        }
+        return null;
+    }
+
     public Course getCourse(UUID uuid) {
         for (Course course : courses) {
             if (course.getUuid().equals(uuid)) {
