@@ -63,7 +63,9 @@ public class ApplicationUI {
                     }
                     System.out.println("Please Enter The Course Name");
                     String subject = scanner.next();
-                    student.updateCurrentCourses(CourseList.getInstance().findCourseByName(subject));
+                    System.out.println("Please Enter The Course Number");
+                    int number = scanner.nextInt();
+                    student.updateCurrentCourses(CourseList.getInstance().getCourse(subject, number));
                     break;
                 case 6:
                     System.out.println("Please enter the Code for the requirement");

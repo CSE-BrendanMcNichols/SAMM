@@ -337,7 +337,7 @@ public class DataLoader extends DataConstants {
 				UUID uuid = UUID.fromString((String) courseJSON.get(UUIDSTRING));
 
 				courses.add(new Course(courseName, courseNumber, courseSemester,
-						courseDescription, courseHours, minGrade, courseState, uuid));
+						courseDescription, courseHours, minGrade, courseState, uuid, courseSubject));
 			}
 			System.out.println("*** Successfully Loaded Courses without Requirements");
 
