@@ -40,6 +40,7 @@ public class TestDriver {
 
         braxWest.setCompletedCourses(completedCourses);
 
+        /* 
         ArrayList<Course> remainingCourses = new ArrayList<>();
         remainingCourses.add(new Course("GFL", "3", semesters, "Foreign Language", 3 , 'A', CourseState.NOT_STARTED, UUID.randomUUID()));
         braxWest.setRemainingCourses(remainingCourses);
@@ -49,6 +50,7 @@ public class TestDriver {
         braxWest.setCurrentElectives(selectedElective);
 
         braxWest.setApplicationArea("Digital Design");
+        */
 
         generateSemesterPlan(braxWest);
 
@@ -142,7 +144,67 @@ public class TestDriver {
 
     //TODO: Implement method to select GFL elective and choose Digital Design
 
+    /*
     private static void generateSemesterPlan(Student braxWest) {
+        try {
+            FileWriter writer = new FileWriter("backEnd/BraxWest_SemesterPlan.txt");
+            writer.write("Brax West's 8-Semester Plan:\n\n");
+            ArrayList<Course> coursesToTake = new ArrayList<>(braxWest.getCurrentCourses());
+            for (int i = 1; i <= 8; i++) {
+                writer.write("Semester " + i + ":\n");
+                writer.write("Courses to Take:\n");
+                for (Course course : coursesToTake) {
+                    writer.write(course.getCourseSubject() + " " + course.getCourseNumber() + " - " + course.getCourseName() + "\n");
+                }
+                writer.write("\n");
+            }
+            writer.close();
+            System.out.println("\n8-Semester Plan for Brax West has been generated and saved to BraxWest_SemesterPlan.txt");
+        } catch (IOException e) {
+            System.out.println("An error occurred while writing the 8-Semester Plan to a file.");
+            e.printStackTrace();
+        }
+    }
+    
+
+    public static void generateSemesterPlan(Student braxWest) {
+        try {
+            FileWriter writer = new FileWriter("backEnd/BraxWest_SemesterPlan.txt");
+            writer.write("Brax West's 8-Semester Plan:\n\n");
+
+            // Assuming the student needs to take CS courses in each semester
+            ArrayList<Course> csCoursesToTake = generateCsCoursesToTake(braxWest);
+            
+            for (int i = 1; i <= 8; i++) {
+                writer.write("Semester " + i + ":\n");
+                writer.write("Courses to Take:\n");
+                for (Course course : csCoursesToTake) {
+                    writer.write(course.getCourseSubject() + " " + course.getCourseNumber() + " - " + course.getCourseName() + "\n");
+                }
+                writer.write("\n");
+            }
+            writer.close();
+            System.out.println("\n8-Semester Plan for Brax West has been generated and saved to BraxWest_SemesterPlan.txt");
+        } catch (IOException e) {
+            System.out.println("An error occurred while writing the 8-Semester Plan to a file.");
+            e.printStackTrace();
+        }
+    }
+
+    // Sample logic to generate CS courses to take
+    public static ArrayList<Course> generateCsCoursesToTake(Student student) {
+        ArrayList<Course> coursesToTake = new ArrayList<>();
+        // Sample: Adding CS courses that the student hasn't completed yet
+        for (Course course : student.getReq().getRequiredCourses()) {
+            if (!student.getCompletedCourses().containsKey(course)) {
+                coursesToTake.add(course);
+            }
+        }
+        return coursesToTake;
+    }
+    */
+
+    public static void generateSemesterPlan(Student braxWest) {
         try {
             FileWriter writer = new FileWriter("backEnd/BraxWest_SemesterPlan.txt");
             writer.write("Brax West's 8-Semester Plan:\n\n");
