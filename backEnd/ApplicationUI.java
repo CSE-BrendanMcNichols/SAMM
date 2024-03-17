@@ -33,6 +33,8 @@ public class ApplicationUI {
                 case 4:
                     logout();
                     break;
+                case 5:
+                    
                 default:
                     System.out.println("Invalid option, please try again.");
             }

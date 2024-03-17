@@ -1,5 +1,7 @@
 package backEnd;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -446,6 +448,38 @@ public class Student extends User {
 
     public String displayStudent() {
         return "Student:: " + this.getUscid() + " : " + this.getFirstName() + " " + this.getLastName();
+    }
+
+    public static void checkProgress(Student braxWest) {
+        System.out.println("Brax West's Completed Courses: ");
+        for(Course course : braxWest.getCurrentCourses()) {
+            System.out.println(course.getCourseSubject() + " " + course.getCourseNumber() + " Grade: " + braxWest.getCompletedCourses().get(course));
+        }
+        System.out.println("\nBrax West's Remaining Courses:");
+        for (Course course : braxWest.getCurrentCourses()) {
+            System.out.println(course.getCourseSubject() + " " + course.getCourseNumber());
+        }
+    }
+
+    private static void generateSemesterPlan(Student braxWest) {
+        try {
+            FileWriter writer = new FileWriter("BraxWest_SemesterPlan.txt");
+            writer.write("Brax West's 8-Semester Plan:\n\n");
+            ArrayList<Course> coursesToTake = new ArrayList<>(braxWest.getCurrentCourses());
+            for (int i = 1; i <= 8; i++) {
+                writer.write("Semester " + i + ":\n");
+                writer.write("Courses to Take:\n");
+                for (Course course : coursesToTake) {
+                    writer.write(course.getCourseSubject() + " " + course.getCourseNumber() + " - " + course.getCourseName() + "\n");
+                }
+                writer.write("\n");
+            }
+            writer.close();
+            System.out.println("\n8-Semester Plan for Brax West has been generated and saved to BraxWest_SemesterPlan.txt");
+        } catch (IOException e) {
+            System.out.println("An error occurred while writing the 8-Semester Plan to a file.");
+            e.printStackTrace();
+        }
     }
 
     @Override
