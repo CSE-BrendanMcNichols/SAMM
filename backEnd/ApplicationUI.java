@@ -1,6 +1,7 @@
 package backEnd;
 
 import java.util.Scanner;
+import java.util.UUID;
 
 public class ApplicationUI {
     private static ApplicationFacade applicationFacade;
@@ -10,12 +11,16 @@ public class ApplicationUI {
     public static void main(String[] args) {
         applicationFacade = ApplicationFacade.getInstance();
         User user = null;
+        Student student = null;
+        Advisor advisor = null;
         while (true) {
             System.out.println("\nWelcome to the Application");
             System.out.println("1. Login");
             System.out.println("2. Create New Account");
             System.out.println("3. View Student Information");
-            System.out.println("4. Logout");
+            System.out.println("4. Check progress as student");
+            System.out.println("5. Display roadmap as student");
+            System.out.println("6. Logout");
             System.out.print("Choose an option: ");
 
             int choice = scanner.nextInt();
@@ -23,6 +28,9 @@ public class ApplicationUI {
             switch (choice) {
                 case 1:
                     user = login();
+                    if(user.getType() == UserType.STUDENT){
+                        student = loginStudent(user.getUuid());
+                    }
                     break;
                 case 2:
                     createAccount();
@@ -31,16 +39,33 @@ public class ApplicationUI {
                     viewStudentInfo(user);
                     break;
                 case 4:
-                    logout();
+                    checkProgress(student);
                     break;
                 case 5:
-                    
+                    displayRoadmap(student);
+                    break;
+                case 6:
+                    logout();
+                    break;
                 default:
                     System.out.println("Invalid option, please try again.");
             }
         }
     }
 
+
+    private static void checkProgress(Student student){
+        Student.checkProgress(student);
+    }
+
+    private static void displayRoadmap(Student student){
+        Student.generateSemesterPlan(student);
+    }
+
+    private static Student loginStudent(UUID uuid){
+        Student student = applicationFacade.loginStudent(uuid);
+        return student;
+    }
 
     private static User login() {
         System.out.print("Enter username: ");

@@ -461,7 +461,7 @@ public class Student extends User {
         }
     }
 
-    private static void generateSemesterPlan(Student braxWest) {
+    public static void generateSemesterPlan(Student braxWest) {
         try {
             FileWriter writer = new FileWriter("BraxWest_SemesterPlan.txt");
             writer.write("Brax West's 8-Semester Plan:\n\n");

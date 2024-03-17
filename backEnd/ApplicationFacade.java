@@ -2,6 +2,7 @@ package backEnd;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.UUID;
 
 public class ApplicationFacade {
     private UserList userList = UserList.getInstance();
@@ -78,6 +79,12 @@ public class ApplicationFacade {
             return user;
         }
         return null;
+    }
+
+    public Student loginStudent(UUID uuid) {
+        Student student = userList.getStudent(uuid);
+        //System.out.println("Login user " + user);
+        return student;
     }
 
     /* 
