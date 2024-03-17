@@ -141,4 +141,13 @@ public class Cache {
         return null;
     }
 
+    public Requirement getRequirementByType(RequirementType type) {
+        for (Requirement requirement : requirementList) {
+            if (requirement.getType().equals(type)) {
+                return requirement;
+            }
+        }
+        return null;
+    }
+
 }

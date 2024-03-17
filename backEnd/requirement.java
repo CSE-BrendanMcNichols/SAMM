@@ -63,4 +63,11 @@ public class Requirement{
     public ArrayList<Course> getCourses(){
         return this.courses;
     }
+
+    public void displayRequirement(Requirement requirement){
+        System.out.println("These are the courses that satisfy the Requirement: "+ type);
+        for(Course course: courses){
+            System.out.println(course.displayCourse());
+        }
+    }
 }

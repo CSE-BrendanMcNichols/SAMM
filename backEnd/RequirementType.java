@@ -7,7 +7,7 @@ public enum RequirementType {
     CMW,
     ARP,
     SCI,
-    GLF,
+    GFL,
     GHS,
     GSS,
     AIU,
@@ -29,8 +29,8 @@ public enum RequirementType {
                 return ARP;
             case "SCI":
                 return SCI;
-            case "GLF":
-                return GLF;
+            case "GFL":
+                return GFL;
             case "GHS":
                 return GHS;
             case "GSS":

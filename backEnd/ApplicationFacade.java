@@ -88,8 +88,10 @@ public class ApplicationFacade {
         return student;
     }
 
-    public static void displayRequirement(RequirementType type){
-        for(Requirement requirement: );
+    public void displayRequirement(RequirementType type){
+       Requirement requirement = cache.getInstance().getRequirementByType(type);
+       requirement.displayRequirement(requirement);
+       //Requirement.displayRequirement(requirement);
     }
 
     /* 
