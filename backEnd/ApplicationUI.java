@@ -101,7 +101,7 @@ public class ApplicationUI {
             System.out.println("Please Login to proceed.");
             return;
         }
-        System.out.println("loggedInUser" + loggedInUser);
+        //System.out.println("loggedInUser" + loggedInUser);
 
         if (loggedInUser.getType() == UserType.ADVISOR) {
             Advisor advisor = UserList.getInstance().getAdvisor(loggedInUser.getUuid());
