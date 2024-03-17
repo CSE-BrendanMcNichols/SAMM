@@ -20,7 +20,8 @@ public class ApplicationUI {
             System.out.println("3. View Student Information");
             System.out.println("4. Check progress as student");
             System.out.println("5. Display roadmap as student");
-            System.out.println("6. Logout");
+            System.out.println("6. Display GFL Classes as student");
+            System.out.println("7. Logout");
             System.out.print("Choose an option: ");
 
             int choice = scanner.nextInt();
@@ -45,6 +46,9 @@ public class ApplicationUI {
                     displayRoadmap(student);
                     break;
                 case 6:
+                    displayRoadmap(student);
+                    break;
+                case 7:
                     logout();
                     break;
                 default:
