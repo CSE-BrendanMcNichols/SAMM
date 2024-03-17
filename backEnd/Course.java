@@ -50,6 +50,19 @@ public class Course {
         this.uuid = uuid;
     }
 
+    public Course(String courseName, String courseNumber, ArrayList<Semester> courseAvailability, String courseDescription,
+            int courseHours, char minGrade, CourseState courseStatus, UUID uuid, String courseSubject) {
+        this.courseSubject = courseSubject;
+        this.courseName = courseName;
+        this.courseNumber = courseNumber;
+        this.courseAvailability = new ArrayList<>(courseAvailability);
+        this.courseDescription = courseDescription;
+        this.courseHours = courseHours;
+        this.minGrade = minGrade;
+        this.courseStatus = courseStatus;
+        this.uuid = uuid;
+    }
+
     
 
     public UUID getUuid() {
@@ -124,7 +137,7 @@ public class Course {
     }
 
     public String displayCourse(){
-        return "Course Number:" + courseNumber + " Course Name:" + courseName + " Course: Subject"+ courseSubject + "\n"; 
+        return "Course Number:" + courseNumber + " Course Name:" + courseName + " Subject: "+ courseSubject + "\n"; 
         //return courseName;
     }
     
