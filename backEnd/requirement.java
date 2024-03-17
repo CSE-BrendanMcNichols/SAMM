@@ -1,15 +1,12 @@
 package backEnd;
-
 import java.util.ArrayList;
 import java.util.UUID;
-
 public class Requirement{
     private Boolean eitherOr;
     private String requirementFor;
     private RequirementType type;
     private ArrayList<Course> courses;
     private UUID uuid;
-
     Requirement(ArrayList<Course> courses, Boolean eitherOr, RequirementType type, String requirementFor, UUID uuid){
         this.eitherOr = eitherOr;
         this.requirementFor = requirementFor;
@@ -30,7 +27,6 @@ public class Requirement{
         }
         return false;
     }
-
     public static Requirement getReq(ArrayList<Requirement> requirements, UUID uuid ){
         for (Requirement requirement : requirements){
             if(requirement.getUuid().equals(uuid)){
@@ -39,27 +35,21 @@ public class Requirement{
         }
         return null;
     }
-
     public void addCourse(Course course){
         courses.add(course);
     }
-
     public String toString(){
         return"description";
     }
-
     public RequirementType getType(){
         return this.type;
     }
-
     public Boolean getEitherOr(){
         return this.eitherOr;
     }
-
     public String getRequirementFor(){
         return this.requirementFor;
     }
-
     public ArrayList<Course> getCourses(){
         return this.courses;
     }
