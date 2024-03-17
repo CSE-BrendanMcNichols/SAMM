@@ -7,7 +7,6 @@ import java.util.UUID;
 public class ApplicationFacade {
     private UserList userList = UserList.getInstance();
     private static ApplicationFacade applicationFacade;
-    private Cache cache = Cache.getInstance();
 
     private ApplicationFacade() {
         Cache.getInstance().initializeCourses();

@@ -450,32 +450,49 @@ public class Student extends User {
         return "Student:: " + this.getUscid() + " : " + this.getFirstName() + " " + this.getLastName();
     }
 
-    public static void checkProgress(Student braxWest) {
-        System.out.println("Brax West's Completed Courses: ");
-        for(Course course : braxWest.getCurrentCourses()) {
-            System.out.println(course.getCourseSubject() + " " + course.getCourseNumber() + " Grade: " + braxWest.getCompletedCourses().get(course));
+    public static void checkProgress(User user) {
+
+        if(user.getType() != UserType.STUDENT){
+            return;
         }
-        System.out.println("\nBrax West's Remaining Courses:");
-        for (Course course : braxWest.getCurrentCourses()) {
-            System.out.println(course.getCourseSubject() + " " + course.getCourseNumber());
+
+        Student student = UserList.getInstance().getStudent(user.getUuid());
+
+        System.out.println("\n" + student.getFirstName() + " " + student.getLastName() + "'s Completed Courses: ");
+        System.out.println("------------------------------------");
+        for(Course course : student.getCurrentCourses()) {
+            System.out.println(course.getCourseName() + " " + course.getCourseNumber() + " Grade: " + student.getCompletedCourses().get(course));
+        }
+        System.out.println("\n"+ student.getFirstName() + " " + student.getLastName() +"'s Remaining Courses:");
+        System.out.println("------------------------------------");
+        for (Course course : student.getCurrentCourses()) {
+            System.out.println(course.getCourseName() + " " + course.getCourseNumber());
         }
     }
 
-    public static void generateSemesterPlan(Student braxWest) {
+    public static void generateSemesterPlan(User user) {
         try {
-            FileWriter writer = new FileWriter("backEnd/BraxWest_SemesterPlan.txt");
-            writer.write("Brax West's 8-Semester Plan:\n\n");
-            ArrayList<Course> coursesToTake = new ArrayList<>(braxWest.getCurrentCourses());
+
+            if(user.getType() != UserType.STUDENT){
+                return;
+            }
+            Student student = UserList.getInstance().getStudent(user.getUuid());
+            FileWriter writer = new FileWriter("backEnd/" + student.getFirstName() + student.getLastName() + "_SemesterPlan.txt");
+            writer.write(student.getFirstName() + " " + student.getLastName() + "'s 8-Semester Plan:\n\n");
+            ArrayList<Course> coursesToTake = new ArrayList<>(student.getCurrentCourses());
             for (int i = 1; i <= 8; i++) {
                 writer.write("Semester " + i + ":\n");
+                writer.write("----------\n");
                 writer.write("Courses to Take:\n");
+                // TODO: fix the logic
                 for (Course course : coursesToTake) {
                     writer.write(course.getCourseSubject() + " " + course.getCourseNumber() + " - " + course.getCourseName() + "\n");
                 }
                 writer.write("\n");
             }
             writer.close();
-            System.out.println("\n8-Semester Plan for Brax West has been generated and saved to BraxWest_SemesterPlan.txt");
+            System.out.println("\n8-Semester Plan for " + student.getFirstName() + " " + student.getLastName() + "has been generated and saved to " + 
+            student.getFirstName() + student.getLastName() + "SemesterPlan.txt");
         } catch (IOException e) {
             System.out.println("An error occurred while writing the 8-Semester Plan to a file.");
             e.printStackTrace();

@@ -34,8 +34,8 @@ public class ApplicationArea {
         return area;
     }
 
-    public static void setArea(String area) {
-        area = area;
+    public void setArea(String area) {
+        this.area = area;
     }
 
     public int getHours() {

@@ -11,19 +11,19 @@ public class ApplicationUI {
     public static void main(String[] args) {
         applicationFacade = ApplicationFacade.getInstance();
         User user = null;
-        Student student = null;
-        Advisor advisor = null;
         ApplicationArea applicationArea = null;
+
         while (true) {
-            System.out.println("\nWelcome to the Application");
+            System.out.println("\nWelcome to the Application\n");
             System.out.println("1. Login");
             System.out.println("2. Create New Account");
-            System.out.println("3. View Student Information");
+            System.out.println("3. View Student Information as advisor");
             System.out.println("4. Check progress as student");
             System.out.println("5. Display roadmap as student");
             System.out.println("6. Display GFL Classes as student");
             System.out.println("7. Display application areas as student");
             System.out.println("8. Logout");
+
             System.out.print("Choose an option: ");
 
             int choice = scanner.nextInt();
@@ -31,9 +31,6 @@ public class ApplicationUI {
             switch (choice) {
                 case 1:
                     user = login();
-                    if(user.getType() == UserType.STUDENT){
-                        student = loginStudent(user.getUuid());
-                    }
                     break;
                 case 2:
                     createAccount();
@@ -42,10 +39,10 @@ public class ApplicationUI {
                     viewStudentInfo(user);
                     break;
                 case 4:
-                    checkProgress(student);
+                    checkProgress(user);
                     break;
                 case 5:
-                    displayRoadmap(student);
+                    displayRoadmap(user);
                     System.out.println("Would you like to check the courses for any of the requirements? Y/N");
                     String check = scanner.next();
                     if(check.equalsIgnoreCase("N")){
@@ -59,31 +56,39 @@ public class ApplicationUI {
                     //need GFL function
                     break;
                 case 7:
-                    applicationArea(student);
+                    applicationArea(user);
                     break;
                 case 8:
                     logout();
-                    break;
+                    saveData();
+                    System.exit(0);
                 default:
                     System.out.println("Invalid option, please try again.");
             }
+            
+   
         }
+
     }
 
-    private static void checkProgress(Student student){
+
+    private static void saveData() {
+        System.out.print("Saving Information...");
+        DataWriter.saveAdvisors(UserList.getInstance().getAdvisors());
+        DataWriter.saveStudents(UserList.getInstance().getStudents());
+        System.out.print("Your are successfully logged out! Good Bye!");
+    }
+
+
+    private static void checkProgress(User student){
         Student.checkProgress(student);
     }
 
-    private static void displayRoadmap(Student student){
+    private static void displayRoadmap(User student){
         Student.generateSemesterPlan(student);
     }
 
-    private static Student loginStudent(UUID uuid){
-        Student student = applicationFacade.loginStudent(uuid);
-        return student;
-    }
-
-    private static void applicationArea(Student student) {
+    private static void applicationArea(User student) {
         System.out.println("Possible Application Areas: ");
         System.out.println("\n Science \n Math \n Digital Design \n Robotics \n Speech \n");
         System.out.println("Please enter which application area you would like to choose: ");
@@ -203,11 +208,7 @@ public class ApplicationUI {
      * Save the info and logout
      */
     private static void logout() {
-        System.out.print("Saving Information...");
-        DataWriter.saveAdvisors(UserList.getInstance().getAdvisors());
-        DataWriter.saveStudents(UserList.getInstance().getStudents());
-        System.out.print("Your are successfully logged out! Good Bye!");
-        System.exit(0);
+        loggedIn = false;
     }
 
     private static void displayRequirement(RequirementType type){

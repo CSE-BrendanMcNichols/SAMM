@@ -310,7 +310,7 @@ public class DataLoader extends DataConstants {
 	 * @return
 	 */
 	public static ArrayList<Course> loadCoursesMinusRequirements() {
-		System.out.println("*** Loading Courses without Requirements");
+		//System.out.println("*** Loading Courses without Requirements");
 
 		ArrayList<Course> courses = new ArrayList<Course>();
 		try {

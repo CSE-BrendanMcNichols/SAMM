@@ -144,7 +144,7 @@ public class TestDriver {
 
     private static void generateSemesterPlan(Student braxWest) {
         try {
-            FileWriter writer = new FileWriter("backEnd/BraxWest_SemesterPlan.txt");
+            FileWriter writer = new FileWriter("BraxWest_SemesterPlan.txt");
             writer.write("Brax West's 8-Semester Plan:\n\n");
             ArrayList<Course> coursesToTake = new ArrayList<>(braxWest.getCurrentCourses());
             for (int i = 1; i <= 8; i++) {
