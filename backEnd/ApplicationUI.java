@@ -11,15 +11,13 @@ public class ApplicationUI {
     public static void main(String[] args) {
         applicationFacade = ApplicationFacade.getInstance();
         User user = null;
-        Student student = null;
-        Advisor advisor = null;
         while (true) {
-            System.out.println("\nWelcome to the Application");
+            System.out.println("\nWelcome to the Application\n");
             System.out.println("1. Login");
             System.out.println("2. Create New Account");
-            System.out.println("3. View Student Information");
-            System.out.println("4. Check progress as student");
-            System.out.println("5. Display roadmap as student");
+            System.out.println("3. View Student Information as Advisor");
+            System.out.println("4. Check progress as Student");
+            System.out.println("5. Display roadmap as Student");
             System.out.println("6. Logout");
             System.out.print("Choose an option: ");
 
@@ -28,9 +26,6 @@ public class ApplicationUI {
             switch (choice) {
                 case 1:
                     user = login();
-                    if(user.getType() == UserType.STUDENT){
-                        student = loginStudent(user.getUuid());
-                    }
                     break;
                 case 2:
                     createAccount();
@@ -39,26 +34,38 @@ public class ApplicationUI {
                     viewStudentInfo(user);
                     break;
                 case 4:
-                    checkProgress(student);
+                    checkProgress(user);
                     break;
                 case 5:
-                    displayRoadmap(student);
+                    displayRoadmap(user);
                     break;
                 case 6:
                     logout();
-                    break;
+                    saveData();
+                    System.exit(0);
                 default:
                     System.out.println("Invalid option, please try again.");
             }
+            
+   
         }
+
     }
 
 
-    private static void checkProgress(Student student){
+    private static void saveData() {
+        System.out.print("Saving Information...");
+        DataWriter.saveAdvisors(UserList.getInstance().getAdvisors());
+        DataWriter.saveStudents(UserList.getInstance().getStudents());
+        System.out.print("Your are successfully logged out! Good Bye!");
+    }
+
+
+    private static void checkProgress(User student){
         Student.checkProgress(student);
     }
 
-    private static void displayRoadmap(Student student){
+    private static void displayRoadmap(User student){
         Student.generateSemesterPlan(student);
     }
 
@@ -179,11 +186,7 @@ public class ApplicationUI {
      * Save the info and logout
      */
     private static void logout() {
-        System.out.print("Saving Information...");
-        DataWriter.saveAdvisors(UserList.getInstance().getAdvisors());
-        DataWriter.saveStudents(UserList.getInstance().getStudents());
-        System.out.print("Your are successfully logged out! Good Bye!");
-        System.exit(0);
+        loggedIn = false;
     }
 
 }
