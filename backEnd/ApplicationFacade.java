@@ -34,34 +34,33 @@ public class ApplicationFacade {
         return applicationFacade;
     }
 
-    public boolean registerUser(UserType type, String firstName, String lastName, String uscid, String email,
-            String username, String password) {
+    public User registerUser(UserType type, String firstName, String lastName, String uscid, String email,
+            String username, String password,String department) {
         
         System.out.println("type:" + type);
-
+        User user = null;
         switch (type) {
             case STUDENT:
                 Student student = new Student(firstName, lastName, uscid, email,  username, password, 
                 Year.Freshman, null, null, 0, 0, null, null, null,null,null,"");
-
                 userList.addStudent(student);
-                DataWriter.saveStudents(userList.getStudents());
+                user = student;
+                //DataWriter.saveStudents(userList.getStudents());
                 break;
             case ADVISOR:
-                Advisor advisor = new Advisor(firstName, lastName, uscid, email, username, password,"CIS");
+                Advisor advisor = new Advisor(firstName, lastName, uscid, email, username, password,department);
                 userList.addAdvisor(advisor);
-                DataWriter.saveAdvisors(userList.getAdvisors());
+                user = advisor;
+                //DataWriter.saveAdvisors(userList.getAdvisors());
                 break;
             case ADMINISTRATOR:
                 Administrator administrator = new Administrator(firstName, lastName, uscid, email, username, password);
                 userList.addAdministrator(administrator);
-                DataWriter.saveAdministrators(userList.getAdministrators());
+                user = administrator;
+                //DataWriter.saveAdministrators(userList.getAdministrators());
                 break;
-            default:
-                return false;
         }
-        // userList.loadUsers();
-        return true;
+        return user;
     }
 
     /**
