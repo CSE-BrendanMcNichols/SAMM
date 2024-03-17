@@ -18,19 +18,41 @@ public class TestDriver {
         scenario2();
     }
     public static void main(String[] args) {
-        //scenario1();
-        scenario2();
-
-        
-
+        scenario1();
+        //scenario2()
     }
     public static void scenario1(){
-
+        //Start of scenario 1 code
         Student braxWest = new Student("Brax", "West", "12345", "brax@email.sc.edu", "brax_west", "password", 
         UserType.STUDENT, Year.Junior, null, null, 0.0, 0, null, null, null);
         
-        checkProgress(braxWest);
+        ArrayList <Semester> semesters = new ArrayList <Semester>();
+        semesters.add(Semester.Spring);
+
+        Course cs101 = new Course("CS101", "3", semesters, "CS101 desc", 3, 'C', CourseState.NOT_STARTED, UUID.randomUUID());
+        Course cs202 = new Course("CS202", "3", semesters, "CS202 desc", 3, 'C', CourseState.NOT_STARTED, UUID.randomUUID());
+        Course cs303 = new Course("CS303", "3", semesters, "CS303 desc", 3, 'C', CourseState.NOT_STARTED, UUID.randomUUID());
+
+        HashMap<Course, String> completedCourses = new HashMap<>();
+        completedCourses.put(cs101, "Passed");
+        completedCourses.put(cs202, "Passed");
+        completedCourses.put(cs303, "Passed");
+
+        braxWest.setCompletedCourses(completedCourses);
+
+        ArrayList<Course> remainingCourses = new ArrayList<>();
+        remainingCourses.add(new Course("GFL", "3", semesters, "Foreign Language", 3 , 'A', CourseState.NOT_STARTED, UUID.randomUUID()));
+        braxWest.setRemainingCourses(remainingCourses);
+
+        ArrayList<Elective> selectedElective = new ArrayList<>();
+        selectedElective.add(new Elective(remainingCourses, "Spanish101", 3, UUID.randomUUID()));
+        braxWest.setCurrentElectives(selectedElective);
+
+        braxWest.setApplicationArea("Digital Design");
+
         generateSemesterPlan(braxWest);
+
+        //End of scenario 1 code
     }
     public static void scenario2(){
         //scenario 2 code

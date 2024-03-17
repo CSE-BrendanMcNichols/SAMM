@@ -28,6 +28,7 @@ public class Student extends User {
     private int credits;
     private HashMap<Course, String> completedCourses = new HashMap<Course, String>();
     private ArrayList<Course> currentCourses = new ArrayList<Course>();
+    private ArrayList<Course> remainingCourses = new ArrayList<Course>();
     private ArrayList<String> notes = new ArrayList<String>();
     private String applicationArea;
     private ArrayList<Elective> currentElectives = new ArrayList<Elective>();
@@ -165,6 +166,14 @@ public class Student extends User {
 
     public void setCurrentCourses(ArrayList<Course> currentCourses) {
         this.currentCourses = currentCourses;
+    }
+
+    public void setRemainingCourses(ArrayList<Course> remainingCourses) {
+        this.remainingCourses = remainingCourses;
+    }
+
+    public ArrayList<Course> getRemainingCourses() {
+        return remainingCourses;
     }
 
     public ArrayList<String> getNotes() {
@@ -447,4 +456,5 @@ public class Student extends User {
                 + currentCourses + ", notes=" + notes + ", applicationArea=" + applicationArea + ", currentElectives="
                 + currentElectives + ", completedElectives=" + completedElectives + ", uuid=" + uuid + "]";
     }
+
 }
