@@ -14,9 +14,11 @@ public class Requirement{
         this.courses = courses;
         this.uuid = uuid;
     }
+
     public UUID getUuid(){
         return this.uuid;
     }
+
     public static Boolean findReq(ArrayList<Requirement> requirements, UUID uuid ){
         for (Requirement requirement : requirements){
             if(requirement.getUuid().equals(uuid)){

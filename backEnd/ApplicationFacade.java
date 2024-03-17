@@ -88,9 +88,8 @@ public class ApplicationFacade {
     }
 
     public void displayRequirement(RequirementType type){
-       Requirement requirement = cache.getInstance().getRequirementByType(type);
+       Requirement requirement = Cache.getInstance().getRequirementByType(type);
        requirement.displayRequirement(requirement);
-       //Requirement.displayRequirement(requirement);
     }
 
     /* 

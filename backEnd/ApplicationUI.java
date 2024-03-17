@@ -11,6 +11,8 @@ public class ApplicationUI {
     public static void main(String[] args) {
         applicationFacade = ApplicationFacade.getInstance();
         User user = null;
+        Student student = null;
+        Advisor advisor = null;
         ApplicationArea applicationArea = null;
 
         while (true) {
@@ -20,7 +22,7 @@ public class ApplicationUI {
             System.out.println("3. View Student Information as advisor");
             System.out.println("4. Check progress as student");
             System.out.println("5. Display roadmap as student");
-            System.out.println("6. Display GFL Classes as student");
+            System.out.println("6. Display remaining requirements");
             System.out.println("7. Display application areas as student");
             System.out.println("8. Logout");
 
@@ -31,6 +33,9 @@ public class ApplicationUI {
             switch (choice) {
                 case 1:
                     user = login();
+                    if(user.getType() == UserType.STUDENT){
+                        student = applicationFacade.loginStudent(user.getUuid());
+                    }
                     break;
                 case 2:
                     createAccount();
@@ -51,9 +56,19 @@ public class ApplicationUI {
                     System.out.println("Please enter the Code for the requirement");
                     check = scanner.next();
                     displayRequirement(RequirementType.StringToType(check));
+                    System.out.println("Would you Like to add a course? Y/N ");
+                    check = scanner.next();
+                    if(check.equalsIgnoreCase("N")){
+                        break;
+                    }
+                    System.out.println("Please Enter The Course Name");
+                    String subject = scanner.next();
+                    student.updateCurrentCourses(CourseList.getInstance().findCourseByName(subject));
                     break;
                 case 6:
-                    //need GFL function
+                    System.out.println("Please enter the Code for the requirement");
+                    check = scanner.next();
+                    displayRequirement(RequirementType.StringToType(check));
                     break;
                 case 7:
                     applicationArea(user);

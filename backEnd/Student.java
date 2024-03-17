@@ -350,7 +350,7 @@ public class Student extends User {
      * @return the credits accumulated
      */
 
-    private void updateCurrentCourses(Course course) {
+    public void updateCurrentCourses(Course course) {
         ArrayList<Course> updatedclasses = currentCourses;
         if (updatedclasses != null)
             updatedclasses.add(course);
