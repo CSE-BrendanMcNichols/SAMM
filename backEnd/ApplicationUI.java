@@ -61,17 +61,27 @@ public class ApplicationUI {
                     if(check.equalsIgnoreCase("N")){
                         break;
                     }
-                    System.out.println("Please Enter The Course Name");
+                    System.out.println("Please Enter The Course Subject");
                     String subject = scanner.next();
                     System.out.println("Please Enter The Course Number");
                     int number = scanner.nextInt();
                     student.updateCurrentCourses(CourseList.getInstance().getCourse(subject, number));
                     break;
                 case 6:
-                    System.out.println("Please enter the Code for the requirement");
-                    check = scanner.next();
-                    displayRequirement(RequirementType.StringToType(check));
+                System.out.println("Please enter the Code for the requirement");
+                check = scanner.next();
+                displayRequirement(RequirementType.StringToType(check));
+                System.out.println("Would you Like to add a course? Y/N ");
+                check = scanner.next();
+                if(check.equalsIgnoreCase("N")){
                     break;
+                }
+                System.out.println("Please Enter The Course Subject");
+                subject = scanner.next();
+                System.out.println("Please Enter The Course Number");
+                number = scanner.nextInt();
+                student.updateCurrentCourses(CourseList.getInstance().getCourse(subject, number));
+                break;
                 case 7:
                     applicationArea(user);
                     break;
