@@ -13,6 +13,7 @@ public class ApplicationUI {
         User user = null;
         Student student = null;
         Advisor advisor = null;
+        ApplicationArea applicationArea = null;
         while (true) {
             System.out.println("\nWelcome to the Application");
             System.out.println("1. Login");
@@ -21,7 +22,8 @@ public class ApplicationUI {
             System.out.println("4. Check progress as student");
             System.out.println("5. Display roadmap as student");
             System.out.println("6. Display GFL Classes as student");
-            System.out.println("7. Logout");
+            System.out.println("7. Display application areas as student");
+            System.out.println("8. Logout");
             System.out.print("Choose an option: ");
 
             int choice = scanner.nextInt();
@@ -54,9 +56,12 @@ public class ApplicationUI {
                     displayRequirement(RequirementType.StringToType(check));
                     break;
                 case 6:
-                    displayRoadmap(student);
+                    //need GFL function
                     break;
                 case 7:
+                    applicationArea(student);
+                    break;
+                case 8:
                     logout();
                     break;
                 default:
@@ -76,6 +81,14 @@ public class ApplicationUI {
     private static Student loginStudent(UUID uuid){
         Student student = applicationFacade.loginStudent(uuid);
         return student;
+    }
+
+    private static void applicationArea(Student student) {
+        System.out.println("Possible Application Areas: ");
+        System.out.println("\n Science \n Math \n Digital Design \n Robotics \n Speech \n");
+        System.out.println("Please enter which application area you would like to choose: ");
+        String applicationInput = scanner.nextLine();
+        ApplicationArea.setArea(applicationInput);
     }
 
     private static User login() {
