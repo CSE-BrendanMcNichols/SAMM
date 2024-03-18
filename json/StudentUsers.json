@@ -29,7 +29,7 @@
       "39046cda-f913-4f9b-a002-f06e7c59f235": "B",
       "a014f77a-2ac5-4f22-87d7-f0ab623dce64": "A",
       "377ddfb9-de27-4996-8f72-c86999f08c03": "A"
-    },
+  },
     "currentClasses": [
       "6c8202fd-b31b-4647-b551-b7f4dbf007a0",
       "96cd3d5d-590a-4567-9cc3-787e03cc5140",
@@ -43,12 +43,12 @@
       "note2",
       "note3"
     ],
-    "completedElectives": [
+    "completedElectives": {
       "c85eb519-e97b-488b-ba02-2947764cfe92": "A",
       "732e0849-4531-43d5-ae8e-363b59958631": "A",
       "5844e157-e966-4ca8-a60b-a86f76903c6d": "B",
       "b0687a3a-9e0f-479a-8df8-14f5478ef547": "A"
-    ],
+    },
     "currentElectives": [
 
 
