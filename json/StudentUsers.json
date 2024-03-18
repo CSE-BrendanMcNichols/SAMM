@@ -17,9 +17,12 @@
       "f8e10b3a-146b-4d43-a3d8-647028c98641": "B",
       "2e2ebf3f-c4d3-4dae-956b-d8afa7fca627": "B",
       "3cca9c4e-a195-4759-a761-cfe09adb20b8": "A",
+      "c85eb519-e97b-488b-ba02-2947764cfe92": "A",
       "980e1056-4ed2-4459-b0e7-56d78eca5d73": "B",
+      "732e0849-4531-43d5-ae8e-363b59958631": "A",
       "57eaa5d5-a439-43b1-87fc-2d3a4c0b9cd6": "B",
       "9b9ea0d0-3574-44be-b6cf-1ef50ce2aa23": "A",
+      "5844e157-e966-4ca8-a60b-a86f76903c6d": "B",
       "e4c7001a-fadb-481d-b4e6-162dfa25744c": "A",
       "f9bc9ca2-9fe9-43eb-8444-2f0fc53da6c3": "A",
       "730005f1-113d-446e-865c-31b46dfbc924": "A",
@@ -28,7 +31,8 @@
       "cecc9003-5bf5-4d17-b01d-895f24ea03a2": "A",
       "39046cda-f913-4f9b-a002-f06e7c59f235": "B",
       "a014f77a-2ac5-4f22-87d7-f0ab623dce64": "A",
-      "377ddfb9-de27-4996-8f72-c86999f08c03": "A"
+      "377ddfb9-de27-4996-8f72-c86999f08c03": "A",
+      "b0687a3a-9e0f-479a-8df8-14f5478ef547": "A"
   },
     "currentClasses": [
       "6c8202fd-b31b-4647-b551-b7f4dbf007a0",
@@ -44,14 +48,8 @@
       "note3"
     ],
     "completedElectives": {
-      "c85eb519-e97b-488b-ba02-2947764cfe92": "A",
-      "732e0849-4531-43d5-ae8e-363b59958631": "A",
-      "5844e157-e966-4ca8-a60b-a86f76903c6d": "B",
-      "b0687a3a-9e0f-479a-8df8-14f5478ef547": "A"
     },
     "currentElectives": [
-
-
     ],
     "applicationArea": "Robotics"
   }

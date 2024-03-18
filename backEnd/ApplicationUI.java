@@ -3,6 +3,9 @@ package backEnd;
 import java.util.Scanner;
 import java.util.UUID;
 
+import org.json.simple.JSONObject;
+import org.json.simple.JSONArray;
+
 public class ApplicationUI {
     private static ApplicationFacade applicationFacade;
     private static boolean loggedIn = false;
@@ -110,6 +113,19 @@ public class ApplicationUI {
     private static void checkProgress(User student){
         Student.checkProgress(student);
     }
+
+    
+    public static void displayCompletedCourses(JSONObject studentJson) {
+        JSONObject completedClasses = studentJson.getJSONObject("completedClasses");
+        System.out.println("Completed Classes: ");
+        for(String courseId : completedClasses.keySet()) {
+            String grade = completedClasses.getString(courseId);
+            System.out.println("Course Id: " + courseId + ", Grade: " + grade);
+        }
+    }
+    
+
+
 
     private static void displayRoadmap(User student){
         Student.generateSemesterPlan(student);
