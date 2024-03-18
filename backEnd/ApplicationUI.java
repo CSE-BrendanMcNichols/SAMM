@@ -1,10 +1,12 @@
 package backEnd;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 import java.util.UUID;
 
 import org.json.simple.JSONObject;
-import org.json.simple.JSONArray;
 
 public class ApplicationUI {
     private static ApplicationFacade applicationFacade;
@@ -47,7 +49,14 @@ public class ApplicationUI {
                     viewStudentInfo(user);
                     break;
                 case 4:
-                    checkProgress(user);
+                    //checkProgress(user);
+                    if(user.getType() == UserType.STUDENT) {
+                        student = applicationFacade.loginStudent(user.getUuid());
+                        displayCompletedClasses(student);
+                        displayCurrentClasses(student);
+                    } else {
+                        System.out.println("You need to log in as a student first");
+                    }
                     break;
                 case 5:
                     displayRoadmap(user);
@@ -113,18 +122,46 @@ public class ApplicationUI {
     private static void checkProgress(User student){
         Student.checkProgress(student);
     }
-
     
-    public static void displayCompletedCourses(JSONObject studentJson) {
-        JSONObject completedClasses = studentJson.getJSONObject("completedClasses");
-        System.out.println("Completed Classes: ");
-        for(String courseId : completedClasses.keySet()) {
-            String grade = completedClasses.getString(courseId);
-            System.out.println("Course Id: " + courseId + ", Grade: " + grade);
+    
+    /*
+    public static void displayCompletedClasses(Student student) {
+        HashMap<Course, String> completedCourses = student.getCompletedCourses();
+        System.out.println("Completed Classes:");
+        for (Map.Entry<Course, String> entry : completedCourses.entrySet()) {
+            Course course = entry.getKey();
+            String grade = entry.getValue();
+            System.out.println("Course ID: " + course.getCourseNumber() + ", Name: " + course.getCourseName() + ", Grade: " + grade);
+        }
+    }
+    */
+
+    public static void displayCompletedClasses(Student student) {
+        HashMap<Course, String> completedCourses = student.getCompletedCourses();
+        if (completedCourses == null) {
+            System.out.println("No completed courses found for the student.");
+            return;
+        }
+        System.out.println("Completed Classes:");
+        for (Map.Entry<Course, String> entry : completedCourses.entrySet()) {
+            Course course = entry.getKey();
+            String grade = entry.getValue();
+            if (course == null) {
+                System.out.println("Null course found in completed courses map.");
+                continue; // Skip this iteration if course is null
+            }
+            System.out.println("Course ID: " + course.getCourseNumber() + ", Name: " + course.getCourseName() + ", Grade: " + grade);
         }
     }
     
 
+    public static void displayCurrentClasses(Student student) {
+        ArrayList<Course> currentCourses = student.getCurrentCourses();
+        System.out.println("\nCurrent Classes:");
+        for (Course course : currentCourses) {
+            System.out.println("Course ID: " + course.getCourseNumber() + ", Name: " + course.getCourseName());
+        }
+    }    
 
 
     private static void displayRoadmap(User student){

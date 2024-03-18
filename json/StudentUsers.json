@@ -47,8 +47,8 @@
       "note2",
       "note3"
     ],
-    "completedElectives": {
-    },
+    "completedElectives": [
+    ],
     "currentElectives": [
     ],
     "applicationArea": "Robotics"
