@@ -14,6 +14,15 @@ public class CourseList {
         courses = DataLoader.loadCoursesMinusRequirements();
         coursesByUuid = new HashMap<>();
         uuidsBySubjectAndNumber = new HashMap<>();
+
+        // Initialize helper hashmaps
+        for (Course course : courses) {
+            // Add the entry to the new map
+            String key = course.getCourseSubject() + " " + course.getCourseNumber();
+            uuidsBySubjectAndNumber.put(key, course.getUuid());
+            coursesByUuid.put(course.getUuid(), course);
+        }
+
     }
 
     public static CourseList getInstance() {
