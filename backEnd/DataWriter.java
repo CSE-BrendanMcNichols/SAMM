@@ -8,7 +8,9 @@ import com.google.gson.GsonBuilder;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -49,11 +51,12 @@ public class DataWriter {
             // Todo. When reading from JSON file, it has to look up this id with the Major
             // List and update Student with Major Object reference
             if (student.getMajor() != null) {
-                studentJSON.put(DataConstants.MAJOR, student.getMajor().getMajor());
+                studentJSON.put(DataConstants.MAJOR, student.getMajor().getUuid());
             }
 
             if (student.getCompletedCourses() != null) {
-                studentJSON.put(DataConstants.COMPLETEDCOURSES, student.getCompletedCourses());
+                //getUUIDMap(student.getCompletedCourses());
+                studentJSON.put(DataConstants.COMPLETEDCOURSES, getUUIDMap(student.getCompletedCourses()));
             }
 
             // Convert the Objects to UUID arraylist and store
@@ -92,6 +95,22 @@ public class DataWriter {
             e.printStackTrace();
         }
 
+    }
+
+    private static HashMap<String, String> getUUIDMap(HashMap<Course, String> completedCourses) {
+
+        // Create a new HashMap<CourseID, String>
+        HashMap<String, String> newMap = new HashMap<>();
+
+        // Iterate over the entries of the original map
+        for (Map.Entry<Course, String> entry : completedCourses.entrySet()) {
+            Course course = entry.getKey();
+            String value = entry.getValue();
+
+            // Add the entry to the new map
+            newMap.put(course.getUuidString(), value);
+        }
+        return newMap;
     }
 
     /**
