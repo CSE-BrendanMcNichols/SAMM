@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "ApplicationUI",
+            "request": "launch",
+            "mainClass": "backEnd.ApplicationUI",
+            "projectName": "SAMM-1_ab950288"
+        },
+        {
+            "type": "java",
             "name": "TestDriver",
             "request": "launch",
             "mainClass": "backEnd.TestDriver",
