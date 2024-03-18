@@ -297,7 +297,7 @@ public class DataLoader extends DataConstants {
 
 		
 		for (String str: errors) {
-			System.out.println(str);
+			//System.out.println(str);
 		}
 
 
