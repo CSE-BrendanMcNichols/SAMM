@@ -60,7 +60,7 @@ public class DataLoader extends DataConstants {
 					if (CourseList.getInstance().findCourse(courseUUID)) {
 						currentCourses.add(CourseList.getInstance().getCourse(courseUUID));
 					} else {
-						System.out.println("Warning: While loading Student current courses, Course Id: " + courseUUID + " not found in Course List");
+						//System.out.println("Warning: While loading Student current courses, Course Id: " + courseUUID + " not found in Course List");
 					}
 				}
 				JSONObject completedClassesJSON = (JSONObject) studentJSON.get(COMPLETEDCOURSES);
@@ -70,9 +70,9 @@ public class DataLoader extends DataConstants {
 					UUID courseUUID = UUID.fromString(courseString);
 					Course course = null;
 					if (CourseList.getInstance().findCourse(courseUUID)) {
-						course = CourseList.getInstance().getCourse(majorUUID);
+						course = CourseList.getInstance().getCourse(courseUUID);
 					} else {
-						System.out.println("Warning: While loading Student completed courses, Course Id: " + courseUUID + " not found in Course List");
+						//System.out.println("Warning: While loading Student completed courses, Course Id: " + courseUUID + " not found in Course List");
 					}
 					String grade = (String) (completedClassesJSON.get(courseString));
 					completedCourses.put(course, grade);
@@ -84,7 +84,7 @@ public class DataLoader extends DataConstants {
 					if (Cache.getInstance().findElective(electiveUUID)) {
 						currentElectives.add(Cache.getInstance().getElective(electiveUUID));
 					} else {
-						System.out.println("Warning: While loading Student current elective courses, Elective Id: " + electiveUUID + " not found in Elective List");
+						//System.out.println("Warning: While loading Student current elective courses, Elective Id: " + electiveUUID + " not found in Elective List");
 					}
 				}
 				JSONArray completedElectivesJSON = (JSONArray) studentJSON.get(COMPLETEDELECTIVES);
@@ -94,7 +94,7 @@ public class DataLoader extends DataConstants {
 					if (Cache.getInstance().findElective(electiveUUID)) {
 						currentElectives.add(Cache.getInstance().getElective(electiveUUID));
 					} else {
-						System.out.println("Warning: While loading Student completed elective courses, Elective Id: " + electiveUUID + " not found in Elective List");
+						//System.out.println("Warning: While loading Student completed elective courses, Elective Id: " + electiveUUID + " not found in Elective List");
 					}
 				}
 
@@ -142,7 +142,7 @@ public class DataLoader extends DataConstants {
 					if (UserList.getInstance().findStudent(studentUUID)) {
 						assignedStudents.add(UserList.getInstance().getStudent(studentUUID));
 					} else {
-						System.out.println("Warning: While loading Advisor for Student record, Student Id: " + studentUUID + " from is not in the Student List.");
+						//System.out.println("Warning: While loading Advisor for Student record, Student Id: " + studentUUID + " from is not in the Student List.");
 					}
 				}
 				advisors.add(new Advisor(firstName, lastName, uscid,email, username, password, 
@@ -216,7 +216,7 @@ public class DataLoader extends DataConstants {
 				if (UserList.getInstance().findAdvisor(advisorUUID)) {
 					advisor = UserList.getInstance().getAdvisor(advisorUUID);
 				} else {
-					System.out.println("Warning: While loading Advisor for Student record, Advisor Id: " + advisorUUID + " is not in the Advisor List.");
+					//System.out.println("Warning: While loading Advisor for Student record, Advisor Id: " + advisorUUID + " is not in the Advisor List.");
 				}
 
 				Student student = null;
@@ -225,7 +225,7 @@ public class DataLoader extends DataConstants {
 					//update the student's Advisor. It will update the central instance of Student in Cache
 					student.setAdvisor(advisor);
 				} else {
-					System.out.println("Warning: While loading Advisor for Student record, Student Id: " + studentUUID + " is not in the student List.");
+					//System.out.println("Warning: While loading Advisor for Student record, Student Id: " + studentUUID + " is not in the student List.");
 				}			
 			}
 
@@ -256,7 +256,7 @@ public class DataLoader extends DataConstants {
 					if (Cache.getInstance().findRequirement(reqUUID)) {
 						prerequisites.add(Cache.getInstance().getRequirement(reqUUID));
 					} else {
-						System.out.println("Warning: While loading Requirment for Course record, Requirement Id: " + reqUUID + " is not in the Requirement List.");
+						//System.out.println("Warning: While loading Requirment for Course record, Requirement Id: " + reqUUID + " is not in the Requirement List.");
 						errors.add(reqUUID.toString());
 					}
 				}
@@ -271,7 +271,7 @@ public class DataLoader extends DataConstants {
 					if (Cache.getInstance().findRequirement(reqUUID)) {
 						corequisites.add(Cache.getInstance().getRequirement(reqUUID));
 					} else {
-						System.out.println("Warning: While loading Requirement for Course record, Requirement Id: " + reqUUID + " is not in the Requirement List.");
+						//System.out.println("Warning: While loading Requirement for Course record, Requirement Id: " + reqUUID + " is not in the Requirement List.");
 						errors.add(reqUUID.toString());
 					}
 				}
@@ -287,7 +287,7 @@ public class DataLoader extends DataConstants {
 					course.setPrerequisites(prerequisites);
 					course.setCorequisites(corequisites);
 				} else {
-					System.out.println("Warning: While loading Requirement for course record, Course Id: " + courseUuid + " is not in the Course List.");
+					//System.out.println("Warning: While loading Requirement for course record, Course Id: " + courseUuid + " is not in the Course List.");
 				}
 			}
 		} catch (Exception e) {
@@ -376,7 +376,7 @@ public class DataLoader extends DataConstants {
 					if (CourseList.getInstance().findCourse(courseUUID)) {
 						reqCourses.add(CourseList.getInstance().getCourse(courseUUID));
 					} else {
-						System.out.println("Warning: While loading Requirement record, Course Id: " + courseUUID + " is not in the Course List.");
+						//System.out.println("Warning: While loading Requirement record, Course Id: " + courseUUID + " is not in the Course List.");
 					}
 				}
 				requirements.add(new Requirement(reqCourses, eitherOr, type, requirementFor, uuid));
@@ -419,7 +419,7 @@ public class DataLoader extends DataConstants {
 					if (CourseList.getInstance().findCourse(courseUUID)) {
 						courses.add(CourseList.getInstance().getCourse(courseUUID));
 					} else {
-						System.out.println("Warning: While loading Elective record, Course Id: " + courseUUID + " is not in the Course List.");
+						//System.out.println("Warning: While loading Elective record, Course Id: " + courseUUID + " is not in the Course List.");
 					}
 				}
 				electives.add(new Elective(courses, electiveName, hours, uuid));
@@ -462,7 +462,7 @@ public class DataLoader extends DataConstants {
 					if (CourseList.getInstance().findCourse(courseUUID)) {
 						courses.add(CourseList.getInstance().getCourse(courseUUID));
 					} else {
-						System.out.println("Warning: While loading ApplicationArea, Course Id: " + courseUUID + " is not in the Course List.");
+						//System.out.println("Warning: While loading ApplicationArea, Course Id: " + courseUUID + " is not in the Course List.");
 					}
 				}
 				areas.add(new ApplicationArea(courses, area, hours, uuid));
@@ -506,7 +506,7 @@ public class DataLoader extends DataConstants {
 					if (CourseList.getInstance().findCourse(courseUUID)) {
 						courses.add(CourseList.getInstance().getCourse(courseUUID));
 					} else {
-						System.out.println("Warning: While loading Major record, Course Id: " + courseUUID + " is not in the Course List.");
+						//System.out.println("Warning: While loading Major record, Course Id: " + courseUUID + " is not in the Course List.");
 					}
 				}
 
@@ -516,7 +516,7 @@ public class DataLoader extends DataConstants {
 				if (Cache.getInstance().findElective(electiveUuid)) {
 					majorElective = Cache.getInstance().getElective(electiveUuid);
 				} else {
-					System.out.println("Warning: While loading Major3 record, Elective Id: " + electiveUuid + " is not in the Elective List.");
+					//System.out.println("Warning: While loading Major3 record, Elective Id: " + electiveUuid + " is not in the Elective List.");
 				}
 
 				// read core req
