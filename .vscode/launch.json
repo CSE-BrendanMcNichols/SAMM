@@ -9,6 +9,13 @@
             "name": "ApplicationUI",
             "request": "launch",
             "mainClass": "backEnd.ApplicationUI",
+            "projectName": "SAMM_fafa2283"
+        },
+        {
+            "type": "java",
+            "name": "ApplicationUI",
+            "request": "launch",
+            "mainClass": "backEnd.ApplicationUI",
             "projectName": "SAMM-1_ab950288"
         },
         {
