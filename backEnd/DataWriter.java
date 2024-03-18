@@ -84,10 +84,10 @@ public class DataWriter {
         }
 
         // Write JSON to file
-        try (FileWriter file = new FileWriter(DataConstants.STUDENT_FILE_NAME_TEST)) {
+        try (FileWriter file = new FileWriter(DataConstants.STUDENT_FILE_NAME)) {
             file.write(prettyPrint(studentsJSONArray));
             file.flush();
-            System.out.println("Studnets JSON data is written to the file " + DataConstants.STUDENT_FILE_NAME_TEST);
+            System.out.println("Studnets JSON data is written to the file " + DataConstants.STUDENT_FILE_NAME);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -121,10 +121,10 @@ public class DataWriter {
         }
 
         // Write JSON to file
-        try (FileWriter file = new FileWriter(DataConstants.ADVISOR_FILE_NAME_TEST)) {
+        try (FileWriter file = new FileWriter(DataConstants.ADVISOR_FILE_NAME)) {
             file.write(prettyPrint(advisorsJSONArray));
             file.flush();
-            System.out.println("Advisors JSON data is written to the file " + DataConstants.ADVISOR_FILE_NAME_TEST);
+            System.out.println("Advisors JSON data is written to the file " + DataConstants.ADVISOR_FILE_NAME);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -155,11 +155,11 @@ public class DataWriter {
         }
 
         // Write JSON to file
-        try (FileWriter file = new FileWriter(DataConstants.ADMINISTRATOR_FILE_NAME_TEST)) {
+        try (FileWriter file = new FileWriter(DataConstants.ADMINISTRATOR_FILE_NAME)) {
             file.write(prettyPrint(administratorsJSONArray));
             file.flush();
             System.out.println(
-                    "Administrators JSON data is written to the file " + DataConstants.ADMINISTRATOR_FILE_NAME_TEST);
+                    "Administrators JSON data is written to the file " + DataConstants.ADMINISTRATOR_FILE_NAME);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -192,7 +192,7 @@ public class DataWriter {
         }
 
         // Write JSON to file
-        try (FileWriter file = new FileWriter(DataConstants.MAJORS_FILE_NAME_TEST)) {
+        try (FileWriter file = new FileWriter(DataConstants.MAJORS_FILE_NAME)) {
             file.write(prettyPrint(jsonArray));
             file.flush();
             System.out.println("Majors JSON data is written to the file.");
@@ -227,10 +227,10 @@ public class DataWriter {
         }
 
         // Write JSON to file
-        try (FileWriter file = new FileWriter(DataConstants.COURSE_FILE_NAME_TEST)) {
+        try (FileWriter file = new FileWriter(DataConstants.COURSE_FILE_NAME)) {
             file.write(prettyPrint(coursesJSONArray));
             file.flush();
-            System.out.println("Courses JSON data is written to the file." + DataConstants.COURSE_FILE_NAME_TEST);
+            System.out.println("Courses JSON data is written to the file." + DataConstants.COURSE_FILE_NAME);
         } catch (IOException e) {
             e.printStackTrace();
         }
