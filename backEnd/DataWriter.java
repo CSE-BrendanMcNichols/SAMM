@@ -8,7 +8,9 @@ import com.google.gson.GsonBuilder;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -49,11 +51,12 @@ public class DataWriter {
             // Todo. When reading from JSON file, it has to look up this id with the Major
             // List and update Student with Major Object reference
             if (student.getMajor() != null) {
-                studentJSON.put(DataConstants.MAJOR, student.getMajor().getMajor());
+                studentJSON.put(DataConstants.MAJOR, student.getMajor().getUuid());
             }
 
             if (student.getCompletedCourses() != null) {
-                studentJSON.put(DataConstants.COMPLETEDCOURSES, student.getCompletedCourses());
+                //getUUIDMap(student.getCompletedCourses());
+                studentJSON.put(DataConstants.COMPLETEDCOURSES, getUUIDMap(student.getCompletedCourses()));
             }
 
             // Convert the Objects to UUID arraylist and store
@@ -84,14 +87,30 @@ public class DataWriter {
         }
 
         // Write JSON to file
-        try (FileWriter file = new FileWriter(DataConstants.STUDENT_FILE_NAME_TEST)) {
+        try (FileWriter file = new FileWriter(DataConstants.STUDENT_FILE_NAME)) {
             file.write(prettyPrint(studentsJSONArray));
             file.flush();
-            System.out.println("Studnets JSON data is written to the file " + DataConstants.STUDENT_FILE_NAME_TEST);
+            System.out.println("Studnets JSON data is written to the file " + DataConstants.STUDENT_FILE_NAME);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
+    }
+
+    private static HashMap<String, String> getUUIDMap(HashMap<Course, String> completedCourses) {
+
+        // Create a new HashMap<CourseID, String>
+        HashMap<String, String> newMap = new HashMap<>();
+
+        // Iterate over the entries of the original map
+        for (Map.Entry<Course, String> entry : completedCourses.entrySet()) {
+            Course course = entry.getKey();
+            String value = entry.getValue();
+
+            // Add the entry to the new map
+            newMap.put(course.getUuidString(), value);
+        }
+        return newMap;
     }
 
     /**
@@ -121,10 +140,10 @@ public class DataWriter {
         }
 
         // Write JSON to file
-        try (FileWriter file = new FileWriter(DataConstants.ADVISOR_FILE_NAME_TEST)) {
+        try (FileWriter file = new FileWriter(DataConstants.ADVISOR_FILE_NAME)) {
             file.write(prettyPrint(advisorsJSONArray));
             file.flush();
-            System.out.println("Advisors JSON data is written to the file " + DataConstants.ADVISOR_FILE_NAME_TEST);
+            System.out.println("Advisors JSON data is written to the file " + DataConstants.ADVISOR_FILE_NAME);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -155,11 +174,11 @@ public class DataWriter {
         }
 
         // Write JSON to file
-        try (FileWriter file = new FileWriter(DataConstants.ADMINISTRATOR_FILE_NAME_TEST)) {
+        try (FileWriter file = new FileWriter(DataConstants.ADMINISTRATOR_FILE_NAME)) {
             file.write(prettyPrint(administratorsJSONArray));
             file.flush();
             System.out.println(
-                    "Administrators JSON data is written to the file " + DataConstants.ADMINISTRATOR_FILE_NAME_TEST);
+                    "Administrators JSON data is written to the file " + DataConstants.ADMINISTRATOR_FILE_NAME);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -192,7 +211,7 @@ public class DataWriter {
         }
 
         // Write JSON to file
-        try (FileWriter file = new FileWriter(DataConstants.MAJORS_FILE_NAME_TEST)) {
+        try (FileWriter file = new FileWriter(DataConstants.MAJORS_FILE_NAME)) {
             file.write(prettyPrint(jsonArray));
             file.flush();
             System.out.println("Majors JSON data is written to the file.");
@@ -227,10 +246,10 @@ public class DataWriter {
         }
 
         // Write JSON to file
-        try (FileWriter file = new FileWriter(DataConstants.COURSE_FILE_NAME_TEST)) {
+        try (FileWriter file = new FileWriter(DataConstants.COURSE_FILE_NAME)) {
             file.write(prettyPrint(coursesJSONArray));
             file.flush();
-            System.out.println("Courses JSON data is written to the file." + DataConstants.COURSE_FILE_NAME_TEST);
+            System.out.println("Courses JSON data is written to the file." + DataConstants.COURSE_FILE_NAME);
         } catch (IOException e) {
             e.printStackTrace();
         }

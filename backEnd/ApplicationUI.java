@@ -168,12 +168,15 @@ public class ApplicationUI {
         Student.generateSemesterPlan(student);
     }
 
-    private static void applicationArea(User student) {
+    private static void applicationArea(User user) {
         System.out.println("Possible Application Areas: ");
         System.out.println("\n Science \n Math \n Digital Design \n Robotics \n Speech \n");
         System.out.println("Please enter which application area you would like to choose: ");
+        
+        Student student = UserList.getInstance().getStudent(user.getUuid());
+
         String applicationInput = scanner.nextLine();
-        //ApplicationArea.setArea(applicationInput);
+        student.setApplicationArea(applicationInput);
         System.out.println("Would you like to see your application area? Y/N");
         String check = scanner.nextLine();
         if(check.equalsIgnoreCase("Y")); {
@@ -273,6 +276,8 @@ public class ApplicationUI {
                                 "\nWould like to add a note for " + student.getFirstName() + student.getLastName() + " ?");
                         response = scanner.nextLine();
                         if (response.equalsIgnoreCase("yes")) {
+                            System.out.println(
+                                "\nPlease Enter notes");
                             String note = scanner.nextLine();
                             //String note = "You have taken 2 elective stats classes but havent declared stats as your application area. I reccomment making stats your application area.";
                             student.addNotes(note);                        
