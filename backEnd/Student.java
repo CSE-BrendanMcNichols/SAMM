@@ -62,6 +62,11 @@ public class Student extends User {
         this.applicationArea = applicationArea;
     }
 
+
+
+
+    //Default constructor
+    //By Matthew
     public Student(){
         gradeYear = Year.Freshman;
         advisor = new Advisor("Default Advisor", "Default Constructor", "Default ID", "Default Email", "Default Username", "Default Password", null, "Default Apartment");
@@ -76,7 +81,7 @@ public class Student extends User {
         completedElectives = new ArrayList<Elective>();
         uuid = UUID.randomUUID();
         applicationArea = "Default Application Area";
-        
+
     }
 
     // constructor for DataLoader final run through
