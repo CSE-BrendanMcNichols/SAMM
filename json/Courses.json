@@ -5,7 +5,9 @@
         "courseSubject": "ACCT",
         "courseNumber": "222",
         "prerequisites": [
+            [
                 "f8e10b3a-146b-4d43-a3d8-647028c98641"
+            ]
         ],
         "corequisites": [],
         "courseSemester": [
@@ -41,7 +43,9 @@
         "courseSubject": "ACCT",
         "courseNumber": "226",
         "prerequisites": [
+            [
                 "145a02ba-0a74-4eb3-87fb-8c3ecf91f240"
+            ]
         ],
         "corequisites": [],
         "courseSemester": [
@@ -94,7 +98,9 @@
         "courseSubject": "ACCT",
         "courseNumber": "401",
         "prerequisites": [
+            [
                 "e53c6dfc-fdeb-458e-a2b3-a7d076dfbb77"
+            ]
         ],
         "corequisites": [],
         "courseSemester": [
@@ -113,7 +119,9 @@
         "courseSubject": "ACCT",
         "courseNumber": "402",
         "prerequisites": [
+            [
                 "e53c6dfc-fdeb-458e-a2b3-a7d076dfbb77"
+            ]
         ],
         "corequisites": [],
         "courseSemester": [
@@ -132,7 +140,9 @@
         "courseSubject": "ACCT",
         "courseNumber": "403",
         "prerequisites": [
+            [
                 "0287575f-710b-4526-aa12-d87e89d9477a"
+            ]
         ],
         "corequisites": [],
         "courseSemester": [
@@ -151,8 +161,12 @@
         "courseSubject": "ACCT",
         "courseNumber": "404",
         "prerequisites": [
-                "0287575f-710b-4526-aa12-d87e89d9477a",
+            [
+                "0287575f-710b-4526-aa12-d87e89d9477a"
+            ],
+            [
                 "377ddfb9-de27-4996-8f72-c86999f08c03"
+            ]
         ],
         "corequisites": [],
         "courseSemester": [
@@ -171,7 +185,9 @@
         "courseSubject": "ACCT",
         "courseNumber": "405",
         "prerequisites": [
+            [
                 "0287575f-710b-4526-aa12-d87e89d9477a"
+            ]
         ],
         "corequisites": [],
         "courseSemester": [
@@ -190,8 +206,12 @@
         "courseSubject": "ACCT",
         "courseNumber": "406",
         "prerequisites": [
-                "47c4e89e-9000-4203-ba31-77441dff5028",
+            [
+                "47c4e89e-9000-4203-ba31-77441dff5028"
+            ],
+            [
                 "539e502b-70b1-4764-a735-efb2580844e0"
+            ]
         ],
         "corequisites": [],
         "courseSemester": [
@@ -210,7 +230,9 @@
         "courseSubject": "ACCT",
         "courseNumber": "421",
         "prerequisites": [
+            [
                 "539e502b-70b1-4764-a735-efb2580844e0"
+            ]
         ],
         "corequisites": [],
         "courseSemester": [
@@ -229,7 +251,9 @@
         "courseSubject": "ACCT",
         "courseNumber": "422",
         "prerequisites": [
+            [
                 "4e77986e-bc27-4898-b5bd-263fe872b348"
+            ]
         ],
         "corequisites": [],
         "courseSemester": [
@@ -248,8 +272,12 @@
         "courseSubject": "ACCT",
         "courseNumber": "423",
         "prerequisites": [
-                "8c7ad8b6-3096-455c-810a-bebdc498bc77",
+            [
+                "8c7ad8b6-3096-455c-810a-bebdc498bc77"
+            ],
+            [
                 "539e502b-70b1-4764-a735-efb2580844e0"
+            ]
         ],
         "corequisites": [],
         "courseSemester": [
@@ -268,7 +296,9 @@
         "courseSubject": "ACCT",
         "courseNumber": "424",
         "prerequisites": [
+            [
                 "6390e71f-3219-4036-8347-5f8545de9a32"
+            ]
         ],
         "corequisites": [],
         "courseSemester": [
@@ -287,7 +317,9 @@
         "courseSubject": "ACCT",
         "courseNumber": "425",
         "prerequisites": [
+            [
                 "539e502b-70b1-4764-a735-efb2580844e0"
+            ]
         ],
         "corequisites": [],
         "courseSemester": [
@@ -306,7 +338,9 @@
         "courseSubject": "ACCT",
         "courseNumber": "426",
         "prerequisites": [
+            [
                 "539e502b-70b1-4764-a735-efb2580844e0"
+            ]
         ],
         "corequisites": [],
         "courseSemester": [
@@ -325,8 +359,15 @@
         "courseSubject": "ACCT",
         "courseNumber": "470",
         "prerequisites": [
-                "e53c6dfc-fdeb-458e-a2b3-a7d076dfbb77",
+            [
+                "145a02ba-0a74-4eb3-87fb-8c3ecf91f240"
+            ],
+            [
+                "e53c6dfc-fdeb-458e-a2b3-a7d076dfbb77"
+            ],
+            [
                 "070ac291-a177-4ed2-b335-f33264222153"
+            ]
         ],
         "corequisites": [],
         "courseSemester": [
@@ -345,9 +386,13 @@
         "courseSubject": "ACCT",
         "courseNumber": "475",
         "prerequisites": [
-                "0287575f-710b-4526-aa12-d87e89d9477a",
+            [
+                "0287575f-710b-4526-aa12-d87e89d9477a"
+            ],
+            [
                 "47c4e89e-9000-4203-ba31-77441dff5028",
                 "1fe509c2-879d-4f76-9ad8-5f37468fcc66"
+            ]
         ],
         "corequisites": [],
         "courseSemester": [
@@ -383,7 +428,9 @@
         "courseSubject": "ACCT",
         "courseNumber": "499",
         "prerequisites": [
+            [
                 "0287575f-710b-4526-aa12-d87e89d9477a"
+            ]
         ],
         "corequisites": [],
         "courseSemester": [
@@ -402,7 +449,9 @@
         "courseSubject": "ACCT",
         "courseNumber": "621",
         "prerequisites": [
+            [
                 "539e502b-70b1-4764-a735-efb2580844e0"
+            ]
         ],
         "corequisites": [],
         "courseSemester": [
@@ -421,7 +470,9 @@
         "courseSubject": "ACCT",
         "courseNumber": "622",
         "prerequisites": [
+            [
                 "4e77986e-bc27-4898-b5bd-263fe872b348"
+            ]
         ],
         "corequisites": [],
         "courseSemester": [
@@ -457,7 +508,9 @@
         "courseSubject": "ACCT",
         "courseNumber": "624",
         "prerequisites": [
+            [
                 "6390e71f-3219-4036-8347-5f8545de9a32"
+            ]
         ],
         "corequisites": [],
         "courseSemester": [
@@ -476,7 +529,9 @@
         "courseSubject": "ACCT",
         "courseNumber": "625",
         "prerequisites": [
+            [
                 "539e502b-70b1-4764-a735-efb2580844e0"
+            ]
         ],
         "corequisites": [],
         "courseSemester": [
@@ -495,7 +550,9 @@
         "courseSubject": "ACCT",
         "courseNumber": "626",
         "prerequisites": [
+            [
                 "539e502b-70b1-4764-a735-efb2580844e0"
+            ]
         ],
         "corequisites": [],
         "courseSemester": [
@@ -531,8 +588,12 @@
         "courseSubject": "ACCT",
         "courseNumber": "710",
         "prerequisites": [
-                "1fe509c2-879d-4f76-9ad8-5f37468fcc66",
+            [
+                "1fe509c2-879d-4f76-9ad8-5f37468fcc66"
+            ],
+            [
                 "47c4e89e-9000-4203-ba31-77441dff5028"
+            ]
         ],
         "corequisites": [],
         "courseSemester": [
@@ -602,7 +663,9 @@
         "courseSubject": "ACCT",
         "courseNumber": "737",
         "prerequisites": [
+            [
                 "47c4e89e-9000-4203-ba31-77441dff5028"
+            ]
         ],
         "corequisites": [],
         "courseSemester": [
