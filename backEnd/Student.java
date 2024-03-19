@@ -32,7 +32,7 @@ public class Student extends User {
     private ArrayList<Course> currentCourses = new ArrayList<Course>();
     private ArrayList<Course> remainingCourses = new ArrayList<Course>();
     private ArrayList<String> notes = new ArrayList<String>();
-    private String applicationArea;
+    private String applicationArea = new String();
     private ArrayList<Elective> currentElectives = new ArrayList<Elective>();
     private ArrayList<Elective> completedElectives = new ArrayList<Elective>();
     private UUID uuid;
