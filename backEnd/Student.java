@@ -27,7 +27,7 @@ public class Student extends User {
     private Advisor advisor = new Advisor("Default Advisor", "Default Constructor", "Default ID", "Default Email", "Default Username", "Default Password", null, "Default Apartment");
     private Major major = new Major("Default Major");
     private double overallGrade = 0.0;
-    
+
     private int credits = 0;
     private HashMap<Course, String> completedCourses = new HashMap<Course, String>();
     private ArrayList<Course> currentCourses = new ArrayList<Course>();
@@ -37,7 +37,7 @@ public class Student extends User {
     private ArrayList<Elective> currentElectives = new ArrayList<Elective>();
     private ArrayList<Elective> completedElectives = new ArrayList<Elective>();
     private UUID uuid;
-
+    
     // Updated Constructor
     public Student(String firstName, String lastName, String uscid, String email, String username, String password,
             Year gradeYear, Advisor advisor, Major major, double overallGrade, int credits,
@@ -60,6 +60,23 @@ public class Student extends User {
         this.notes = notes;
         this.uuid = UUID.randomUUID();
         this.applicationArea = applicationArea;
+    }
+
+    public Student(){
+        gradeYear = Year.Freshman;
+        advisor = new Advisor("Default Advisor", "Default Constructor", "Default ID", "Default Email", "Default Username", "Default Password", null, "Default Apartment");
+        major = new Major("Default Major");
+        overallGrade = 0.0;
+        credits = 0;
+        completedCourses = new HashMap<Course, String>();
+        currentCourses = new ArrayList<Course>();
+        remainingCourses = new ArrayList<Course>();
+        notes = new ArrayList<String>();
+        currentElectives = new ArrayList<Elective>();
+        completedElectives = new ArrayList<Elective>();
+        uuid = UUID.randomUUID();
+        applicationArea = "Default Application Area";
+        
     }
 
     // constructor for DataLoader final run through
