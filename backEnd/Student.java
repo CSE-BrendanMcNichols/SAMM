@@ -27,12 +27,13 @@ public class Student extends User {
     private Advisor advisor = new Advisor("Default Advisor", "Default Constructor", "Default ID", "Default Email", "Default Username", "Default Password", null, "Default Apartment");
     private Major major = new Major("Default Major");
     private double overallGrade = 0.0;
+    
     private int credits = 0;
     private HashMap<Course, String> completedCourses = new HashMap<Course, String>();
     private ArrayList<Course> currentCourses = new ArrayList<Course>();
     private ArrayList<Course> remainingCourses = new ArrayList<Course>();
     private ArrayList<String> notes = new ArrayList<String>();
-    private String applicationArea = "";
+    private String applicationArea = "Default Application Area";
     private ArrayList<Elective> currentElectives = new ArrayList<Elective>();
     private ArrayList<Elective> completedElectives = new ArrayList<Elective>();
     private UUID uuid;
