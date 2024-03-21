@@ -18,6 +18,7 @@ public class Course {
 
     public Course(){
         this.courseName = "EMPTY CLASS";
+        this.courseHours = 3;
     }
 
     public Course(String courseName, String courseNumber,
