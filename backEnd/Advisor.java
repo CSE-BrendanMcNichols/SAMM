@@ -14,6 +14,13 @@ public class Advisor extends User {
     private String department;
     private UUID uuid;
 
+
+    public Advisor() {
+        assignedStudents = new ArrayList<Student>();
+        department = "Computer Science";
+        uuid = uuid.randomUUID();   
+    }
+
     /**
      * Constuctor
      */
@@ -47,6 +54,8 @@ public class Advisor extends User {
             this.assignedStudents = new ArrayList<Student>();
         //this.uuid = uuid;
     }
+
+    
 
     /**
      * Getter method for assignedStudents
