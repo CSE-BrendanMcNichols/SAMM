@@ -145,4 +145,6 @@ public class testingFile{
         assertEquals(Semester.Summer, course.getCourseAvailability().get(1));
         //by Matt
     }
+
+    
 }
