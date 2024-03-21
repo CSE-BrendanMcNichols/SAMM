@@ -281,7 +281,7 @@ public class Student extends User {
         completedCourses.put(course, Character.toString(grade));
     }
 
-    private double toPointGrade(String grade) {
+    public double toPointGrade(String grade) {
         double pointGrade = 0.0;
         if (grade == "A") {
             pointGrade = 4.0;
