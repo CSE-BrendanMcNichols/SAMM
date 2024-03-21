@@ -46,4 +46,18 @@ public class testingFile{
         assertEquals(null, course.getCourseSubject());
     }
 
+    @Test
+    public void courseAddNullPrerequisite(){
+        Course course = new Course();
+        course.addPrerequisite(null);
+        assertEquals(null, course.getPrerequisites());
+    }
+
+    @Test
+    public void courseAddNullCorequisite(){
+        Course course = new Course();
+        course.addCorequisite(null);
+        assertEquals(null, course.getCorequisites());
+    }
+
 }
