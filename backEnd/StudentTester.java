@@ -193,7 +193,7 @@ public class StudentTester {
         ArrayList<Course> testCoursesArray = new ArrayList<Course>();
         testCourses.add(testCourse);
         student.setCurrentCourses(testCoursesArray);
-        student.updateCourseCompleted(course, 'A')
+        student.updateCourseCompleted(course, "A")
         assertEquals(course, student.getCompletedCourses().keySet().iterator().next());
     }
 
@@ -205,8 +205,8 @@ public class StudentTester {
         ArrayList<Course> testCoursesArray = new ArrayList<Course>();
         testCourses.add(testCourse);
         student.setCurrentCourses(testCoursesArray);
-        student.updateCourseCompleted(course, 'A')
-        assertEquals('A', student.getCompletedCourses().Values().iterator().next());
+        student.updateCourseCompleted(course, "A")
+        assertEquals("A", student.getCompletedCourses().Values().iterator().next());
     }
 
     @Test
@@ -217,8 +217,20 @@ public class StudentTester {
         ArrayList<Course> testCoursesArray = new ArrayList<Course>();
         testCourses.add(testCourse);
         student.setCurrentCourses(testCoursesArray);
-        student.updateCourseCompleted(course, 'A')
+        student.updateCourseCompleted(course, "A")
         assertEquals(0, student.getCurrentCourses.size());
     }
 
+    @Test
+    public void testUpdateCourseCompletedNullCourse(){
+        Student student = new Student();
+        HashMap<Course, String> testCourses = new HashMap<Course, String>();
+        Course testCourse = new Course();
+        ArrayList<Course> testCoursesArray = new ArrayList<Course>();
+        testCourses.add(testCourse);
+        student.setCurrentCourses(testCoursesArray);
+        student.updateCourseCompleted(null, "A")
+        assertEquals(null, student.getCompletedCourses().KeySet().iterator().next());
+    }
+    //Find way to check Hash Size
 }
