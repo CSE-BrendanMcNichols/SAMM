@@ -26,6 +26,7 @@ public class testingFile{
         assertEquals(null, course.getMinGrade());
         assertEquals(null, course.getCourseStatus());
         assertEquals(null, course.getUuid());
+        //made by Matt
     }
 
     @Test
@@ -33,6 +34,7 @@ public class testingFile{
         Course course = new Course();
         course.setUuid(null);
         assertEquals(null, course.getUuid());
+        //made by Matt
     }
 
     @Test
@@ -44,6 +46,7 @@ public class testingFile{
         assertEquals(null, course.getCourseNumber());
         assertEquals(null, course.getCourseName());
         assertEquals(null, course.getCourseSubject());
+        //made by Matt
     }
 
     @Test
@@ -51,6 +54,7 @@ public class testingFile{
         Course course = new Course();
         course.addPrerequisite(null);
         assertEquals(null, course.getPrerequisites());
+        //made by Matt
     }
 
     @Test
@@ -58,6 +62,21 @@ public class testingFile{
         Course course = new Course();
         course.addCorequisite(null);
         assertEquals(null, course.getCorequisites());
+        //made by Matt
+    }
+
+    @Test
+    public void courseRemovePrerequisiteThatItDoesntHave(){
+        Course course = new Course();
+        Requirement requirement1 = new Requirement();
+        Requirement requirement2 = new Requirement();
+        course.addPrerequisite(requirement1);
+        course.addPrerequisite(requirement2);
+        Requirement requirement3 = new Requirement();
+        course.removePrerequisite(requirement3);
+        assertEquals(requirement1, course.getPrerequisites().get(0));
+        assertEquals(requirement2, course.getPrerequisites().get(1));
+        //made by Matt
     }
 
 }
