@@ -20,4 +20,11 @@ public class testingFile{
         null, null, null,null);
     }
 
+    @Test
+    public void getCourseNullUuid(){
+        Course course = new Course();
+        course.setUuid(null);
+        assertEquals(null, course.getUuid());
+    }
+
 }
