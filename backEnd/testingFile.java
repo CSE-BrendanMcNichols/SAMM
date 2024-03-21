@@ -58,7 +58,7 @@ public class testingFile{
         assertNull(course.getCourseNumber());
         //made by Matt
     }
-
+    @Test
     public void displayCourseWithNullCourseName(){
         Course course = new Course();
         course.setCourseNumber("jeerwrwrfr");
@@ -69,7 +69,7 @@ public class testingFile{
         
         //made by Matt
     }
-
+    @Test
     public void displayCourseWithNullCourseSubject(){
         Course course = new Course();
         course.setCourseNumber("NULL");
@@ -109,4 +109,51 @@ public class testingFile{
         //made by Matt
     }
 
+
+    @Test
+    public void testMinGradeWithCharThatIsntAthroughF(){
+        Course course = new Course();
+        course.setMinGrade('R');
+        assertEquals('F',course.getMinGrade());
+        //by Matt
+    }
+
+
+
+
+    @Test
+    public void courseRemoveCorequisiteThatItDoesntHave(){
+        Course course = new Course();
+        Requirement requirement1 = new Requirement();
+        Requirement requirement2 = new Requirement();
+        course.addCorequisite(requirement1);
+        course.addCorequisite(requirement2);
+        Requirement requirement3 = new Requirement();
+        course.removeCorequisite(requirement3);
+        assertEquals(requirement1, course.getCorequisites().get(0));
+        assertEquals(requirement2, course.getCorequisites().get(1));
+        //made by Matt
+    }
+
+
+
+    @Test
+    public void addAndPrintNullSemester(){
+        Course course = new Course();
+        course.addSemesterOffered(null);
+        assertNull(course.getCourseAvailability());
+        //By Matt
+    }
+
+    @Test
+    public void courseRemoveSemesterThatItDoesntHave(){
+        Course course = new Course();
+        course.addSemesterOffered(Semester.Fall);
+        course.addSemesterOffered(Semester.Summer);
+        assertEquals(Semester.Fall, course.getCourseAvailability().get(0));
+        assertEquals(Semester.Summer, course.getCourseAvailability().get(1));
+        //by Matt
+    }
+
+    
 }
