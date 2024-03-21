@@ -71,6 +71,38 @@ public class StudentTester {
     }
 
     @Test
+    public void testStudentOverallGradeEmpty(){
+        Student student = new Student();
+        HashMap<Course, String> testCourses = new HashMap<Course, String>();
+        student.setCompletedCourses(testCourses);
+        student.updateOverallGrade();
+        assertEquals(0.0, student.getOverallGrade());
+    }
+
+    @Test
+    public void testStudentOverallGradeOneGrade(){
+        Student student = new Student();
+        HashMap<Course, String> testCourses = new HashMap<Course, String>();
+        student.setCompletedCourses(testCourses);
+        student.updateOverallGrade();
+        Course testCourse = new Course();
+        testCourses.put(testCourse, "A");
+        assertEquals(4.0, student.getOverallGrade());
+    }
+
+    @Test
+    public void testStudentOverallGradeTwoGrade(){
+        Student student = new Student();
+        HashMap<Course, String> testCourses = new HashMap<Course, String>();
+        student.setCompletedCourses(testCourses);
+        student.updateOverallGrade();
+        Course testCourse = new Course();
+        testCourses.put(testCourse, "A");
+        testCourses.put(testCourse, "B");
+        assertEquals(4.0, student.getOverallGrade());
+    }
+
+    @Test
     public void testCalculateGPAAllAs(){
         Student student = new Student();
         HashMap<Course, String> testCourses = new HashMap<Course, String>();
@@ -80,7 +112,7 @@ public class StudentTester {
         testCourses.put(testCourse, "A");
         student.setCompletedCourses(testCourses);
         student.updateOverallGrade();
-        assertEquals(4.0, student.getOverallGrade());
+        assertEquals(4.0, student.calculateGPA());
     }
 
     @Test
@@ -92,7 +124,7 @@ public class StudentTester {
         testCourses.put(testCourse, "B");
         student.setCompletedCourses(testCourses);
         student.updateOverallGrade();
-        assertEquals(3.5, student.getOverallGrade());
+        assertEquals(3.5, student.calculateGPA());
     }
 
     @Test
@@ -104,7 +136,7 @@ public class StudentTester {
         testCourses.put(testCourse, "test");
         student.setCompletedCourses(testCourses);
         student.updateOverallGrade();
-        assertEquals(0.0, student.getOverallGrade());
+        assertEquals(0.0, student.calculateGPA());
     }
 
     @Test
@@ -116,6 +148,21 @@ public class StudentTester {
         testCourses.put(testCourse, "test");
         student.setCompletedCourses(testCourses);
         student.updateOverallGrade();
-        assertEquals(0.0, student.getOverallGrade());
+        assertEquals(0.0, student.calculateGPA());
     }
+
+    @Test
+    public void testGetCreditsAccumulatedBaseLine(){
+        Student student = new Student();
+        HashMap<Course, String> testCourses = new HashMap<Course, String>();
+        Course testCourse = new Course();
+        testCourses.put(testCourse, "A");
+        testCourses.put(testCourse, "A");
+        testCourses.put(testCourse, "A");
+        student.setCompletedCourses(testCourses);
+        student.updateOverallGrade();
+        assertEquals(4.0, student.calculateGPA());
+    }
+
+
 }
