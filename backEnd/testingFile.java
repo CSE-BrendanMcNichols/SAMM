@@ -13,9 +13,11 @@ import java.util.UUID;
 
 public class testingFile{
     @Test
-    public void testCourseDefaultConstructor(){
-        Course c1 = new course();
-        
+    public void makeNullCourse(){
+        Course course = new Course(null, null,
+        null, null,
+        null, null,
+        null, null, null,null);
     }
 
 }
