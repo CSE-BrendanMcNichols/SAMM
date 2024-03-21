@@ -18,6 +18,14 @@ public class testingFile{
         null, null,
         null, null,
         null, null, null,null);
+        assertEquals(null, course.getCourseNumber());
+        assertEquals(null, course.getCourseName());
+        assertEquals(null, course.getCourseSubject());
+        assertEquals(null, course.getCourseDescription());
+        assertEquals(null, course.getCourseHours());
+        assertEquals(null, course.getMinGrade());
+        assertEquals(null, course.getCourseStatus());
+        assertEquals(null, course.getUuid());
     }
 
     @Test
@@ -25,6 +33,17 @@ public class testingFile{
         Course course = new Course();
         course.setUuid(null);
         assertEquals(null, course.getUuid());
+    }
+
+    @Test
+    public void displayCourseWithNullCourseNumberAndNullCourseNameAndNullCourseSubject(){
+        Course course = new Course();
+        course.setCourseNumber(null);
+        course.setCourseName(null);
+        course.setCourseSubject(null);
+        assertEquals(null, course.getCourseNumber());
+        assertEquals(null, course.getCourseName());
+        assertEquals(null, course.getCourseSubject());
     }
 
 }
