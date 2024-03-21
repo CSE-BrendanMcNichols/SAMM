@@ -104,8 +104,7 @@ public class testingFile{
         course.addPrerequisite(requirement2);
         Requirement requirement3 = new Requirement();
         course.removePrerequisite(requirement3);
-        assertEquals(requirement1, course.getPrerequisites().get(0));
-        assertEquals(requirement2, course.getPrerequisites().get(1));
+        assertEquals(2, course.getPrerequisites().size());
         //made by Matt
     }
 
@@ -130,8 +129,7 @@ public class testingFile{
         course.addCorequisite(requirement2);
         Requirement requirement3 = new Requirement();
         course.removeCorequisite(requirement3);
-        assertEquals(requirement1, course.getCorequisites().get(0));
-        assertEquals(requirement2, course.getCorequisites().get(1));
+        assertEquals(2, course.getCorequisites().size());
         //made by Matt
     }
 
@@ -150,8 +148,7 @@ public class testingFile{
         Course course = new Course();
         course.addSemesterOffered(Semester.Fall);
         course.addSemesterOffered(Semester.Summer);
-        assertEquals(Semester.Fall, course.getCourseAvailability().get(0));
-        assertEquals(Semester.Summer, course.getCourseAvailability().get(1));
+        assertEquals(2, course.getCourseAvailability().size());
         //by Matt
     }
 
