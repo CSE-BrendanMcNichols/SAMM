@@ -11,6 +11,18 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+/*
+ * possible tests:
+ * assertEquals(val1, val2);
+ * assertFalse(val);
+ * assertTrue(val);
+ * assertSame(val1, val2);
+ * assertNotSame(val1, val2);
+ * assertNull(val);
+ * assertNotNull(val);
+ */
+
+
 public class testingFile{
     @Test
     public void makeNullCourse(){
@@ -18,14 +30,14 @@ public class testingFile{
         null, null,
         null, null,
         null, null, null,null);
-        assertEquals(null, course.getCourseNumber());
-        assertEquals(null, course.getCourseName());
-        assertEquals(null, course.getCourseSubject());
-        assertEquals(null, course.getCourseDescription());
-        assertEquals(null, course.getCourseHours());
-        assertEquals(null, course.getMinGrade());
-        assertEquals(null, course.getCourseStatus());
-        assertEquals(null, course.getUuid());
+        assertNull(course.getCourseNumber());
+        assertNull(course.getCourseName());
+        assertNull(course.getCourseSubject());
+        assertNull(course.getCourseDescription());
+        assertNull(course.getCourseHours());
+        assertNull(course.getMinGrade());
+        assertNull(course.getCourseStatus());
+        assertNull(course.getUuid());
         //made by Matt
     }
 
@@ -33,19 +45,37 @@ public class testingFile{
     public void getCourseNullUuid(){
         Course course = new Course();
         course.setUuid(null);
-        assertEquals(null, course.getUuid());
+        assertNull(course.getUuid());
         //made by Matt
     }
 
     @Test
-    public void displayCourseWithNullCourseNumberAndNullCourseNameAndNullCourseSubject(){
+    public void displayCourseWithNullCourseNumber(){
         Course course = new Course();
         course.setCourseNumber(null);
+        course.setCourseName("hi");
+        course.setCourseSubject("weeee");
+        assertNull(course.getCourseNumber());
+        //made by Matt
+    }
+
+    public void displayCourseWithNullCourseName(){
+        Course course = new Course();
+        course.setCourseNumber("jeerwrwrfr");
         course.setCourseName(null);
+        course.setCourseSubject("null");
+        
+        assertNull(course.getCourseName());
+        
+        //made by Matt
+    }
+
+    public void displayCourseWithNullCourseSubject(){
+        Course course = new Course();
+        course.setCourseNumber("NULL");
+        course.setCourseName("error");
         course.setCourseSubject(null);
-        assertEquals(null, course.getCourseNumber());
-        assertEquals(null, course.getCourseName());
-        assertEquals(null, course.getCourseSubject());
+        assertNull(course.getCourseSubject());
         //made by Matt
     }
 
@@ -53,7 +83,7 @@ public class testingFile{
     public void courseAddNullPrerequisite(){
         Course course = new Course();
         course.addPrerequisite(null);
-        assertEquals(null, course.getPrerequisites());
+        assertNull(course.getPrerequisites());
         //made by Matt
     }
 
@@ -61,7 +91,7 @@ public class testingFile{
     public void courseAddNullCorequisite(){
         Course course = new Course();
         course.addCorequisite(null);
-        assertEquals(null, course.getCorequisites());
+        assertNull(course.getCorequisites());
         //made by Matt
     }
 
