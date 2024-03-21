@@ -126,4 +126,12 @@ public class testingFile{
         //made by Matt
     }
 
+
+
+    @Test
+    public void printNullSemester(){
+        Course course = new Course();
+        course.addSemesterOffered(null);
+        assertNull(course.getCourseAvailability());
+    }
 }
