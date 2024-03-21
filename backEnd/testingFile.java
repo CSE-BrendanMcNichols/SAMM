@@ -109,4 +109,21 @@ public class testingFile{
         //made by Matt
     }
 
+
+
+
+    @Test
+    public void courseRemoveCorequisiteThatItDoesntHave(){
+        Course course = new Course();
+        Requirement requirement1 = new Requirement();
+        Requirement requirement2 = new Requirement();
+        course.addCorequisite(requirement1);
+        course.addCorequisite(requirement2);
+        Requirement requirement3 = new Requirement();
+        course.removeCorequisite(requirement3);
+        assertEquals(requirement1, course.getCorequisites().get(0));
+        assertEquals(requirement2, course.getCorequisites().get(1));
+        //made by Matt
+    }
+
 }
