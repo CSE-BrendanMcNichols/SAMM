@@ -129,7 +129,7 @@ public class testingFile{
 
 
     @Test
-    public void printNullSemester(){
+    public void addAndPrintNullSemester(){
         Course course = new Course();
         course.addSemesterOffered(null);
         assertNull(course.getCourseAvailability());
