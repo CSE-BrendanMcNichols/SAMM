@@ -110,6 +110,15 @@ public class testingFile{
     }
 
 
+    @Test
+    public void testMinGradeWithCharThatIsntAthroughF(){
+        Course course = new Course();
+        course.setMinGrade('R');
+        assertEquals('F',course.getMinGrade());
+        //by Matt
+    }
+
+
 
 
     @Test
