@@ -58,7 +58,7 @@ public class testingFile{
         assertNull(course.getCourseNumber());
         //made by Matt
     }
-
+    @Test
     public void displayCourseWithNullCourseName(){
         Course course = new Course();
         course.setCourseNumber("jeerwrwrfr");
@@ -69,7 +69,7 @@ public class testingFile{
         
         //made by Matt
     }
-
+    @Test
     public void displayCourseWithNullCourseSubject(){
         Course course = new Course();
         course.setCourseNumber("NULL");
@@ -133,5 +133,16 @@ public class testingFile{
         Course course = new Course();
         course.addSemesterOffered(null);
         assertNull(course.getCourseAvailability());
+        //By Matt
+    }
+
+    @Test
+    public void courseRemoveSemesterThatItDoesntHave(){
+        Course course = new Course();
+        course.addSemesterOffered(Semester.Fall);
+        course.addSemesterOffered(Semester.Summer);
+        assertEquals(Semester.Fall, course.getCourseAvailability().get(0));
+        assertEquals(Semester.Summer, course.getCourseAvailability().get(1));
+        //by Matt
     }
 }
