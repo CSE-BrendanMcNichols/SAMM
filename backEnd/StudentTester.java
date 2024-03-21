@@ -71,6 +71,38 @@ public class StudentTester {
     }
 
     @Test
+    public void testStudentOverallGradeEmpty(){
+        Student student = new Student();
+        HashMap<Course, String> testCourses = new HashMap<Course, String>();
+        student.setCompletedCourses(testCourses);
+        student.updateOverallGrade();
+        assertEquals(0.0, student.getOverallGrade());
+    }
+
+    @Test
+    public void testStudentOverallGradeOneGrade(){
+        Student student = new Student();
+        HashMap<Course, String> testCourses = new HashMap<Course, String>();
+        student.setCompletedCourses(testCourses);
+        student.updateOverallGrade();
+        Course testCourse = new Course();
+        testCourses.put(testCourse, "A");
+        assertEquals(4.0, student.getOverallGrade());
+    }
+
+    @Test
+    public void testStudentOverallGradeTwoGrade(){
+        Student student = new Student();
+        HashMap<Course, String> testCourses = new HashMap<Course, String>();
+        student.setCompletedCourses(testCourses);
+        student.updateOverallGrade();
+        Course testCourse = new Course();
+        testCourses.put(testCourse, "A");
+        testCourses.put(testCourse, "B");
+        assertEquals(4.0, student.getOverallGrade());
+    }
+
+    @Test
     public void testCalculateGPAAllAs(){
         Student student = new Student();
         HashMap<Course, String> testCourses = new HashMap<Course, String>();
@@ -80,7 +112,7 @@ public class StudentTester {
         testCourses.put(testCourse, "A");
         student.setCompletedCourses(testCourses);
         student.updateOverallGrade();
-        assertEquals(4.0, student.getOverallGrade());
+        assertEquals(4.0, student.calculateGPA());
     }
 
     @Test
@@ -92,7 +124,7 @@ public class StudentTester {
         testCourses.put(testCourse, "B");
         student.setCompletedCourses(testCourses);
         student.updateOverallGrade();
-        assertEquals(3.5, student.getOverallGrade());
+        assertEquals(3.5, student.calculateGPA());
     }
 
     @Test
@@ -104,7 +136,7 @@ public class StudentTester {
         testCourses.put(testCourse, "test");
         student.setCompletedCourses(testCourses);
         student.updateOverallGrade();
-        assertEquals(0.0, student.getOverallGrade());
+        assertEquals(0.0, student.calculateGPA());
     }
 
     @Test
@@ -116,6 +148,89 @@ public class StudentTester {
         testCourses.put(testCourse, "test");
         student.setCompletedCourses(testCourses);
         student.updateOverallGrade();
-        assertEquals(0.0, student.getOverallGrade());
+        assertEquals(0.0, student.calculateGPA());
     }
+
+    @Test
+    public void testGetCreditsAccumulatedBaseLine(){
+        Student student = new Student();
+        HashMap<Course, String> testCourses = new HashMap<Course, String>();
+        Course testCourse = new Course();
+        testCourses.put(testCourse, "A");
+        testCourses.put(testCourse, "A");
+        testCourses.put(testCourse, "A");
+        student.setCompletedCourses(testCourses);
+        assertEquals(9, student.getCreditsAccumulated());
+    }
+
+    @Test
+    public void testGetCreditsAccumulatedEmpty(){
+        Student student = new Student();
+        HashMap<Course, String> testCourses = new HashMap<Course, String>();
+        student.setCompletedCourses(testCourses);
+        assertEquals(0, student.getCreditsAccumulated());
+    }
+
+    public void updateCourseCompleted(Course updateCourse, String courseGrade) {
+        // System.out.println("updateCourseCompleted called. updateCourse: " +
+        // updateCourse);
+        for (Course course : this.currentCourses) {
+            if (course.getUuid() == updateCourse.getUuid()) {
+                currentCourses.remove(course);
+                break;
+            }
+        }
+        this.completedCourses.put(updateCourse, courseGrade);
+        updateCredits();
+        updateOverallGrade();
+    }
+
+    @Test
+    public void testUpdateCourseCompletedBaseLineCourse(){
+        Student student = new Student();
+        HashMap<Course, String> testCourses = new HashMap<Course, String>();
+        Course testCourse = new Course();
+        ArrayList<Course> testCoursesArray = new ArrayList<Course>();
+        testCourses.add(testCourse);
+        student.setCurrentCourses(testCoursesArray);
+        student.updateCourseCompleted(course, "A")
+        assertEquals(course, student.getCompletedCourses().keySet().iterator().next());
+    }
+
+    @Test
+    public void testUpdateCourseCompletedBaseLineGrade(){
+        Student student = new Student();
+        HashMap<Course, String> testCourses = new HashMap<Course, String>();
+        Course testCourse = new Course();
+        ArrayList<Course> testCoursesArray = new ArrayList<Course>();
+        testCourses.add(testCourse);
+        student.setCurrentCourses(testCoursesArray);
+        student.updateCourseCompleted(course, "A")
+        assertEquals("A", student.getCompletedCourses().Values().iterator().next());
+    }
+
+    @Test
+    public void testUpdateCourseCompletedBaseLineRemoved(){
+        Student student = new Student();
+        HashMap<Course, String> testCourses = new HashMap<Course, String>();
+        Course testCourse = new Course();
+        ArrayList<Course> testCoursesArray = new ArrayList<Course>();
+        testCourses.add(testCourse);
+        student.setCurrentCourses(testCoursesArray);
+        student.updateCourseCompleted(course, "A")
+        assertEquals(0, student.getCurrentCourses.size());
+    }
+
+    @Test
+    public void testUpdateCourseCompletedNullCourse(){
+        Student student = new Student();
+        HashMap<Course, String> testCourses = new HashMap<Course, String>();
+        Course testCourse = new Course();
+        ArrayList<Course> testCoursesArray = new ArrayList<Course>();
+        testCourses.add(testCourse);
+        student.setCurrentCourses(testCoursesArray);
+        student.updateCourseCompleted(null, "A")
+        assertEquals(null, student.getCompletedCourses().KeySet().iterator().next());
+    }
+    //Find way to check Hash Size
 }
