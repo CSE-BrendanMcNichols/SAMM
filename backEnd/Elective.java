@@ -30,6 +30,13 @@ public class Elective {
         this.uuid = UUID.randomUUID();
     }
 
+    public Elective(ArrayList<Course> courses){
+        this.courses = courses;
+        this.electiveName = "default name";
+        this.hours = 0;
+        this.uuid = UUID.randomUUID();
+    }
+
     public void displayName(){
         System.out.println(electiveName);
     }

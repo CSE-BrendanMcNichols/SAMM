@@ -209,7 +209,7 @@ public class Student extends User {
         this.notes = notes;
     }
 
-    private double calculateGPA() {
+    public double calculateGPA() {
         double gpa = 0.0;
         for (Map.Entry<Course, String> entry : completedCourses.entrySet()) {
             Course course = entry.getKey();
@@ -232,7 +232,7 @@ public class Student extends User {
      * Calculates the students gpa
      */
 
-    private void viewClassGrades() {
+    public void viewClassGrades() {
         System.out.println("These are your class grades:");
         for (Map.Entry<Course, String> entry : completedCourses.entrySet()) {
             Course course = entry.getKey();
@@ -246,11 +246,6 @@ public class Student extends User {
             return true;
         }
         return false;
-    }
-
-    public Major viewFutureSchedule() {
-        major.getCourses();
-        return null;
     }
 
     public void viewCurrentSchedule() {
@@ -273,9 +268,6 @@ public class Student extends User {
         // System.out.println("End of Current Schedule");
     }
 
-    private void assignAdvisor(Advisor advisor) {
-        this.advisor = advisor;
-    }
 
     private void updateGrade(Course course, char grade) {
         completedCourses.put(course, Character.toString(grade));
@@ -358,7 +350,7 @@ public class Student extends User {
      * By Matt
      */
 
-    private int getCreditsAccumulated() {
+    public int getCreditsAccumulated() {
         int creditTotal = 0;
         for (Map.Entry<Course, String> entry : completedCourses.entrySet()) {
             Course course = entry.getKey();

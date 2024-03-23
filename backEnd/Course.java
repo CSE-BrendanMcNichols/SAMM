@@ -19,6 +19,8 @@ public class Course {
     public Course(){
         this.courseName = "EMPTY CLASS";
         this.courseHours = 3;
+        this.courseSubject = "TEST";
+        this.courseNumber = "5555";
     }
 
     public Course(String courseName, String courseNumber,

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 import java.util.UUID;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.io.FileWriter;
 import java.io.IOException;
 
@@ -18,8 +19,15 @@ public class TestDriver {
         scenario2();
     }
     public static void main(String[] args) {
-        scenario1();
+        //scenario1();
         //scenario2()
+        Student student = new Student();
+        HashMap<Course, String> testCourses = new HashMap<Course, String>();
+        Course testCourse = new Course();
+        testCourse.setCourseSubject(null);
+        testCourses.put(testCourse, "A");
+        student.setCompletedCourses(testCourses);
+        student.viewClassGrades();
     }
     public static void scenario1(){
         //Start of scenario 1 code
