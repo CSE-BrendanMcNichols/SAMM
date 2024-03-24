@@ -24,16 +24,6 @@ public class StudentTester {
 
     private final PrintStream standardOut = System.out;
     private final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
-    
-    @BeforeClass
-	public void oneTimeSetup() {
-		
-	}
-	
-	@AfterClass
-	public void oneTimeTearDown() {
-		
-	}
 	
 	@BeforeEach
 	public void setup() {
@@ -200,7 +190,6 @@ public class StudentTester {
     @Test
     public void testUpdateCourseCompletedBaseLineCourse(){
         Student student = new Student();
-        HashMap<Course, String> testCourses = new HashMap<Course, String>();
         Course testCourse = new Course();
         ArrayList<Course> testCoursesArray = new ArrayList<Course>();
         testCoursesArray.add(testCourse);
@@ -510,7 +499,7 @@ public class StudentTester {
         assertEquals("Student:: Error:null : Error:null Error:null", student.displayStudent());
     }
     
-    //All test beloe involve outputing to the console and as such the test don't work properly so manually chack what it calls an error and determine if it truly failed the tests
+    //All test below involve outputing to the console and as such the test don't work properly so manually chack what it calls an error and determine if it truly failed the tests
     //These Tests don't seem to properly catch the errors so manually check if they succeed or fail
     @Test
     public void testCheckHoursBaseLine(){

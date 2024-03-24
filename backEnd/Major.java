@@ -28,6 +28,14 @@ public class Major {
         this.major = major;
     }
 
+    public Major() {
+        this.major = "DefaultMajor";
+        this.uuid = UUID.randomUUID();
+        this.courses = new ArrayList<Course>();
+        this.coreReq = new HashMap<RequirementType, Integer>();
+        this.electiveCourses = new Elective();
+    }
+
     /**
      * This is the constructor
      * 
@@ -111,14 +119,9 @@ public class Major {
         System.out.println("addCourse called");
     }
 
-    public void addCoreReq() {
+    public void addCoreReq(RequirementType type, Integer hours) {
         // TODO: ?
         System.out.println("addCoreReq called");
-    }
-
-    public void addElective(Course course) {
-        // electiveCourses.add(course);
-        System.out.println("addElective called");
     }
 
     @Override
@@ -131,7 +134,7 @@ public class Major {
         System.out.println("printRoadmap called");
     }
 
-    private void removeCourse(Course course) {
+    public void removeCourse(Course course) {
         // Todo:
         System.out.println("removeCourse called");
     }
