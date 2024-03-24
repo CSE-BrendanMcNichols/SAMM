@@ -22,12 +22,7 @@ public class TestDriver {
         //scenario1();
         //scenario2()
         Student student = new Student();
-        HashMap<Course, String> testCourses = new HashMap<Course, String>();
-        Course testCourse = new Course();
-        testCourse.setCourseSubject(null);
-        testCourses.put(testCourse, "A");
-        student.setCompletedCourses(testCourses);
-        student.viewClassGrades();
+        student.checkProgress(student);
     }
     public static void scenario1(){
         //Start of scenario 1 code

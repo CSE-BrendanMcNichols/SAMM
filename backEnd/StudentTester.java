@@ -662,83 +662,185 @@ public class StudentTester {
         assertEquals(elective, student.getCurrentElectives().get(0));
     }
 
-    public void updateElectiveCompleted(Elective elect) {
-
-        removeElective(elect);
-        if (this.completedElectives != null) {
-            this.completedElectives = new ArrayList<Elective>();
-            this.completedElectives.add(elect);
-            // System.out.println("Elective: " + elect.getName() + " is added tp completed
-            // electives list");
-        }
+    @Test
+    public void testUpdateElectiveCompletedBaseLine(){
+        Student student = new Student();
+        Elective elective = new Elective();
+        student.addElective(elective);
+        student.updateElectiveCompleted(elective);
+        assertEquals(elective, student.getCompletedElectives().get(0));
     }
 
-    public void addNotes(String note) {
-        if (notes == null) {
-            this.notes = new ArrayList<String>();
-        }
-        notes.add(note);
+    @Test
+    public void testUpdateElectiveCompletedNotCurrentElective(){
+        Student student = new Student();
+        Elective elective = new Elective();
+        student.updateElectiveCompleted(elective);
+        assertEquals(elective, student.getCompletedElectives().get(0));
     }
 
-    public String displayStudent() {
-        return "Student:: " + this.getUscid() + " : " + this.getFirstName() + " " + this.getLastName();
+    @Test
+    public void testUpdateElectiveCompletedTwoElectives(){
+        Student student = new Student();
+        Elective elective = new Elective();
+        Elective elective2 = new Elective();
+        student.addElective(elective);
+        student.addElective(elective2);
+        student.updateElectiveCompleted(elective);
+        student.updateElectiveCompleted(elective2);
+        assertEquals(2, student.getCompletedElectives().size());
     }
 
-    public static void checkProgress(User user) {
-
-        if(user.getType() != UserType.STUDENT){
-            return;
-        }
-
-        Student student = UserList.getInstance().getStudent(user.getUuid());
-
-        System.out.println("\n" + student.getFirstName() + " " + student.getLastName() + "'s Completed Courses: ");
-        System.out.println("------------------------------------");
-        for(Course course : student.getCurrentCourses()) {
-            System.out.println(course.getCourseName() + " " + course.getCourseNumber() + " Grade: " + student.getCompletedCourses().get(course));
-        }
-        System.out.println("\n"+ student.getFirstName() + " " + student.getLastName() +"'s Remaining Courses:");
-        System.out.println("------------------------------------");
-        for (Course course : student.getCurrentCourses()) {
-            System.out.println(course.getCourseName() + " " + course.getCourseNumber());
-        }
+    @Test
+    public void testUpdateElectiveCompletedNull(){
+        Student student = new Student();
+        student.updateElectiveCompleted(null);
+        assertEquals(0, student.getCompletedElectives().size());
     }
 
-    public static void generateSemesterPlan(User user) {
-        try {
-
-            if(user.getType() != UserType.STUDENT){
-                return;
-            }
-            Student student = UserList.getInstance().getStudent(user.getUuid());
-            FileWriter writer = new FileWriter("backEnd/" + student.getFirstName() + student.getLastName() + "_SemesterPlan.txt");
-            writer.write(student.getFirstName() + " " + student.getLastName() + "'s 8-Semester Plan:\n\n");
-            ArrayList<Course> coursesToTake = new ArrayList<>(student.getCurrentCourses());
-            for (int i = 1; i <= 8; i++) {
-                writer.write("Semester " + i + ":\n");
-                writer.write("----------\n");
-                writer.write("Courses to Take:\n");
-                // TODO: fix the logic
-                for (Course course : coursesToTake) {
-                    writer.write(course.getCourseSubject() + " " + course.getCourseNumber() + " - " + course.getCourseName() + "\n");
-                }
-                writer.write("\n");
-            }
-            writer.close();
-            System.out.println("\n8-Semester Plan for " + student.getFirstName() + " " + student.getLastName() + "has been generated and saved to " + 
-            student.getFirstName() + student.getLastName() + "SemesterPlan.txt");
-        } catch (IOException e) {
-            System.out.println("An error occurred while writing the 8-Semester Plan to a file.");
-            e.printStackTrace();
-        }
+    @Test
+    public void testUpdateElectiveCompletedDuplicate(){
+        Student student = new Student();
+        Elective elective = new Elective();
+        student.updateElectiveCompleted(elective);
+        student.updateElectiveCompleted(elective);
+        assertEquals(1, student.getCompletedElectives().size());
     }
 
-    @Override
-    public String toString() {
-        return super.toString() + "Student [gradeYear=" + gradeYear + ", advisor=" + advisor + ", major=" + major
-                + ", overallGrade="
-                + overallGrade + ", credits=" + credits + ", completedCourses=" + completedCourses + ", currentCourses="
-                + currentCourses + ", notes=" + notes + ", applicationArea=" + applicationArea + ", currentElectives="
-                + currentElectives + ", completedElectives=" + completedElectives + ", uuid=" + uuid + "]";
+    @Test
+    public void tesAddNoteBaseLine(){
+        Student student = new Student();
+        String testString = "Test";
+        student.addNotes(testString);
+        assertEquals("Test", student.getNotes().get(0));
     }
+
+    @Test
+    public void tesAddNoteMultiple(){
+        Student student = new Student();
+        String testString = "Test";
+        String testString2 = "Test2";
+        student.addNotes(testString);
+        student.addNotes(testString2);
+        assertEquals("Test2", student.getNotes().get(1));
+    }
+
+    @Test
+    public void tesAddNoteNull(){
+        Student student = new Student();
+        student.addNotes(null);
+        assertEquals(0, student.getNotes().size());
+    }
+
+    @Test
+    public void tesDisplayStudentBaseLine(){
+        Student student = new Student();
+        assertEquals("Student:: null : null null", student.displayStudent());
+    }
+
+    @Test
+    public void tesDisplayStudentActualNulls(){
+        Student student = new Student();
+        student.setFirstName(null);
+        student.setLastName(null);
+        student.setUscid(null);
+        assertEquals("Student:: Error:null : Error:null Error:null", student.displayStudent());
+    }
+    
+    @Test
+    public void testCheckProgressBaseLine(){
+        Student student = new Student();
+        Course testCourseCurrent = new Course();
+        testCourseCurrent.setCourseName("Current Course");
+        student.updateCurrentCourses(testCourseCurrent);
+        Course testCourseCompleted = new Course();
+        testCourseCompleted.setCourseName("Completed Course");
+        student.updateCourseCompleted(testCourseCompleted, "B");
+        Student.checkProgress(student);
+        assertEquals("\nfirst last's Completed Courses: "+
+                    "\n------------------------------------"+
+                    "\nCompleted Course 555 Grade: B"+
+                    "\n"+
+                    "\nfirst last's Remaining Courses:"+
+                    "\n------------------------------------"+
+                    "\nCurrent Course 555"+
+                    "\n", outputStreamCaptor.toString());
+    }
+
+    @Test
+    public void testCheckProgressTwoClasses(){
+        Student student = new Student();
+        Course testCourseCurrent = new Course();
+        testCourseCurrent.setCourseName("Current Course");
+        student.updateCurrentCourses(testCourseCurrent);
+        Course testCourseCurrent2 = new Course();
+        testCourseCurrent2.setCourseName("Current Course2");
+        student.updateCurrentCourses(testCourseCurrent2);
+        Course testCourseCompleted = new Course();
+        testCourseCompleted.setCourseName("Completed Course");
+        student.updateCourseCompleted(testCourseCompleted, "B");
+        Course testCourseCompleted2 = new Course();
+        testCourseCompleted2.setCourseName("Completed Course2");
+        student.updateCourseCompleted(testCourseCompleted2, "B");
+        Student.checkProgress(student);
+        assertEquals("\nfirst last's Completed Courses: "+
+                    "\n------------------------------------"+
+                    "\nCompleted Course 555 Grade: B"+
+                    "\nCompleted Course2 555 Grade: B"+
+                    "\n"+
+                    "\nfirst last's Remaining Courses:"+
+                    "\n------------------------------------"+
+                    "\nCurrent Course 555"+
+                    "\nCurrent Course2 555"+
+                    "\n", outputStreamCaptor.toString());
+    }
+
+    @Test
+    public void testCheckProgressNullCompleted(){
+        Student student = new Student();
+        Course testCourseCurrent = new Course();
+        testCourseCurrent.setCourseName("Current Course");
+        student.updateCurrentCourses(testCourseCurrent);
+        student.updateCourseCompleted(null, "B");
+        Student.checkProgress(student);
+        assertEquals("\nfirst last's Completed Courses: "+
+                    "\n------------------------------------"+
+                    "\n"+
+                    "\nfirst last's Remaining Courses:"+
+                    "\n------------------------------------"+
+                    "\nCurrent Course 555"+
+                    "\n", outputStreamCaptor.toString());
+    }
+
+    @Test
+    public void testCheckProgressNullCurrent(){
+        Student student = new Student();
+        student.updateCurrentCourses(null);
+        Course testCourseCompleted = new Course();
+        testCourseCompleted.setCourseName("Completed Course");
+        student.updateCourseCompleted(testCourseCompleted, "B");
+        Student.checkProgress(student);
+        assertEquals("\nfirst last's Completed Courses: "+
+                    "\n------------------------------------"+
+                    "\nCompleted Course 555 Grade: B"+
+                    "\n"+
+                    "\nfirst last's Remaining Courses:"+
+                    "\n------------------------------------"+
+                    "\n", outputStreamCaptor.toString());
+    }
+
+    @Test
+    public void testCheckProgressNoClasses(){
+        Student student = new Student();
+        Student.checkProgress(student);
+        assertEquals("\nfirst last's Completed Courses: "+
+                    "\n------------------------------------"+
+                    "\n"+
+                    "\nfirst last's Remaining Courses:"+
+                    "\n------------------------------------"+
+                    "\n", outputStreamCaptor.toString());
+    }
+
+    //Did not test Generate Semester Plan As it outputs to a txt file
+
 }   
