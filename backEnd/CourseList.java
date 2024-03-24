@@ -1,28 +1,16 @@
 package backEnd;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.UUID;
 
 public class CourseList {
     private ArrayList<Course> courses;
-    private HashMap<UUID, Course> coursesByUuid;
-    private HashMap<String, UUID> uuidsBySubjectAndNumber;
+
     private static CourseList courseList;
 
     private CourseList() {
+        // Initialize course from database
         courses = DataLoader.loadCoursesMinusRequirements();
-        coursesByUuid = new HashMap<>();
-        uuidsBySubjectAndNumber = new HashMap<>();
-
-        // Initialize helper hashmaps
-        for (Course course : courses) {
-            // Add the entry to the new map
-            String key = course.getCourseSubject() + " " + course.getCourseNumber();
-            uuidsBySubjectAndNumber.put(key, course.getUuid());
-            coursesByUuid.put(course.getUuid(), course);
-        }
-
     }
 
     public static CourseList getInstance() {
@@ -36,57 +24,79 @@ public class CourseList {
         return courses;
     }
 
-
     public void setCourses(ArrayList<Course> courses) {
         this.courses = courses;
     }
 
-    public Course getCoursesByUuid(UUID uuid) {
-        return coursesByUuid.get(uuid);
-    }
-
-    public Course getCourse(String subject, int number) {
-        UUID uuid = uuidsBySubjectAndNumber.get(subject + " " + number);
-        return coursesByUuid.get(uuid);
-    }
-
+    /**
+     * Add/create a new course to the list
+     * 
+     * @param course
+     * @return
+     */
     public boolean createCourse(Course course) {
-        if (!coursesByUuid.containsKey(course.getUuid())) {
+        if (course == null) {
+            System.out.println("Invalid Parameter");
+            return false;
+        }
+        // if not found add to the list
+        if (findCourse(course.getUuid()) == false) {
             courses.add(course);
-            coursesByUuid.put(course.getUuid(), course);
-            uuidsBySubjectAndNumber.put(course.getCourseSubject() + " " + course.getCourseNumber(), course.getUuid());
+            System.out.println("Course  " + course.getCourseName() + " added successfully.");
+            System.out.println(courses);
             return true;
         } else {
-            return false;
+            System.out.println("Course: " + course.getCourseName() + " already exists.");
         }
+        return false;
+
     }
 
-    public boolean deleteCourse(Course course) {
-        if (courses.remove(course)) {
-            coursesByUuid.remove(course.getUuid());
-            uuidsBySubjectAndNumber.remove(course.getCourseSubject() + " " + course.getCourseNumber());
-            return true;
+    /**
+     * Delete a course from courselist
+     * 
+     * @param course
+     * @return
+     */
+    public boolean deleteCourse(Course pCourse) {
+        if (pCourse == null) {
+            System.out.println("Invalid Parameter");
+            return false;
+        }
+        if (findCourse(pCourse.getUuid())) {
+            for (Course course : courses) {
+                if (course.getUuid().equals(pCourse.getUuid())) {
+                    System.out.println("Course  " + course.getCourseName() + " deleted successfully.");
+                    return true;
+                }
+            }
+            return false;
         } else {
+            System.out.println("Course: " + pCourse.getCourseName() + "do not exists and cannot be deleted");
             return false;
         }
     }
 
-    public boolean editCourse(Course course) {
-        if (!coursesByUuid.containsKey(course.getUuid())) {
-            return false;
-        }
+    /**
+     * edit an existing course
+     * 
+     * @param course
+     * @return
+     */
+    public boolean editCourse(Course pCourse) {
+        // first delete existing course
+        deleteCourse(pCourse);
 
-        Course originalCourse = coursesByUuid.get(course.getUuid());
-        courses.remove(originalCourse);
-        uuidsBySubjectAndNumber.remove(originalCourse.getCourseSubject() + " " + originalCourse.getCourseNumber());
-
-        courses.add(course);
-        coursesByUuid.put(course.getUuid(), course);
-        uuidsBySubjectAndNumber.put(course.getCourseSubject() + " " + course.getCourseNumber(), course.getUuid());
-
-        return true;
+        // add new course
+        return createCourse(pCourse);
     }
 
+    /**
+     * Find if a course with the given uuid exists
+     * 
+     * @param uuid
+     * @return
+     */
     public Boolean findCourse(UUID uuid) {
         for (Course course : courses) {
             if (course.getUuid().equals(uuid)) {
@@ -96,6 +106,12 @@ public class CourseList {
         return false;
     }
 
+    /**
+     * find if a course with the given name exist
+     * 
+     * @param name
+     * @return
+     */
     public Course findCourseByName(String name) {
         for (Course course : courses) {
             if (course.getCourseName().equals(name)) {
@@ -105,9 +121,33 @@ public class CourseList {
         return null;
     }
 
+    /**
+     * Get course by UUID
+     * 
+     * @param uuid
+     * @return
+     */
+
     public Course getCourse(UUID uuid) {
         for (Course course : courses) {
             if (course.getUuid().equals(uuid)) {
+                return course;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Get Course by course Subject and course number
+     * 
+     * @param courseSubject
+     * @param courseNumber
+     * @return
+     */
+    public Course getCourse(String courseSubject, String courseNumber) {
+        for (Course course : courses) {
+            if (course.getCourseSubject().equals(courseSubject) &&
+                    course.getCourseNumber().equals(courseNumber)) {
                 return course;
             }
         }

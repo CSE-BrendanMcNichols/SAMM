@@ -77,7 +77,7 @@ public class ApplicationUI {
                     String subject = scanner.next();
                     System.out.println("Please Enter The Course Number");
                     int number = scanner.nextInt();
-                    student.updateCurrentCourses(CourseList.getInstance().getCourse(subject, number));
+                    student.updateCurrentCourses(CourseList.getInstance().getCourse(subject, Integer.toString(number)));
                     break;
                 case 6:
                 System.out.println("Please enter the Code for the requirement");
@@ -92,7 +92,7 @@ public class ApplicationUI {
                 subject = scanner.next();
                 System.out.println("Please Enter The Course Number");
                 number = scanner.nextInt();
-                student.updateCurrentCourses(CourseList.getInstance().getCourse(subject, number));
+                student.updateCurrentCourses(CourseList.getInstance().getCourse(subject, Integer.toString(number)));
                 break;
                 case 7:
                     applicationArea(user);
@@ -113,8 +113,10 @@ public class ApplicationUI {
 
     private static void saveData() {
         System.out.print("Saving Information...");
+        DataWriter.saveCourses(CourseList.getInstance().getCourses());
         DataWriter.saveAdvisors(UserList.getInstance().getAdvisors());
         DataWriter.saveStudents(UserList.getInstance().getStudents());
+        
         System.out.print("Your are successfully logged out! Good Bye!");
     }
 

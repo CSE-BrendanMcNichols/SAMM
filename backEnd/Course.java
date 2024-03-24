@@ -16,48 +16,25 @@ public class Course {
     private char minGrade;
     private CourseState courseStatus;
 
-    public Course(){
+    public Course() {
         this.courseName = "EMPTY CLASS";
         this.courseHours = 3;
         this.courseSubject = "TEST";
         this.courseNumber = "5555";
     }
 
-    public Course(String courseName, String courseNumber,
-                  ArrayList<Requirement> prerequisites, ArrayList<Requirement> corequisites,
-                  ArrayList<Semester> courseAvailability, String courseDescription,
-                  int courseHours, char minGrade, CourseState courseStatus,UUID uuid) {
-
-        this.courseName = courseName;
-        this.courseNumber = courseNumber;
-        this.prerequisites = new ArrayList<>(prerequisites);
-        this.corequisites = new ArrayList<>(corequisites);
-        this.courseAvailability = new ArrayList<>(courseAvailability);
-        this.courseDescription = courseDescription;
-        this.courseHours = courseHours;
-        this.minGrade = minGrade;
-        this.courseStatus = courseStatus;
-        this.uuid = uuid;
-    }
-  
-    public Course(String courseName, String courseNumber, ArrayList<Semester> courseAvailability, String courseDescription,
+    public Course(String courseName, String courseSubject, String courseNumber,
+            ArrayList<Requirement> prerequisites, ArrayList<Requirement> corequisites,
+            ArrayList<Semester> courseAvailability, String courseDescription,
             int courseHours, char minGrade, CourseState courseStatus, UUID uuid) {
 
         this.courseName = courseName;
-        this.courseNumber = courseNumber;
-        this.courseAvailability = new ArrayList<>(courseAvailability);
-        this.courseDescription = courseDescription;
-        this.courseHours = courseHours;
-        this.minGrade = minGrade;
-        this.courseStatus = courseStatus;
-        this.uuid = uuid;
-    }
-
-    public Course(String courseName, String courseNumber, ArrayList<Semester> courseAvailability, String courseDescription,
-            int courseHours, char minGrade, CourseState courseStatus, UUID uuid, String courseSubject) {
         this.courseSubject = courseSubject;
-        this.courseName = courseName;
         this.courseNumber = courseNumber;
+        if (prerequisites != null)
+            this.prerequisites = new ArrayList<>(prerequisites);
+        if (corequisites != null)
+            this.corequisites = new ArrayList<>(corequisites);
         this.courseAvailability = new ArrayList<>(courseAvailability);
         this.courseDescription = courseDescription;
         this.courseHours = courseHours;
@@ -66,7 +43,20 @@ public class Course {
         this.uuid = uuid;
     }
 
-    
+    public Course(String courseName, String courseSubject, String courseNumber, ArrayList<Semester> courseAvailability,
+            String courseDescription,
+            int courseHours, char minGrade, CourseState courseStatus, UUID uuid) {
+
+        this.courseName = courseName;
+        this.courseSubject = courseSubject;
+        this.courseNumber = courseNumber;
+        this.courseAvailability = new ArrayList<>(courseAvailability);
+        this.courseDescription = courseDescription;
+        this.courseHours = courseHours;
+        this.minGrade = minGrade;
+        this.courseStatus = courseStatus;
+        this.uuid = uuid;
+    }
 
     public UUID getUuid() {
         return uuid;
@@ -108,7 +98,6 @@ public class Course {
         return minGrade;
     }
 
-
     public CourseState getCourseStatus() {
         return courseStatus;
     }
@@ -134,16 +123,14 @@ public class Course {
         this.minGrade = minGrade;
     }
 
-
     public void setCourseStatus(CourseState courseStatus) {
         this.courseStatus = courseStatus;
     }
 
-    public String displayCourse(){
-        return "Course Number:" + courseNumber + " Course Name:" + courseName + " Subject: "+ courseSubject + "\n"; 
-        //return courseName;
+    public String displayCourse() {
+        return "Course Number:" + courseNumber + " Course Name:" + courseName + " Subject: " + courseSubject + "\n";
+        // return courseName;
     }
-    
 
     // Methods for managing prerequisites and corequisites
     public void addPrerequisite(Requirement prerequisite) {
@@ -177,26 +164,41 @@ public class Course {
         courseAvailability.remove(semester);
     }
 
-    
-
-    public void printSemester(){
-        for( Semester semester: courseAvailability){
+    public void printSemester() {
+        for (Semester semester : courseAvailability) {
             System.out.println(semester.name());
         }
     }
+
     public String getCourseName() {
         return courseName;
     }
+
     public void setCourseName(String courseName) {
         this.courseName = courseName;
     }
+
     public void setPrerequisites(ArrayList<Requirement> prerequisites) {
         this.prerequisites = prerequisites;
     }
+
     public void setCorequisites(ArrayList<Requirement> corequisites) {
         this.corequisites = corequisites;
     }
+
     public void setCourseAvailability(ArrayList<Semester> courseAvailability) {
         this.courseAvailability = courseAvailability;
     }
+
+    @Override
+    public String toString() {
+        return "Course [uuid=" + uuid + ", courseName=" + courseName + ", courseSubject=" + courseSubject
+                + ", courseNumber=" + courseNumber + ", prerequisites=" + prerequisites + ", corequisites="
+                + corequisites + ", courseAvailability=" + courseAvailability + ", courseDescription="
+                + courseDescription + ", courseHours=" + courseHours + ", minGrade=" + minGrade + ", courseStatus="
+                + courseStatus + "]";
+    }
+
+
+    
 }

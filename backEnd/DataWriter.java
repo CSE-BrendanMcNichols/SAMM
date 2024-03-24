@@ -227,29 +227,39 @@ public class DataWriter {
      * @param courseList
      */
     @SuppressWarnings("unchecked")
-    public static void saveCourses(ArrayList<Course> courseList) {
+    public static void saveCourses(ArrayList<Course> courses) {
         // Convert ArrayList to JSON
         JSONArray coursesJSONArray = new JSONArray();
-        for (Course course : courseList) {
+        for (Course course : courses) {
             JSONObject courseJSON = new JSONObject();
 
-            courseJSON.put(DataConstants.COURSENAME, course.getCourseSubject());
+            courseJSON.put(DataConstants.UUIDSTRING, course.getUuid().toString());
+            courseJSON.put(DataConstants.COURSENAME, course.getCourseName());
+            courseJSON.put(DataConstants.COURSESUBJECT, course.getCourseSubject());
             courseJSON.put(DataConstants.COURSENUMBER, course.getCourseNumber());
+            //TODO store prereq 
+            //TODO store coreq 
+            //TODO semesters
             courseJSON.put(DataConstants.COURSEDESCRIPTION, course.getCourseDescription());
             courseJSON.put(DataConstants.COURSEHOURS, course.getCourseHours());
             courseJSON.put(DataConstants.MINGRADE, "" + course.getMinGrade());
-            courseJSON.put(DataConstants.UUIDSTRING, course.getUuid().toString());
+            courseJSON.put(DataConstants.COURSESTATUS, "" + course.getCourseStatus());
+            
             // Note: User Grade and course STATUS not required for the list of courses
             // TODO : need to store pre and co requisites
+            System.out.println("added courseJSON" );
 
             coursesJSONArray.add(courseJSON);
         }
 
         // Write JSON to file
         try (FileWriter file = new FileWriter(DataConstants.COURSE_FILE_NAME)) {
+
+            System.out.println("JSon output:\n" + prettyPrint(coursesJSONArray));
+
             file.write(prettyPrint(coursesJSONArray));
             file.flush();
-            System.out.println("Courses JSON data is written to the file." + DataConstants.COURSE_FILE_NAME);
+            System.out.println("Courses JSON data is written to the file: " + DataConstants.COURSE_FILE_NAME);
         } catch (IOException e) {
             e.printStackTrace();
         }

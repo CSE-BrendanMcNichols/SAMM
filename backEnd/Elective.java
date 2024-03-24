@@ -61,23 +61,7 @@ public class Elective {
         return this.courses;
     }
 
-    public static Boolean findElective(ArrayList<Elective> electives, UUID uuid ){
-        for (Elective elective : electives){
-            if(elective.getUuid().equals(uuid)){
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public static Elective getElective(ArrayList<Elective> electives, UUID uuid ){
-        for (Elective elective : electives){
-            if(elective.getUuid().equals(uuid)){
-                return elective;
-            }
-        }
-        return null;
-    }
+    
 
     @Override
     public String toString() {

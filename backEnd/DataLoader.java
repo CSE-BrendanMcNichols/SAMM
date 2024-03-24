@@ -320,27 +320,29 @@ public class DataLoader extends DataConstants {
 
 			for (int i = 0; i < coursesJSON.size(); i++) {
 				JSONObject courseJSON = (JSONObject) coursesJSON.get(i);
+				UUID uuid = UUID.fromString((String) courseJSON.get(UUIDSTRING));
 				String courseName = (String) courseJSON.get(COURSENAME);
 				String courseSubject = (String) courseJSON.get(COURSESUBJECT);
+				String courseNumber = ((String) courseJSON.get(COURSENUMBER));
 				JSONArray semesters = (JSONArray) courseJSON.get(COURSESEMESTER);
 				ArrayList<Semester> courseSemester = new ArrayList<Semester>();
 				for (int j = 0; j < semesters.size(); j++) {
 					String semester = (String) semesters.get(j);
 					courseSemester.add(Semester.StringToSemester(semester));
 				}
-				String courseNumber = ((String) courseJSON.get(COURSENUMBER));
+				
 				String courseDescription = (String) courseJSON.get(COURSEDESCRIPTION);
 				//System.out.println("*** Loaded " + courseName);
 				int courseHours = ((Long) courseJSON.get(COURSEHOURS)).intValue();
 				char minGrade = ((String) courseJSON.get(MINGRADE)).charAt(0);
 				CourseState courseState = CourseState.StringToCourseState((String) courseJSON.get(COURSESTATUS));
-				UUID uuid = UUID.fromString((String) courseJSON.get(UUIDSTRING));
 
-				courses.add(new Course(courseName, courseNumber, courseSemester,
-						courseDescription, courseHours, minGrade, courseState, uuid, courseSubject));
+				courses.add(new Course(courseName, courseSubject,courseNumber, courseSemester,
+						courseDescription, courseHours, minGrade, courseState, uuid));
 			}
-			System.out.println("*** Successfully Loaded Courses without Requirements");
+			System.out.println("*** Successfully Loaded Courses without Requirements: " + courses.size());
 
+			reader.close();
 			return courses;
 
 		} catch (Exception e) {
