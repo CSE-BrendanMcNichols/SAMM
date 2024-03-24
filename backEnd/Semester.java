@@ -17,4 +17,6 @@ public enum Semester {
                 throw new IllegalArgumentException("Invalid semester " + semesterString);
         }
     }
+
+    
 }

@@ -18,7 +18,7 @@ import backEnd.CourseState;
 import backEnd.DataWriter;
 import backEnd.Semester;
 
-public class CourseListTest {
+public class CourseListTester {
 
     private CourseList courseList;
     private ArrayList<Course> courses;
@@ -56,7 +56,7 @@ public class CourseListTest {
     @AfterEach
     public void tearDown() {
         // at the end clear every thing
-        //CourseList.getInstance().getCourses().clear();
+        // CourseList.getInstance().getCourses().clear();
         DataWriter.saveCourses(courses);
     }
 
