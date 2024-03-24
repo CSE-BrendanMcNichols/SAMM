@@ -44,7 +44,18 @@ public abstract class User {
         this.email = "null";
         this.username = "null";
         this.password = "null";
-        this.type = UserType.ADMINISTRATOR;
+        this.type = UserType.STUDENT;
+    }
+
+    public User(UserType type) {
+        this.uuid = UUID.randomUUID();
+        this.firstName = "first";
+        this.lastName = "last";
+        this.uscid = "null";
+        this.email = "null";
+        this.username = "null";
+        this.password = "null";
+        this.type = type;
     }
 
     /**

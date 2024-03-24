@@ -68,6 +68,7 @@ public class Student extends User {
     //Default constructor
     //By Matthew
     public Student(){
+        super(UserType.STUDENT);
         gradeYear = Year.Freshman;
         advisor = new Advisor("Default Advisor", "Default Constructor", "Default ID", "Default Email", "Default Username", "Default Password", null, "Default Apartment");
         major = new Major("Default Major");
