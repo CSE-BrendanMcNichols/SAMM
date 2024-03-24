@@ -40,10 +40,10 @@ public class CourseListTest {
         semesters.add(Semester.Fall);
 
         // add couple of dummy courses
-        courses.add(new Course("Course1", "1", "subject1", null, null, semesters, "description 1", 4, 'C',
+        courses.add(new Course("Course1", "subject1", "1", null, null, semesters, "description 1", 4, 'C',
                 CourseState.NOT_STARTED,
                 uuid1));
-        courses.add(new Course("Course2", "2", "subject2", null, null, semesters, "description 2", 4, 'C',
+        courses.add(new Course("Course2", "subject2", "2", null, null, semesters, "description 2", 4, 'C',
                 CourseState.NOT_STARTED,
                 uuid2));
         // db should have only two courses for starting the testing
@@ -64,7 +64,7 @@ public class CourseListTest {
     // should be able to create
     public void testCreateCourse_DonotExists() {
         // add couple of dummy courses
-        Course course3 = new Course("Course3", "3", "subject3", null, null, semesters, "description 3", 4, 'C',
+        Course course3 = new Course("Course3", "subject3", "3", null, null, semesters, "description 3", 4, 'C',
                 CourseState.NOT_STARTED,
                 uuid3);
 
@@ -78,23 +78,23 @@ public class CourseListTest {
     // should return false
     public void testCreateCourse_Exists() {
         // add couple of dummy courses
-        Course course1 = new Course("Course1", "1", "subject4", null, null, semesters, "description 1", 4, 'C',
+        Course course1 = new Course("Course1", "subject1", "1", null, null, semesters, "description 1", 4, 'C',
                 CourseState.NOT_STARTED,
                 uuid1);
 
         boolean courseCreated = CourseList.getInstance().createCourse(course1);
-        assertTrue(courseCreated);
+        assertFalse(courseCreated);
     }
 
     @Test
     // should be able to delete
     public void testDeleteCourse_Exists() {
         // create a course that exist
-        Course course2 = new Course("Course2", "2", "subject2", null, null, semesters, "description 2", 4, 'C',
+        Course course2 = new Course("Course2", "subject2", "2", null, null, semesters, "description 2", 4, 'C',
                 CourseState.NOT_STARTED,
                 uuid2);
 
-        boolean courseDeleted = CourseList.getInstance().createCourse(course2);
+        boolean courseDeleted = CourseList.getInstance().deleteCourse(course2);
         assertTrue(courseDeleted);
     }
 
@@ -102,11 +102,11 @@ public class CourseListTest {
     // should return false
     public void testDeleteCourse_DonotExists() {
         // create a course that donot exist
-        Course course4 = new Course("Course4", "4", "subject4", null, null, semesters, "description 4", 4, 'C',
+        Course course4 = new Course("Course4", "subject4", "4", null, null, semesters, "description 4", 4, 'C',
                 CourseState.NOT_STARTED,
                 uuid4);
 
-        boolean courseDeleted = CourseList.getInstance().createCourse(course4);
+        boolean courseDeleted = CourseList.getInstance().deleteCourse(course4);
         assertFalse(courseDeleted);
     }
 
@@ -114,19 +114,19 @@ public class CourseListTest {
     // should be able to update
     public void testEditCourse_Exists() {
         // create a course that donot exist
-        Course updatedCourse1 = new Course("Course1", "1", "subject1", null, null, semesters, "updated description 1",
+        Course updatedCourse1 = new Course("Course1", "subject1", "1", null, null, semesters, "updated description 1",
                 4, 'C', CourseState.IN_PROGRESS,
                 uuid1);
 
-        boolean courseDeleted = CourseList.getInstance().editCourse(updatedCourse1);
-        assertTrue(courseDeleted);
+        boolean courseUpdated = CourseList.getInstance().editCourse(updatedCourse1);
+        assertTrue(courseUpdated);
     }
 
     @Test
     // should return false
     public void testEditCourse_DonotExists() {
         // create a course that donot exist
-        Course updatedCourse4 = new Course("Course4", "4", "subject4", null, null, semesters, "updated description 4",
+        Course updatedCourse4 = new Course("Course4", "subject4", "4", null, null, semesters, "updated description 4",
                 4, 'C', CourseState.IN_PROGRESS,
                 uuid4);
 
@@ -153,7 +153,7 @@ public class CourseListTest {
     @Test
     public void testFindCourseByName_Exists() {
 
-        String courseName = "course1";
+        String courseName = "Course1";
 
         Course courseFound = CourseList.getInstance().findCourseByName(courseName);
         assertNotNull(courseFound);

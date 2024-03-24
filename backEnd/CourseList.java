@@ -84,11 +84,20 @@ public class CourseList {
      * @return
      */
     public boolean editCourse(Course pCourse) {
-        // first delete existing course
-        deleteCourse(pCourse);
-
-        // add new course
-        return createCourse(pCourse);
+        if (pCourse == null) {
+            System.out.println("Invalid Parameter");
+            return false;
+        }
+        for (int i = 0; i < courses.size(); i++) {
+            Course course = courses.get(i);
+            if (course.getUuid().equals(pCourse.getUuid())) {
+                // matching course id found
+                courses.set(i, pCourse);
+                System.out.println("Course: " + pCourse.getCourseName() + "updated with new information");
+                return true;
+            }
+        }
+        return false;
     }
 
     /**

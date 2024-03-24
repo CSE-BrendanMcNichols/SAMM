@@ -89,7 +89,9 @@ public class DataLoader extends DataConstants {
 				}
 				JSONArray completedElectivesJSON = (JSONArray) studentJSON.get(COMPLETEDELECTIVES);
 				ArrayList<Elective> completedElectives = new ArrayList<Elective>();
-				for (int j = 0; j < electivesJSON.size(); j++) {
+				System.out.println(completedElectives);
+
+				for (int j = 0; j < completedElectives.size(); j++) {
 					UUID electiveUUID = UUID.fromString((String) completedElectivesJSON.get(j));
 					if (Cache.getInstance().findElective(electiveUUID)) {
 						currentElectives.add(Cache.getInstance().getElective(electiveUUID));
