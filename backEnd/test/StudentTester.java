@@ -1,4 +1,4 @@
-package backEnd;
+package backEnd.test;
 
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.AfterClass;
@@ -14,6 +14,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+
+import backEnd.Course;
+import backEnd.Student;
+import backEnd.Elective;
+
 
 public class StudentTester {
 
@@ -277,85 +282,6 @@ public class StudentTester {
         assertEquals(0, student.getCompletedCourses().size(), "Error null is not a course");
     }
 
-    //These Tests don't seem to properly catch the errors so manually check if they succeed or fail
-    @Test
-    public void testViewClassGradesBaseLine(){
-        Student student = new Student();
-        HashMap<Course, String> testCourses = new HashMap<Course, String>();
-        Course testCourse = new Course();
-        Course testCourse2 = new Course();
-        Course testCourse3 = new Course();
-        testCourses.put(testCourse, "A");
-        testCourses.put(testCourse2, "B");
-        testCourses.put(testCourse3, "C");
-        student.setCompletedCourses(testCourses);
-        student.viewClassGrades();
-        assertEquals("These are your class grades:"+
-                    "\nTEST, A"+
-                    "\nTEST, B"+
-                    "\nTEST, C"+
-                    "\n", outputStreamCaptor.toString());
-    }
-    //These Tests don't seem to properly catch the errors so manually check if they succeed or fail
-    @Test
-    public void testViewClassGradesOneClass(){
-        Student student = new Student();
-        HashMap<Course, String> testCourses = new HashMap<Course, String>();
-        Course testCourse = new Course();
-        testCourses.put(testCourse, "A");
-        student.setCompletedCourses(testCourses);
-        student.viewClassGrades();
-        assertEquals("These are your class grades:"+
-                     "\nTEST, A"+
-                     "\n", outputStreamCaptor.toString());
-    }
-    @Test
-    public void testViewClassGradesOneClassTEST(){
-        Student student = new Student();
-        HashMap<Course, String> testCourses = new HashMap<Course, String>();
-        Course testCourse = new Course();
-        testCourses.put(testCourse, "A");
-        student.setCompletedCourses(testCourses);
-        student.viewClassGrades();
-        assertEquals("These are your class grades:"+
-                     "\nTEST, A"+
-                     "\n", outputStreamCaptor.toString());
-    }
-    //These Tests don't seem to properly catch the errors so manually check if they succeed or fail
-    @Test
-    public void testViewClassGradesNoClassError(){
-        Student student = new Student();
-        student.viewClassGrades();
-        assertEquals("Error No Classes", outputStreamCaptor.toString());
-    }
-    //These Tests don't seem to properly catch the errors so manually check if they succeed or fail
-    @Test
-    public void testViewClassGradesNullCourseSubject(){
-        Student student = new Student();
-        HashMap<Course, String> testCourses = new HashMap<Course, String>();
-        Course testCourse = new Course();
-        testCourse.setCourseSubject(null);
-        testCourses.put(testCourse, "A");
-        student.setCompletedCourses(testCourses);
-        student.viewClassGrades();
-        assertEquals("These are your class grades:"+
-                     "\nError Course Subject is Null, A"+
-                     "\n", outputStreamCaptor.toString());
-    }
-    //These Tests don't seem to properly catch the errors so manually check if they succeed or fail
-    @Test
-    public void testViewClassGradesNullGrade(){
-        Student student = new Student();
-        HashMap<Course, String> testCourses = new HashMap<Course, String>();
-        Course testCourse = new Course();
-        testCourses.put(testCourse, null);
-        student.setCompletedCourses(testCourses);
-        student.viewClassGrades();
-        assertEquals("These are your class grades:"+
-                     "\nTEST, Error null is not a Grade"+
-                     "\n", outputStreamCaptor.toString());
-    }
-
     @Test
     public void testRiskOfFailureSuccess(){
         Student student = new Student();
@@ -381,132 +307,6 @@ public class StudentTester {
         assertEquals(false, student.riskOfFailure());
     }
 
-    @Test
-    public void testViewCurrentScheduleOnlyOneClass(){
-        Student student = new Student();
-        Course testCourse = new Course();
-        Course testCourse2 = new Course();
-        ArrayList<Course> testCourses = new ArrayList<Course>();
-        testCourses.add(testCourse);
-        student.setCurrentCourses(testCourses);
-        student.viewCurrentSchedule();
-        assertEquals("--------------------------"+
-                     "\nCurrent Courses:"+
-                     "\nCourse Number:5555 Course Name:EMPTY CLASS Subject: TEST"+
-                     "\n"+
-                     "\nCurrent Electives"+
-                     "\n--------------------------"+
-                     "\n", outputStreamCaptor.toString());
-    }
-
-    @Test
-    public void testViewCurrentScheduleBaseLine(){
-        Student student = new Student();
-        Course testCourse = new Course();
-        Course testCourse2 = new Course();
-        ArrayList<Course> testCourses = new ArrayList<Course>();
-        testCourses.add(testCourse);
-        testCourses.add(testCourse2);
-        student.setCurrentCourses(testCourses);
-        Elective testElective = new Elective(testCourses);
-        ArrayList<Elective> testElectives = new ArrayList<Elective>();
-        testElectives.add(testElective);
-        student.setCurrentElectives(testElectives);
-        student.viewCurrentSchedule();
-        assertEquals("--------------------------"+
-                     "\nCurrent Courses:"+
-                     "\nCourse Number:5555 Course Name:EMPTY CLASS Subject: TEST"+
-                     "\n"+
-                     "\nCourse Number:5555 Course Name:EMPTY CLASS Subject: TEST"+
-                     "\n"+
-                     "\nCurrent Electives"+
-                     "\ndefault name"+
-                     "\nCourse Number:5555 Course Name:EMPTY CLASS Subject: TEST"+
-                     "\n"+
-                     "\nCourse Number:5555 Course Name:EMPTY CLASS Subject: TEST"+
-                     "\n"+
-                     "\n--------------------------"+
-                     "\n", outputStreamCaptor.toString());
-    }
-    @Test
-    public void testViewCurrentScheduleNullElective(){
-        Student student = new Student();
-        Course testCourse = new Course();
-        Course testCourse2 = new Course();
-        ArrayList<Course> testCourses = new ArrayList<Course>();
-        testCourses.add(testCourse);
-        testCourses.add(testCourse2);
-        student.setCurrentCourses(testCourses);
-        Elective testElective = null;
-        ArrayList<Elective> testElectives = new ArrayList<Elective>();
-        testElectives.add(testElective);
-        student.setCurrentElectives(testElectives);
-        student.viewCurrentSchedule();
-        assertEquals("--------------------------"+
-                     "\nCurrent Courses:"+
-                     "\nCourse Number:5555 Course Name:EMPTY CLASS Subject: TEST"+
-                     "\n"+
-                     "\nCourse Number:5555 Course Name:EMPTY CLASS Subject: TEST"+
-                     "\n"+
-                     "\nCurrent Electives"+
-                     "\nError Null Elective"+
-                     "\n--------------------------"+
-                     "\n", outputStreamCaptor.toString());
-    }
-    @Test
-    public void testViewCurrentScheduleNoCourses(){
-        Student student = new Student();
-        Course testCourse = new Course();
-        Course testCourse2 = new Course();
-        ArrayList<Course> testCourses = new ArrayList<Course>();
-        testCourses.add(testCourse);
-        testCourses.add(testCourse2);
-        Elective testElective = new Elective(testCourses);
-        ArrayList<Elective> testElectives = new ArrayList<Elective>();
-        testElectives.add(testElective);
-        student.setCurrentElectives(testElectives);
-        student.viewCurrentSchedule();
-        assertEquals("--------------------------"+
-                     "\nCurrent Courses:"+
-                     "\nCurrent Electives"+
-                     "\ndefault name"+
-                     "\nCourse Number:5555 Course Name:EMPTY CLASS Subject: TEST"+
-                     "\n"+
-                     "\nCourse Number:5555 Course Name:EMPTY CLASS Subject: TEST"+
-                     "\n"+
-                     "\n--------------------------"+
-                     "\n", outputStreamCaptor.toString());
-    }
-    @Test
-    public void testViewCurrentScheduleNullCourse(){
-        Student student = new Student();
-        Course testCourse = new Course();
-        Course testCourse2 = new Course();
-        ArrayList<Course> testCourses = new ArrayList<Course>();
-        testCourses.add(testCourse);
-        testCourses.add(null);
-        student.setCurrentCourses(testCourses);
-        Elective testElective = new Elective(testCourses);
-        ArrayList<Elective> testElectives = new ArrayList<Elective>();
-        testElectives.add(testElective);
-        student.setCurrentElectives(testElectives);
-        student.viewCurrentSchedule();
-        assertEquals("--------------------------"+
-                     "\nCurrent Courses:"+
-                     "\nCourse Number:5555 Course Name:EMPTY CLASS Subject: TEST"+
-                     "\n"+
-                     "\nError Null Class"+
-                     "\n"+
-                     "\nCurrent Electives"+
-                     "\ndefault name"+
-                     "\nError Null Class"+
-                     "\n"+
-                     "\nCourse Number:5555 Course Name:EMPTY CLASS Subject: TEST"+
-                     "\n"+
-                     "\n--------------------------"+
-                     "\n", outputStreamCaptor.toString());
-    }
-
     public void checkHours(HashMap<Course, String> completedCourses) {
         int creditTotal = 0;
         for (Map.Entry<Course, String> entry : completedCourses.entrySet()) {
@@ -517,43 +317,6 @@ public class StudentTester {
         System.out.println("credit hours completed are: " + creditTotal);
     }
 
-    @Test
-    public void testCheckHoursBaseLine(){
-        Student student = new Student();
-        HashMap<Course, String> testCourses = new HashMap<Course, String>();
-        Course testCourse = new Course();
-        Course testCourse2 = new Course();
-        Course testCourse3 = new Course();
-        testCourses.put(testCourse, "A");
-        testCourses.put(testCourse2, "B");
-        testCourses.put(testCourse3, "C");
-        student.setCompletedCourses(testCourses);
-        student.checkHours(student.getCompletedCourses());
-        assertEquals("credit hours completed are: 9"+
-                    "\n", outputStreamCaptor.toString());
-    }
-
-    @Test
-    public void testCheckHoursOneCourse(){
-        Student student = new Student();
-        HashMap<Course, String> testCourses = new HashMap<Course, String>();
-        Course testCourse = new Course();
-        testCourses.put(testCourse, "A");
-        student.setCompletedCourses(testCourses);
-        student.checkHours(student.getCompletedCourses());
-        assertEquals("credit hours completed are: 3"+
-                    "\n", outputStreamCaptor.toString());
-    }
-
-    @Test
-    public void testCheckHoursNoCourses(){
-        Student student = new Student();
-        HashMap<Course, String> testCourses = new HashMap<Course, String>();
-        student.setCompletedCourses(testCourses);
-        student.checkHours(student.getCompletedCourses());
-        assertEquals("credit hours completed are: 0"+
-                    "\n", outputStreamCaptor.toString());
-    }
 
     @Test
     public void testUpdateCurrentCoursesBaseLine(){
@@ -747,6 +510,253 @@ public class StudentTester {
         assertEquals("Student:: Error:null : Error:null Error:null", student.displayStudent());
     }
     
+    //All test beloe involve outputing to the console and as such the test don't work properly so manually chack what it calls an error and determine if it truly failed the tests
+    //These Tests don't seem to properly catch the errors so manually check if they succeed or fail
+    @Test
+    public void testCheckHoursBaseLine(){
+        Student student = new Student();
+        HashMap<Course, String> testCourses = new HashMap<Course, String>();
+        Course testCourse = new Course();
+        Course testCourse2 = new Course();
+        Course testCourse3 = new Course();
+        testCourses.put(testCourse, "A");
+        testCourses.put(testCourse2, "B");
+        testCourses.put(testCourse3, "C");
+        student.setCompletedCourses(testCourses);
+        student.checkHours(student.getCompletedCourses());
+        assertEquals("credit hours completed are: 9"+
+                    "\n", outputStreamCaptor.toString());
+    }
+    //These Tests don't seem to properly catch the errors so manually check if they succeed or fail
+    @Test
+    public void testCheckHoursOneCourse(){
+        Student student = new Student();
+        HashMap<Course, String> testCourses = new HashMap<Course, String>();
+        Course testCourse = new Course();
+        testCourses.put(testCourse, "A");
+        student.setCompletedCourses(testCourses);
+        student.checkHours(student.getCompletedCourses());
+        assertEquals("credit hours completed are: 3"+
+                    "\n", outputStreamCaptor.toString());
+    }
+    //These Tests don't seem to properly catch the errors so manually check if they succeed or fail
+    @Test
+    public void testCheckHoursNoCourses(){
+        Student student = new Student();
+        HashMap<Course, String> testCourses = new HashMap<Course, String>();
+        student.setCompletedCourses(testCourses);
+        student.checkHours(student.getCompletedCourses());
+        assertEquals("credit hours completed are: 0"+
+                    "\n", outputStreamCaptor.toString());
+    }
+    //These Tests don't seem to properly catch the errors so manually check if they succeed or fail
+    @Test
+    public void testViewCurrentScheduleOnlyOneClass(){
+        Student student = new Student();
+        Course testCourse = new Course();
+        Course testCourse2 = new Course();
+        ArrayList<Course> testCourses = new ArrayList<Course>();
+        testCourses.add(testCourse);
+        student.setCurrentCourses(testCourses);
+        student.viewCurrentSchedule();
+        assertEquals("--------------------------"+
+                     "\nCurrent Courses:"+
+                     "\nCourse Number:5555 Course Name:EMPTY CLASS Subject: TEST"+
+                     "\n"+
+                     "\nCurrent Electives"+
+                     "\n--------------------------"+
+                     "\n", outputStreamCaptor.toString());
+    }
+    //These Tests don't seem to properly catch the errors so manually check if they succeed or fail
+    @Test
+    public void testViewCurrentScheduleBaseLine(){
+        Student student = new Student();
+        Course testCourse = new Course();
+        Course testCourse2 = new Course();
+        ArrayList<Course> testCourses = new ArrayList<Course>();
+        testCourses.add(testCourse);
+        testCourses.add(testCourse2);
+        student.setCurrentCourses(testCourses);
+        Elective testElective = new Elective(testCourses);
+        ArrayList<Elective> testElectives = new ArrayList<Elective>();
+        testElectives.add(testElective);
+        student.setCurrentElectives(testElectives);
+        student.viewCurrentSchedule();
+        assertEquals("--------------------------"+
+                     "\nCurrent Courses:"+
+                     "\nCourse Number:5555 Course Name:EMPTY CLASS Subject: TEST"+
+                     "\n"+
+                     "\nCourse Number:5555 Course Name:EMPTY CLASS Subject: TEST"+
+                     "\n"+
+                     "\nCurrent Electives"+
+                     "\ndefault name"+
+                     "\nCourse Number:5555 Course Name:EMPTY CLASS Subject: TEST"+
+                     "\n"+
+                     "\nCourse Number:5555 Course Name:EMPTY CLASS Subject: TEST"+
+                     "\n"+
+                     "\n--------------------------"+
+                     "\n", outputStreamCaptor.toString());
+    }
+    //These Tests don't seem to properly catch the errors so manually check if they succeed or fail
+    @Test
+    public void testViewCurrentScheduleNullElective(){
+        Student student = new Student();
+        Course testCourse = new Course();
+        Course testCourse2 = new Course();
+        ArrayList<Course> testCourses = new ArrayList<Course>();
+        testCourses.add(testCourse);
+        testCourses.add(testCourse2);
+        student.setCurrentCourses(testCourses);
+        Elective testElective = null;
+        ArrayList<Elective> testElectives = new ArrayList<Elective>();
+        testElectives.add(testElective);
+        student.setCurrentElectives(testElectives);
+        student.viewCurrentSchedule();
+        assertEquals("--------------------------"+
+                     "\nCurrent Courses:"+
+                     "\nCourse Number:5555 Course Name:EMPTY CLASS Subject: TEST"+
+                     "\n"+
+                     "\nCourse Number:5555 Course Name:EMPTY CLASS Subject: TEST"+
+                     "\n"+
+                     "\nCurrent Electives"+
+                     "\nError Null Elective"+
+                     "\n--------------------------"+
+                     "\n", outputStreamCaptor.toString());
+    }
+    //These Tests don't seem to properly catch the errors so manually check if they succeed or fail
+    @Test
+    public void testViewCurrentScheduleNoCourses(){
+        Student student = new Student();
+        Course testCourse = new Course();
+        Course testCourse2 = new Course();
+        ArrayList<Course> testCourses = new ArrayList<Course>();
+        testCourses.add(testCourse);
+        testCourses.add(testCourse2);
+        Elective testElective = new Elective(testCourses);
+        ArrayList<Elective> testElectives = new ArrayList<Elective>();
+        testElectives.add(testElective);
+        student.setCurrentElectives(testElectives);
+        student.viewCurrentSchedule();
+        assertEquals("--------------------------"+
+                     "\nCurrent Courses:"+
+                     "\nCurrent Electives"+
+                     "\ndefault name"+
+                     "\nCourse Number:5555 Course Name:EMPTY CLASS Subject: TEST"+
+                     "\n"+
+                     "\nCourse Number:5555 Course Name:EMPTY CLASS Subject: TEST"+
+                     "\n"+
+                     "\n--------------------------"+
+                     "\n", outputStreamCaptor.toString());
+    }
+    //These Tests don't seem to properly catch the errors so manually check if they succeed or fail
+    @Test
+    public void testViewCurrentScheduleNullCourse(){
+        Student student = new Student();
+        Course testCourse = new Course();
+        Course testCourse2 = new Course();
+        ArrayList<Course> testCourses = new ArrayList<Course>();
+        testCourses.add(testCourse);
+        testCourses.add(null);
+        student.setCurrentCourses(testCourses);
+        Elective testElective = new Elective(testCourses);
+        ArrayList<Elective> testElectives = new ArrayList<Elective>();
+        testElectives.add(testElective);
+        student.setCurrentElectives(testElectives);
+        student.viewCurrentSchedule();
+        assertEquals("--------------------------"+
+                     "\nCurrent Courses:"+
+                     "\nCourse Number:5555 Course Name:EMPTY CLASS Subject: TEST"+
+                     "\n"+
+                     "\nError Null Class"+
+                     "\n"+
+                     "\nCurrent Electives"+
+                     "\ndefault name"+
+                     "\nError Null Class"+
+                     "\n"+
+                     "\nCourse Number:5555 Course Name:EMPTY CLASS Subject: TEST"+
+                     "\n"+
+                     "\n--------------------------"+
+                     "\n", outputStreamCaptor.toString());
+    }
+    //These Tests don't seem to properly catch the errors so manually check if they succeed or fail
+    @Test
+    public void testViewClassGradesBaseLine(){
+        Student student = new Student();
+        HashMap<Course, String> testCourses = new HashMap<Course, String>();
+        Course testCourse = new Course();
+        Course testCourse2 = new Course();
+        Course testCourse3 = new Course();
+        testCourses.put(testCourse, "A");
+        testCourses.put(testCourse2, "B");
+        testCourses.put(testCourse3, "C");
+        student.setCompletedCourses(testCourses);
+        student.viewClassGrades();
+        assertEquals("These are your class grades:"+
+                    "\nTEST, A"+
+                    "\nTEST, B"+
+                    "\nTEST, C"+
+                    "\n", outputStreamCaptor.toString());
+    }
+    //These Tests don't seem to properly catch the errors so manually check if they succeed or fail
+    @Test
+    public void testViewClassGradesOneClass(){
+        Student student = new Student();
+        HashMap<Course, String> testCourses = new HashMap<Course, String>();
+        Course testCourse = new Course();
+        testCourses.put(testCourse, "A");
+        student.setCompletedCourses(testCourses);
+        student.viewClassGrades();
+        assertEquals("These are your class grades:"+
+                     "\nTEST, A"+
+                     "\n", outputStreamCaptor.toString());
+    }
+    @Test
+    public void testViewClassGradesOneClassTEST(){
+        Student student = new Student();
+        HashMap<Course, String> testCourses = new HashMap<Course, String>();
+        Course testCourse = new Course();
+        testCourses.put(testCourse, "A");
+        student.setCompletedCourses(testCourses);
+        student.viewClassGrades();
+        assertEquals("These are your class grades:"+
+                     "\nTEST, A"+
+                     "\n", outputStreamCaptor.toString());
+    }
+    //These Tests don't seem to properly catch the errors so manually check if they succeed or fail
+    @Test
+    public void testViewClassGradesNoClassError(){
+        Student student = new Student();
+        student.viewClassGrades();
+        assertEquals("Error No Classes", outputStreamCaptor.toString());
+    }
+    //These Tests don't seem to properly catch the errors so manually check if they succeed or fail
+    @Test
+    public void testViewClassGradesNullCourseSubject(){
+        Student student = new Student();
+        HashMap<Course, String> testCourses = new HashMap<Course, String>();
+        Course testCourse = new Course();
+        testCourse.setCourseSubject(null);
+        testCourses.put(testCourse, "A");
+        student.setCompletedCourses(testCourses);
+        student.viewClassGrades();
+        assertEquals("These are your class grades:"+
+                     "\nError Course Subject is Null, A"+
+                     "\n", outputStreamCaptor.toString());
+    }
+    //These Tests don't seem to properly catch the errors so manually check if they succeed or fail
+    @Test
+    public void testViewClassGradesNullGrade(){
+        Student student = new Student();
+        HashMap<Course, String> testCourses = new HashMap<Course, String>();
+        Course testCourse = new Course();
+        testCourses.put(testCourse, null);
+        student.setCompletedCourses(testCourses);
+        student.viewClassGrades();
+        assertEquals("These are your class grades:"+
+                     "\nTEST, Error null is not a Grade"+
+                     "\n", outputStreamCaptor.toString());
+    }
+    //These Tests don't seem to properly catch the errors so manually check if they succeed or fail
     @Test
     public void testCheckProgressBaseLine(){
         Student student = new Student();
@@ -766,7 +776,7 @@ public class StudentTester {
                     "\nCurrent Course 555"+
                     "\n", outputStreamCaptor.toString());
     }
-
+    //These Tests don't seem to properly catch the errors so manually check if they succeed or fail
     @Test
     public void testCheckProgressTwoClasses(){
         Student student = new Student();
@@ -794,7 +804,7 @@ public class StudentTester {
                     "\nCurrent Course2 555"+
                     "\n", outputStreamCaptor.toString());
     }
-
+    //These Tests don't seem to properly catch the errors so manually check if they succeed or fail
     @Test
     public void testCheckProgressNullCompleted(){
         Student student = new Student();
@@ -811,7 +821,7 @@ public class StudentTester {
                     "\nCurrent Course 555"+
                     "\n", outputStreamCaptor.toString());
     }
-
+    //These Tests don't seem to properly catch the errors so manually check if they succeed or fail
     @Test
     public void testCheckProgressNullCurrent(){
         Student student = new Student();
@@ -828,7 +838,7 @@ public class StudentTester {
                     "\n------------------------------------"+
                     "\n", outputStreamCaptor.toString());
     }
-
+    //These Tests don't seem to properly catch the errors so manually check if they succeed or fail
     @Test
     public void testCheckProgressNoClasses(){
         Student student = new Student();
@@ -841,6 +851,7 @@ public class StudentTester {
                     "\n", outputStreamCaptor.toString());
     }
 
+    
     //Did not test Generate Semester Plan As it outputs to a txt file
 
 }   
