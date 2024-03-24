@@ -8,7 +8,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import backEnd.Course;
-import backEnd.Requirement;
+import backEnd.CourseState;
+import backEnd.CourseRequirement;
 import backEnd.Semester;
 
 import java.util.ArrayList;
@@ -27,14 +28,11 @@ import java.util.UUID;
  * assertNotNull(val);
  */
 
-
-public class testingFile{
+public class testingFile {
     @Test
-    public void makeNullCourse(){
-        Course course = new Course(null, null,
-        null, null,
-        null, null,
-        null, null, null,null);
+    public void makeNullCourse() {
+        Course course = new Course(null, null, null, null, null, null, null, 0, 'C', null, null);
+
         assertNull(course.getCourseNumber());
         assertNull(course.getCourseName());
         assertNull(course.getCourseSubject());
@@ -43,119 +41,114 @@ public class testingFile{
         assertNull(course.getMinGrade());
         assertNull(course.getCourseStatus());
         assertNull(course.getUuid());
-        //made by Matt
+        // made by Matt
     }
 
     @Test
-    public void getCourseNullUuid(){
+    public void getCourseNullUuid() {
         Course course = new Course();
         course.setUuid(null);
         assertNull(course.getUuid());
-        //made by Matt
+        // made by Matt
     }
 
     @Test
-    public void displayCourseWithNullCourseNumber(){
+    public void displayCourseWithNullCourseNumber() {
         Course course = new Course();
         course.setCourseNumber(null);
         course.setCourseName("hi");
         course.setCourseSubject("weeee");
         assertNull(course.getCourseNumber());
-        //made by Matt
+        // made by Matt
     }
+
     @Test
-    public void displayCourseWithNullCourseName(){
+    public void displayCourseWithNullCourseName() {
         Course course = new Course();
         course.setCourseNumber("jeerwrwrfr");
         course.setCourseName(null);
         course.setCourseSubject("null");
-        
+
         assertNull(course.getCourseName());
-        
-        //made by Matt
+
+        // made by Matt
     }
+
     @Test
-    public void displayCourseWithNullCourseSubject(){
+    public void displayCourseWithNullCourseSubject() {
         Course course = new Course();
         course.setCourseNumber("NULL");
         course.setCourseName("error");
         course.setCourseSubject(null);
         assertNull(course.getCourseSubject());
-        //made by Matt
+        // made by Matt
     }
 
     @Test
-    public void courseAddNullPrerequisite(){
+    public void courseAddNullPrerequisite() {
         Course course = new Course();
         course.addPrerequisite(null);
         assertNull(course.getPrerequisites());
-        //made by Matt
+        // made by Matt
     }
 
     @Test
-    public void courseAddNullCorequisite(){
+    public void courseAddNullCorequisite() {
         Course course = new Course();
         course.addCorequisite(null);
         assertNull(course.getCorequisites());
-        //made by Matt
+        // made by Matt
     }
 
     @Test
-    public void courseRemovePrerequisiteThatItDoesntHave(){
+    public void courseRemovePrerequisiteThatItDoesntHave() {
         Course course = new Course();
-        Requirement requirement1 = new Requirement();
-        Requirement requirement2 = new Requirement();
+        CourseRequirement requirement1 = new CourseRequirement(null, null, null, null, null);
+        CourseRequirement requirement2 = new CourseRequirement(null, null, null, null, null);
         course.addPrerequisite(requirement1);
         course.addPrerequisite(requirement2);
-        Requirement requirement3 = new Requirement();
+        CourseRequirement requirement3 = new CourseRequirement(null, null, null, null, null);
         course.removePrerequisite(requirement3);
         assertEquals(2, course.getPrerequisites().size());
-        //made by Matt
+        // made by Matt
     }
 
-
     @Test
-    public void testMinGradeWithCharThatIsntAthroughF(){
+    public void testMinGradeWithCharThatIsntAthroughF() {
         Course course = new Course();
         course.setMinGrade('R');
-        assertEquals('F',course.getMinGrade());
-        //by Matt
+        assertEquals('F', course.getMinGrade());
+        // by Matt
     }
 
-
-
-
     @Test
-    public void courseRemoveCorequisiteThatItDoesntHave(){
+    public void courseRemoveCorequisiteThatItDoesntHave() {
         Course course = new Course();
-        Requirement requirement1 = new Requirement();
-        Requirement requirement2 = new Requirement();
+        CourseRequirement requirement1 = new CourseRequirement(null, null, null, null, null);
+        CourseRequirement requirement2 = new CourseRequirement(null, null, null, null, null);
         course.addCorequisite(requirement1);
         course.addCorequisite(requirement2);
-        Requirement requirement3 = new Requirement();
+        CourseRequirement requirement3 = new CourseRequirement(null, null, null, null, null);
         course.removeCorequisite(requirement3);
         assertEquals(2, course.getCorequisites().size());
-        //made by Matt
+        // made by Matt
     }
 
-
-
     @Test
-    public void addAndPrintNullSemester(){
+    public void addAndPrintNullSemester() {
         Course course = new Course();
         course.addSemesterOffered(null);
         assertNull(course.getCourseAvailability());
-        //By Matt
+        // By Matt
     }
 
     @Test
-    public void courseRemoveSemesterThatItDoesntHave(){
+    public void courseRemoveSemesterThatItDoesntHave() {
         Course course = new Course();
         course.addSemesterOffered(Semester.Fall);
         course.addSemesterOffered(Semester.Summer);
         assertEquals(2, course.getCourseAvailability().size());
-        //by Matt
+        // by Matt
     }
 
-    
 }

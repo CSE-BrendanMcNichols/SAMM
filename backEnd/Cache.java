@@ -14,7 +14,7 @@ public class Cache {
     private static ArrayList<Elective> electiveList = new ArrayList<Elective>();
     private static ArrayList<ApplicationArea> areaList = new ArrayList<ApplicationArea>();
 
-    private static ArrayList<Requirement> requirementList = new ArrayList<Requirement>();
+    private static ArrayList<CourseRequirement> requirementList = new ArrayList<CourseRequirement>();
 
     public static Cache getInstance() {
         if (cacheInstance == null) {
@@ -41,7 +41,7 @@ public class Cache {
     public void initializeRequirements() {
         requirementList = DataLoader.loadRequirements();
 
-        for (Requirement req : requirementList) {
+        for (CourseRequirement req : requirementList) {
             // System.out.println(req+"\n");
         }
 
@@ -124,7 +124,7 @@ public class Cache {
     }
 
     public Boolean findRequirement(UUID uuid) {
-        for (Requirement requirement : requirementList) {
+        for (CourseRequirement requirement : requirementList) {
             if (requirement.getUuid().equals(uuid)) {
                 return true;
             }
@@ -132,8 +132,8 @@ public class Cache {
         return false;
     }
 
-    public Requirement getRequirement(UUID uuid) {
-        for (Requirement requirement : requirementList) {
+    public CourseRequirement getRequirement(UUID uuid) {
+        for (CourseRequirement requirement : requirementList) {
             if (requirement.getUuid().equals(uuid)) {
                 return requirement;
             }
@@ -141,8 +141,8 @@ public class Cache {
         return null;
     }
 
-    public Requirement getRequirementByType(RequirementType type) {
-        for (Requirement requirement : requirementList) {
+    public CourseRequirement getRequirementByType(RequirementType type) {
+        for (CourseRequirement requirement : requirementList) {
             if (requirement.getType().equals(type)) {
                 return requirement;
             }

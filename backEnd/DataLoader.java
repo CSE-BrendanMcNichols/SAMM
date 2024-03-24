@@ -252,7 +252,7 @@ public class DataLoader extends DataConstants {
 
 				// read prerequisites
 				JSONArray prereqsJSON = (JSONArray) courseJSON.get(PREREQUISITES);
-				ArrayList<Requirement> prerequisites = new ArrayList<Requirement>();
+				ArrayList<CourseRequirement> prerequisites = new ArrayList<CourseRequirement>();
 				for (int j = 0; j < prereqsJSON.size(); j++) {
 					UUID reqUUID = UUID.fromString((String) prereqsJSON.get(j));
 					if (Cache.getInstance().findRequirement(reqUUID)) {
@@ -267,7 +267,7 @@ public class DataLoader extends DataConstants {
 
 				// read corequisites
 				JSONArray coreqsJSON = (JSONArray) courseJSON.get(COREQUISITES);
-				ArrayList<Requirement> corequisites = new ArrayList<Requirement>();
+				ArrayList<CourseRequirement> corequisites = new ArrayList<CourseRequirement>();
 				for (int j = 0; j < coreqsJSON.size(); j++) {
 					UUID reqUUID = UUID.fromString((String) coreqsJSON.get(j));
 					if (Cache.getInstance().findRequirement(reqUUID)) {
@@ -359,8 +359,8 @@ public class DataLoader extends DataConstants {
 	 * 
 	 * @return
 	 */
-	public static ArrayList<Requirement> loadRequirements() {
-		ArrayList<Requirement> requirements = new ArrayList<Requirement>();
+	public static ArrayList<CourseRequirement> loadRequirements() {
+		ArrayList<CourseRequirement> requirements = new ArrayList<CourseRequirement>();
 
 		try {
 			FileReader reader = new FileReader(REQUIREMENT_FILE_NAME);
@@ -383,7 +383,7 @@ public class DataLoader extends DataConstants {
 						//System.out.println("Warning: While loading Requirement record, Course Id: " + courseUUID + " is not in the Course List.");
 					}
 				}
-				requirements.add(new Requirement(reqCourses, eitherOr, type, requirementFor, uuid));
+				requirements.add(new CourseRequirement(reqCourses, eitherOr, type, requirementFor, uuid));
 			}
 
 			System.out.println("*** Successfully Loaded Requirements");
