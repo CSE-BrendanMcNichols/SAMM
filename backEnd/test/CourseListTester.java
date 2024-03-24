@@ -14,8 +14,10 @@ import org.junit.jupiter.api.Test;
 
 import backEnd.Course;
 import backEnd.CourseList;
+import backEnd.CourseRequirement;
 import backEnd.CourseState;
 import backEnd.DataWriter;
+import backEnd.RequirementType;
 import backEnd.Semester;
 
 public class CourseListTester {
@@ -39,24 +41,59 @@ public class CourseListTester {
         semesters.add(Semester.Spring);
         semesters.add(Semester.Fall);
 
-        // add couple of dummy courses
-        courses.add(new Course("Course1", "subject1", "1", null, null, semesters, "description 1", 4, 'C',
+        /***** Requirement Setup start *****/
+        UUID preReqCourseUuid = UUID.randomUUID();
+        Course preReqCourse = new Course("PreReqCourse", "PreReqCourse subject", "100", null, null, semesters,
+                "PreReqCourse description ", 4, 'C',
+                CourseState.NOT_STARTED,
+                preReqCourseUuid);
+        courses.add(preReqCourse);
+
+        UUID coReqCourseUuid = UUID.randomUUID();
+        Course coReqCourse = new Course("coReqCourse", "coReqCourse subject", "200", null, null, semesters,
+                "coReqCourse description ", 4, 'C',
+                CourseState.NOT_STARTED,
+                coReqCourseUuid);
+        courses.add(coReqCourse);
+
+        ArrayList<CourseRequirement> preReq = new ArrayList<CourseRequirement>();
+        ArrayList<CourseRequirement> coReq = new ArrayList<CourseRequirement>();
+
+        ArrayList<Course> preReqCourses = new ArrayList<Course>();
+        preReqCourses.add(preReqCourse);
+        UUID preReqUuid = UUID.randomUUID();
+
+        ArrayList<Course> coReqCourses = new ArrayList<Course>();
+        coReqCourses.add(coReqCourse);
+        UUID coReqUuid = UUID.randomUUID();
+
+        preReq.add(new CourseRequirement(preReqCourses, false, RequirementType.GFL, "Carolina Core GFL Requirement",
+                preReqUuid));
+        coReq.add(new CourseRequirement(coReqCourses, false, RequirementType.COREQ, "Carolina Core COREQ Requirement",
+                coReqUuid));
+
+        /***** Requirement Setup End *****/
+
+        courses.add(new Course("Course1", "subject1", "1", null, coReq, semesters, "description 1", 4, 'C',
                 CourseState.NOT_STARTED,
                 uuid1));
-        courses.add(new Course("Course2", "subject2", "2", null, null, semesters, "description 2", 4, 'C',
+        
+        courses.add(new Course("Course2", "subject2", "2", preReq, coReq, semesters, "description 2", 4, 'C',
                 CourseState.NOT_STARTED,
                 uuid2));
+
         // db should have only two courses for starting the testing
 
         System.out.println(courses);
         DataWriter.saveCourses(courses);
+        // DataWriter.saveRequirements(courses);
 
     }
 
     @AfterEach
     public void tearDown() {
         // at the end clear every thing
-        // CourseList.getInstance().getCourses().clear();
+        //CourseList.getInstance().getCourses().clear();
         DataWriter.saveCourses(courses);
     }
 
