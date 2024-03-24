@@ -325,7 +325,7 @@ public class Student extends User {
             String grade = entry.getValue();
             creditTotal += course.getCourseHours();
         }
-        // System.out.println("credit hours completed are: " + creditTotal);
+        System.out.println("credit hours completed are: " + creditTotal);
     }
     /*
      * Checks the hours of completed courses and prints them out

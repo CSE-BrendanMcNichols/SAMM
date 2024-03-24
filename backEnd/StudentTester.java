@@ -7,6 +7,8 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.io.ByteArrayOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -379,25 +381,6 @@ public class StudentTester {
         assertEquals(false, student.riskOfFailure());
     }
 
-    public void viewCurrentSchedule() {
-        System.out.println("--------------------------");
-        System.out.println("Current Courses:");
-        for (Course course : this.currentCourses) {
-            System.out.println(course.displayCourse());
-        }
-        System.out.println("Current Electives");
-        for (Elective elective : this.currentElectives) {
-            System.out.println(elective.getName());
-            if (elective.getCourses() != null) {
-                for (Course course : elective.getCourses()) {
-                    System.out.println(course.displayCourse());
-                }
-            }
-        }
-        System.out.println("--------------------------");
-
-        // System.out.println("End of Current Schedule");
-    }
     @Test
     public void testViewCurrentScheduleOnlyOneClass(){
         Student student = new Student();
@@ -524,5 +507,238 @@ public class StudentTester {
                      "\n", outputStreamCaptor.toString());
     }
 
-    
-}
+    public void checkHours(HashMap<Course, String> completedCourses) {
+        int creditTotal = 0;
+        for (Map.Entry<Course, String> entry : completedCourses.entrySet()) {
+            Course course = entry.getKey();
+            String grade = entry.getValue();
+            creditTotal += course.getCourseHours();
+        }
+        System.out.println("credit hours completed are: " + creditTotal);
+    }
+
+    @Test
+    public void testCheckHoursBaseLine(){
+        Student student = new Student();
+        HashMap<Course, String> testCourses = new HashMap<Course, String>();
+        Course testCourse = new Course();
+        Course testCourse2 = new Course();
+        Course testCourse3 = new Course();
+        testCourses.put(testCourse, "A");
+        testCourses.put(testCourse2, "B");
+        testCourses.put(testCourse3, "C");
+        student.setCompletedCourses(testCourses);
+        student.checkHours(student.getCompletedCourses());
+        assertEquals("credit hours completed are: 9"+
+                    "\n", outputStreamCaptor.toString());
+    }
+
+    @Test
+    public void testCheckHoursOneCourse(){
+        Student student = new Student();
+        HashMap<Course, String> testCourses = new HashMap<Course, String>();
+        Course testCourse = new Course();
+        testCourses.put(testCourse, "A");
+        student.setCompletedCourses(testCourses);
+        student.checkHours(student.getCompletedCourses());
+        assertEquals("credit hours completed are: 3"+
+                    "\n", outputStreamCaptor.toString());
+    }
+
+    @Test
+    public void testCheckHoursNoCourses(){
+        Student student = new Student();
+        HashMap<Course, String> testCourses = new HashMap<Course, String>();
+        student.setCompletedCourses(testCourses);
+        student.checkHours(student.getCompletedCourses());
+        assertEquals("credit hours completed are: 0"+
+                    "\n", outputStreamCaptor.toString());
+    }
+
+    @Test
+    public void testUpdateCurrentCoursesBaseLine(){
+        Student student = new Student();
+        Course testCourse = new Course();
+        student.updateCurrentCourses(testCourse);
+        assertEquals(testCourse, student.getCurrentCourses().get(0));
+    }
+
+    @Test
+    public void testUpdateCurrentCoursesMultipleCourses(){
+        Student student = new Student();
+        Course testCourse = new Course();
+        Course testCourse2 = new Course();
+        Course testCourse3 = new Course();
+        student.updateCurrentCourses(testCourse);
+        student.updateCurrentCourses(testCourse2);
+        student.updateCurrentCourses(testCourse3);
+        assertEquals(testCourse3, student.getCurrentCourses().get(2));
+    }
+    //Should not allow same Course Twice
+    @Test
+    public void testUpdateCurrentCoursesDuplicateCourse(){
+        Student student = new Student();
+        Course testCourse = new Course();
+        student.updateCurrentCourses(testCourse);
+        student.updateCurrentCourses(testCourse);
+        assertEquals(1, student.getCurrentCourses().size());
+    }
+
+    @Test
+    public void testUpdateCurrentCoursesNull(){
+        Student student = new Student();
+        student.updateCurrentCourses(null);
+        assertEquals(0, student.getCurrentCourses().size());
+    }
+
+    @Test
+    public void testAddElectiveBaseLine(){
+        Student student = new Student();
+        Elective elective = new Elective();
+        student.addElective(elective);
+        assertEquals(elective, student.getCurrentElectives().get(0));
+    }
+
+    @Test
+    public void testAddElectiveNull(){
+        Student student = new Student();
+        student.addElective(null);
+        assertEquals(0, student.getCurrentElectives().size());
+    }
+
+    @Test
+    public void testAddElectiveMultiple(){
+        Student student = new Student();
+        Elective elective = new Elective();
+        Elective elective2 = new Elective();
+        student.addElective(elective);
+        student.addElective(elective2);
+        assertEquals(elective2, student.getCurrentElectives().get(1));
+    }
+
+    @Test
+    public void testAddElectiveDuplicate(){
+        Student student = new Student();
+        Elective elective = new Elective();
+        student.addElective(elective);
+        student.addElective(elective);
+        assertEquals(1, student.getCurrentElectives().size());
+    }
+
+    @Test
+    public void testRemoveElectiveBaseLine(){
+        Student student = new Student();
+        Elective elective = new Elective();
+        student.addElective(elective);
+        student.removeElective(elective);
+        assertEquals(0, student.getCurrentElectives().size());
+    }
+
+    @Test
+    public void testRemoveElectiveEmptyElectives(){
+        Student student = new Student();
+        Elective elective = new Elective();
+        student.removeElective(elective);
+        assertEquals(0, student.getCurrentElectives().size());
+    }
+
+    @Test
+    public void testRemoveElectiveNull(){
+        Student student = new Student();
+        Elective elective = new Elective();
+        student.addElective(elective);
+        student.removeElective(null);
+        assertEquals(1, student.getCurrentElectives().size());
+    }
+
+    @Test
+    public void testAddElectiveRemove2(){
+        Student student = new Student();
+        Elective elective = new Elective();
+        Elective elective2 = new Elective();
+        student.addElective(elective);
+        student.addElective(elective2);
+        student.removeElective(elective2);
+        assertEquals(elective, student.getCurrentElectives().get(0));
+    }
+
+    public void updateElectiveCompleted(Elective elect) {
+
+        removeElective(elect);
+        if (this.completedElectives != null) {
+            this.completedElectives = new ArrayList<Elective>();
+            this.completedElectives.add(elect);
+            // System.out.println("Elective: " + elect.getName() + " is added tp completed
+            // electives list");
+        }
+    }
+
+    public void addNotes(String note) {
+        if (notes == null) {
+            this.notes = new ArrayList<String>();
+        }
+        notes.add(note);
+    }
+
+    public String displayStudent() {
+        return "Student:: " + this.getUscid() + " : " + this.getFirstName() + " " + this.getLastName();
+    }
+
+    public static void checkProgress(User user) {
+
+        if(user.getType() != UserType.STUDENT){
+            return;
+        }
+
+        Student student = UserList.getInstance().getStudent(user.getUuid());
+
+        System.out.println("\n" + student.getFirstName() + " " + student.getLastName() + "'s Completed Courses: ");
+        System.out.println("------------------------------------");
+        for(Course course : student.getCurrentCourses()) {
+            System.out.println(course.getCourseName() + " " + course.getCourseNumber() + " Grade: " + student.getCompletedCourses().get(course));
+        }
+        System.out.println("\n"+ student.getFirstName() + " " + student.getLastName() +"'s Remaining Courses:");
+        System.out.println("------------------------------------");
+        for (Course course : student.getCurrentCourses()) {
+            System.out.println(course.getCourseName() + " " + course.getCourseNumber());
+        }
+    }
+
+    public static void generateSemesterPlan(User user) {
+        try {
+
+            if(user.getType() != UserType.STUDENT){
+                return;
+            }
+            Student student = UserList.getInstance().getStudent(user.getUuid());
+            FileWriter writer = new FileWriter("backEnd/" + student.getFirstName() + student.getLastName() + "_SemesterPlan.txt");
+            writer.write(student.getFirstName() + " " + student.getLastName() + "'s 8-Semester Plan:\n\n");
+            ArrayList<Course> coursesToTake = new ArrayList<>(student.getCurrentCourses());
+            for (int i = 1; i <= 8; i++) {
+                writer.write("Semester " + i + ":\n");
+                writer.write("----------\n");
+                writer.write("Courses to Take:\n");
+                // TODO: fix the logic
+                for (Course course : coursesToTake) {
+                    writer.write(course.getCourseSubject() + " " + course.getCourseNumber() + " - " + course.getCourseName() + "\n");
+                }
+                writer.write("\n");
+            }
+            writer.close();
+            System.out.println("\n8-Semester Plan for " + student.getFirstName() + " " + student.getLastName() + "has been generated and saved to " + 
+            student.getFirstName() + student.getLastName() + "SemesterPlan.txt");
+        } catch (IOException e) {
+            System.out.println("An error occurred while writing the 8-Semester Plan to a file.");
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + "Student [gradeYear=" + gradeYear + ", advisor=" + advisor + ", major=" + major
+                + ", overallGrade="
+                + overallGrade + ", credits=" + credits + ", completedCourses=" + completedCourses + ", currentCourses="
+                + currentCourses + ", notes=" + notes + ", applicationArea=" + applicationArea + ", currentElectives="
+                + currentElectives + ", completedElectives=" + completedElectives + ", uuid=" + uuid + "]";
+    }
+}   
