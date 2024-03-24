@@ -21,8 +21,8 @@ public class TestDriver {
     public static void main(String[] args) {
         //scenario1();
         //scenario2()
-        Student student = new Student();
-        student.checkProgress(student);
+        Major major = new Major();
+        System.out.println(major);
     }
     public static void scenario1(){
         //Start of scenario 1 code
