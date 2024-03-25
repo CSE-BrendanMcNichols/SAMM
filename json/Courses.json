@@ -1,5 +1,33 @@
 [
   {
+    "courseName": "PreReqCourse",
+    "courseSubject": "PreReqCourse subject",
+    "courseHours": 4,
+    "courseNumber": "100",
+    "courseSemester": [
+      "Spring",
+      "Fall"
+    ],
+    "minGrade": "C",
+    "courseStatus": "NOT_STARTED",
+    "uuid": "b2c15ff1-c466-4b88-9db5-d46304917187",
+    "courseDescription": "PreReqCourse description "
+  },
+  {
+    "courseName": "coReqCourse",
+    "courseSubject": "coReqCourse subject",
+    "courseHours": 4,
+    "courseNumber": "200",
+    "courseSemester": [
+      "Spring",
+      "Fall"
+    ],
+    "minGrade": "C",
+    "courseStatus": "NOT_STARTED",
+    "uuid": "5f9c7eed-3bd8-4b37-8b78-59ce3d7681df",
+    "courseDescription": "coReqCourse description "
+  },
+  {
     "courseName": "Course1",
     "courseSubject": "subject1",
     "courseHours": 4,
@@ -9,11 +37,17 @@
       "Fall"
     ],
     "minGrade": "C",
+    "corequisites": [
+      "123e0466-0683-4868-b154-fa4443f542e5"
+    ],
     "courseStatus": "NOT_STARTED",
-    "uuid": "4a775d63-6920-4b3f-a888-b06c4a2545ce",
+    "uuid": "fdb3371a-4a59-403c-aff0-087dc0572155",
     "courseDescription": "description 1"
   },
   {
+    "prerequisites": [
+      "d0d8bfb5-cf34-446c-9cf9-924f5e390794"
+    ],
     "courseName": "Course2",
     "courseSubject": "subject2",
     "courseHours": 4,
@@ -23,8 +57,11 @@
       "Fall"
     ],
     "minGrade": "C",
+    "corequisites": [
+      "123e0466-0683-4868-b154-fa4443f542e5"
+    ],
     "courseStatus": "NOT_STARTED",
-    "uuid": "608e4ce1-4876-4e5f-afc5-8f041e743771",
+    "uuid": "7282fe88-3eab-4469-9d9a-3359e073fe2c",
     "courseDescription": "description 2"
   }
 ]
