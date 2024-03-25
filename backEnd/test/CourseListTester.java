@@ -3,7 +3,8 @@ package backEnd.test;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.Assert.assertSame;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
 import java.util.UUID;
@@ -17,6 +18,7 @@ import backEnd.CourseList;
 import backEnd.CourseRequirement;
 import backEnd.CourseState;
 import backEnd.DataWriter;
+import backEnd.MajorList;
 import backEnd.RequirementType;
 import backEnd.Semester;
 
@@ -84,7 +86,7 @@ public class CourseListTester {
 
         // db should have only two courses for starting the testing
 
-        System.out.println(courses);
+        //System.out.println(courses);
         DataWriter.saveCourses(courses);
         // DataWriter.saveRequirements(courses);
 
@@ -95,6 +97,13 @@ public class CourseListTester {
         // at the end clear every thing
         //CourseList.getInstance().getCourses().clear();
         DataWriter.saveCourses(courses);
+    }
+
+     @Test
+    public void testSingletonInstance() {
+        CourseList instance1 = CourseList.getInstance();
+        CourseList instance2 = CourseList.getInstance();
+        assertSame(instance1, instance2, "Expected both instances to be the same object (singleton)");
     }
 
     @Test
