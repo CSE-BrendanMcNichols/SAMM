@@ -10,7 +10,7 @@ import java.util.HashMap;
 import backEnd.Course;
 import backEnd.Major;
 import backEnd.RequirementType;
-
+//Morgan Made and Ran these Tests
 public class MajorTester {
     private final PrintStream standardOut = System.out;
     private final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
