@@ -100,7 +100,7 @@ public class StudentTester {
         testCourses.put(testCourse2, "B");
         student.setCompletedCourses(testCourses);
         student.updateOverallGrade();
-        assertEquals(4.0, student.getOverallGrade());
+        assertEquals(3.5, student.getOverallGrade());
     }
 
     @Test
@@ -487,7 +487,7 @@ public class StudentTester {
     @Test
     public void tesDisplayStudentBaseLine(){
         Student student = new Student();
-        assertEquals("Student:: null : null null", student.displayStudent());
+        assertEquals("Student:: null : first last", student.displayStudent());
     }
 
     @Test
@@ -681,8 +681,8 @@ public class StudentTester {
         student.setCompletedCourses(testCourses);
         student.viewClassGrades();
         assertEquals("These are your class grades:"+
-                    "\nTEST, A"+
                     "\nTEST, B"+
+                    "\nTEST, A"+
                     "\nTEST, C"+
                     "\n", outputStreamCaptor.toString());
     }

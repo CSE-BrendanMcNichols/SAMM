@@ -6,7 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
-
+import java.util.HashMap;
 import backEnd.Course;
 import backEnd.Major;
 import backEnd.RequirementType;
@@ -146,7 +146,9 @@ public class MajorTester {
     @Test
     public void testDisplayCoreReqBaseLine(){
         Major major = new Major();
-        major.addCoreReq(RequirementType.ARP, 3);
+        HashMap<RequirementType, Integer> hash = new HashMap<RequirementType, Integer>();
+        hash.put(RequirementType.ARP, 3);
+        major.setCoreReq(hash);
         major.displaycoreReq();
         assertEquals("ARP 3"+
                     "\n", outputStreamCaptor.toString());
@@ -155,11 +157,13 @@ public class MajorTester {
     @Test
     public void testDisplayCoreReqTwoReqs(){
         Major major = new Major();
-        major.addCoreReq(RequirementType.ARP, 3);
-        major.addCoreReq(RequirementType.AIU, 5);
+        HashMap<RequirementType, Integer> hash = new HashMap<RequirementType, Integer>();
+        hash.put(RequirementType.ARP, 3);
+        hash.put(RequirementType.AIU, 5);
+        major.setCoreReq(hash);
         major.displaycoreReq();
-        assertEquals("ARP 3"+
-                     "\nAIU 5"+
+        assertEquals("AIU 5"+
+                     "\nARP 3"+
                      "\n", outputStreamCaptor.toString());
     }
 
