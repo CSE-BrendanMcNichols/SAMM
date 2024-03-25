@@ -10,7 +10,7 @@
     ],
     "minGrade": "C",
     "courseStatus": "NOT_STARTED",
-    "uuid": "b2c15ff1-c466-4b88-9db5-d46304917187",
+    "uuid": "9e54f83e-9c0f-4c2c-8a3f-a556e62148fb",
     "courseDescription": "PreReqCourse description "
   },
   {
@@ -24,7 +24,7 @@
     ],
     "minGrade": "C",
     "courseStatus": "NOT_STARTED",
-    "uuid": "5f9c7eed-3bd8-4b37-8b78-59ce3d7681df",
+    "uuid": "9347f663-7e88-4d3e-a225-d33df1e3e5f0",
     "courseDescription": "coReqCourse description "
   },
   {
@@ -38,15 +38,15 @@
     ],
     "minGrade": "C",
     "corequisites": [
-      "123e0466-0683-4868-b154-fa4443f542e5"
+      "6678b761-dccf-48e3-8020-9495ac38a816"
     ],
     "courseStatus": "NOT_STARTED",
-    "uuid": "fdb3371a-4a59-403c-aff0-087dc0572155",
+    "uuid": "d9f37468-a812-4fa7-b114-6e45ea91a8c1",
     "courseDescription": "description 1"
   },
   {
     "prerequisites": [
-      "d0d8bfb5-cf34-446c-9cf9-924f5e390794"
+      "ec6c917a-6d8c-49d0-9df1-8ba880c45c47"
     ],
     "courseName": "Course2",
     "courseSubject": "subject2",
@@ -58,10 +58,10 @@
     ],
     "minGrade": "C",
     "corequisites": [
-      "123e0466-0683-4868-b154-fa4443f542e5"
+      "6678b761-dccf-48e3-8020-9495ac38a816"
     ],
     "courseStatus": "NOT_STARTED",
-    "uuid": "7282fe88-3eab-4469-9d9a-3359e073fe2c",
+    "uuid": "8b300da2-ff4f-4043-8900-fe8c1be805bc",
     "courseDescription": "description 2"
   }
 ]

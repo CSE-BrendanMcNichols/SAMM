@@ -1,72 +1,103 @@
 package backEnd.test;
 
-import org.junit.Before;
-import org.junit.Test;
-
-import backEnd.Administrator;
-import backEnd.Advisor;
-import backEnd.Major;
-import backEnd.Student;
-import backEnd.User;
-import backEnd.UserList;
-import backEnd.Year;
-
-import java.util.HashMap;
-import java.util.ArrayList;
-import java.util.UUID;
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+import java.util.UUID;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+
+import backEnd.*;
+
 public class UserListTester {
+
     private UserList userList;
+    private UUID studentUuid = UUID.randomUUID();
+    private UUID advisorUuid = UUID.randomUUID();
+    private UUID adminUuid = UUID.randomUUID();
 
-    @Before
-    public void setUp() {
+    @BeforeEach
+    public void setup() {
         userList = UserList.getInstance();
+        // Assuming a clear method is implemented to reset userList state
+        userList.clear();
 
-        Student studentBrax = new Student("Brax", "West", "12345", "brax@email.sc.edu", "braxwest", "pass123", 
-            Year.Junior, null, new Major("CS"), 3.5, 27, 
-            new HashMap<>(), new ArrayList<>(), new ArrayList<>(), 
-            UUID.fromString("daa77ead-9fcb-47f0-964d-3cff541591cd"), new ArrayList<>(), new ArrayList<>(), 
-            "Digital Design");
+        // Initialize the userList with basic users for testing
+        Student student = new Student("Alice", "Example", "123456789", "alice@example.edu", "aliceStudent", "password1", Year.Sophomore, null, new Major("Computer Science"), 3.5, 30, null, null, new ArrayList<>(), studentUuid, new ArrayList<>(), new ArrayList<>(), "Software Engineering");
+        userList.addUser(student);
 
-        Advisor advisorMary = new Advisor("Mary", "Ziemba", "HE12865", "MaryZiemba@email.sc.edu", "MaryZiemba", "P4zzWrd8888", 
-            new ArrayList<>(), UUID.fromString("2c29e60d-c02e-450a-8ac1-0c65266cabac"), "CS Department");
+        Advisor advisor = new Advisor("Bob", "Example", "987654321", "bob@example.edu", "bobAdvisor", "password2", "Engineering");
+        advisor.setUuid(advisorUuid);
+        userList.addUser(advisor);
 
-        studentBrax.setAdvisor(advisorMary);
-        advisorMary.assignStudent(studentBrax);
+        Administrator admin = new Administrator("Charlie", "Example", "1122334455", "charlie@example.edu", "charlieAdmin", "password3", adminUuid);
+        userList.addUser(admin);
+    }
 
-        Administrator adminJohnDoe = new Administrator("John", "Doe", "HE82021", "JohnDoe@email.sc.edu", "JohnDoe", "Password123", 
-            UUID.fromString("886c33a5-a9c1-4314-8284-ec73d657a973"));
-
-        userList.addUser(studentBrax);
-        userList.addUser(advisorMary);
-        userList.addUser(adminJohnDoe);
+    @AfterEach
+    public void tearDown() {
+        // Clear userList after each test
+        userList.clear();
     }
 
     @Test
-    public void testAddUserAndRetrieve() {
-        UUID newStudentUUID = UUID.randomUUID();
-        Student newStudent = new Student("New", "Student", "SE83332", "newstudent@email.sc.edu", "newstudent", "newpass", 
-            Year.Freshman, null, new Major("CIS"), 3.0, 15, 
-            new HashMap<>(), new ArrayList<>(), new ArrayList<>(), 
-            newStudentUUID, new ArrayList<>(), new ArrayList<>(), 
-            "General CIS");
-        assertTrue(userList.addUser(newStudent));
-
-        User retrievedUser = userList.getUserByUsername("newstudent");
-        assertNotNull(retrievedUser);
-        assertEquals(newStudentUUID, retrievedUser.getUuid());
-        assertEquals("CIS", ((Student) retrievedUser).getMajor().getMajor());
+    public void testCreateUser_NotExists() {
+        Advisor newAdvisor = new Advisor("Diana", "Advisor", "2233445566", "diana@example.edu", "dianaAdvisor", "password4", "Science");
+        boolean userCreated = userList.addUser(newAdvisor);
+        assertTrue("User should be added successfully", userCreated);
     }
 
     @Test
-    public void testAdvisorStudentRelationship() {
-        Advisor retrievedAdvisor = (Advisor) userList.getUserByUsername("MaryZiemba");
-        assertNotNull(retrievedAdvisor);
-        assertFalse(retrievedAdvisor.getAssignedStudents().isEmpty());
-
-        Student assignedStudent = retrievedAdvisor.getAssignedStudents().get(0);
-        assertEquals("Brax", assignedStudent.getFirstName());
-        assertTrue("CS".equals(assignedStudent.getMajor().getMajor()) || "CIS".equals(assignedStudent.getMajor().getMajor()));
+    public void testCreateUser_Exists() {
+        Student duplicateStudent = new Student("Alice", "Example", "123456789", "alice@example.edu", "aliceStudent", "password1", Year.Sophomore, null, new Major("Computer Science"), 3.5, 30, null, null, new ArrayList<>(), studentUuid, new ArrayList<>(), new ArrayList<>(), "Software Engineering");
+        boolean userCreated = userList.addUser(duplicateStudent);
+        assertFalse("Duplicate user should not be added", userCreated);
     }
+
+    @Test
+    public void testDeleteUser_Exists() {
+        boolean userDeleted = userList.deleteUserByUsername("aliceStudent");
+        assertTrue("User should be deleted successfully", userDeleted);
+    }
+
+    @Test
+    public void testDeleteUser_NotExists() {
+        boolean userDeleted = userList.deleteUserByUsername("nonexistentUser");
+        assertFalse("Nonexistent user should not be deleted", userDeleted);
+    }
+
+    @Test
+    public void testFindUserByUsername_Exists() {
+        User foundUser = userList.getUserByUsername("aliceStudent");
+        assertNotNull("User should be found by username", foundUser);
+    }
+
+    @Test
+    public void testFindUserByUsername_NotExists() {
+        User foundUser = userList.getUserByUsername("nonexistentUser");
+        assertNull("Nonexistent user should not be found", foundUser);
+    }
+
+    @Test
+    public void testUpdateUser_Exists() {
+        User userToUpdate = userList.getUserByUsername("bobAdvisor");
+        assertNotNull("User to update should exist", userToUpdate);
+
+        userToUpdate.setEmail("updated@example.edu");
+        boolean updated = userList.updateUser(userToUpdate);
+        assertTrue("User should be updated successfully", updated);
+
+        User updatedUser = userList.getUserByUsername("bobAdvisor");
+        assertEquals("User email should be updated", "updated@example.edu", updatedUser.getEmail());
+    }
+
+    @Test
+    public void testUpdateUser_NotExists() {
+        User nonExistentUser = new Administrator("NonExistent", "User", "0000000000", "nonexistent@example.edu", "nonexistentUser", "password", UUID.randomUUID());
+        boolean updated = userList.updateUser(nonExistentUser);
+        assertFalse("Nonexistent user should not be updated", updated);
+    }
+
 }

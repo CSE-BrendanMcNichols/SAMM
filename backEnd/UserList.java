@@ -277,10 +277,15 @@ public class UserList {
         return null;
     }
 
-    public void displayStudents() {
-        for (Student student : students) {
-            System.out.println(student.displayStudent());
+        public void displayStudents() {
+            for (Student student : students) {
+                System.out.println(student.displayStudent());
+            }
         }
-    }
 
+        public void clear() {
+            if (this.users != null) {
+                this.users.clear();
+            }
+    } // Add this closing brace to complete the class body
 }
