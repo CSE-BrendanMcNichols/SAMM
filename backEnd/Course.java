@@ -8,8 +8,8 @@ public class Course {
     private String courseName;
     private String courseSubject;
     private String courseNumber;
-    private ArrayList<Requirement> prerequisites;
-    private ArrayList<Requirement> corequisites;
+    private ArrayList<CourseRequirement> prerequisites;
+    private ArrayList<CourseRequirement> corequisites;
     private ArrayList<Semester> courseAvailability;
     private String courseDescription;
     private int courseHours;
@@ -24,7 +24,7 @@ public class Course {
     }
 
     public Course(String courseName, String courseSubject, String courseNumber,
-            ArrayList<Requirement> prerequisites, ArrayList<Requirement> corequisites,
+            ArrayList<CourseRequirement> prerequisites, ArrayList<CourseRequirement> corequisites,
             ArrayList<Semester> courseAvailability, String courseDescription,
             int courseHours, char minGrade, CourseState courseStatus, UUID uuid) {
 
@@ -74,18 +74,6 @@ public class Course {
         return courseNumber;
     }
 
-    public ArrayList<Requirement> getPrerequisites() {
-        return new ArrayList<>(prerequisites);
-    }
-
-    public ArrayList<Requirement> getCorequisites() {
-        return new ArrayList<>(corequisites);
-    }
-
-    public ArrayList<Semester> getCourseAvailability() {
-        return new ArrayList<>(courseAvailability);
-    }
-
     public String getCourseDescription() {
         return courseDescription;
     }
@@ -132,24 +120,39 @@ public class Course {
         // return courseName;
     }
 
+
+    
+
+    public ArrayList<CourseRequirement> getPrerequisites() {
+        return prerequisites;
+    }
+
+    public ArrayList<CourseRequirement> getCorequisites() {
+        return corequisites;
+    }
+
+    public ArrayList<Semester> getCourseAvailability() {
+        return courseAvailability;
+    }
+
     // Methods for managing prerequisites and corequisites
-    public void addPrerequisite(Requirement prerequisite) {
+    public void addPrerequisite(CourseRequirement prerequisite) {
         if (!prerequisites.contains(prerequisite)) {
             prerequisites.add(prerequisite);
         }
     }
 
-    public void addCorequisite(Requirement corequisite) {
+    public void addCorequisite(CourseRequirement corequisite) {
         if (!corequisites.contains(corequisite)) {
             corequisites.add(corequisite);
         }
     }
 
-    public void removePrerequisite(Requirement prerequisite) {
+    public void removePrerequisite(CourseRequirement prerequisite) {
         prerequisites.remove(prerequisite);
     }
 
-    public void removeCorequisite(Requirement corequisite) {
+    public void removeCorequisite(CourseRequirement corequisite) {
         corequisites.remove(corequisite);
     }
 
@@ -178,11 +181,11 @@ public class Course {
         this.courseName = courseName;
     }
 
-    public void setPrerequisites(ArrayList<Requirement> prerequisites) {
+    public void setPrerequisites(ArrayList<CourseRequirement> prerequisites) {
         this.prerequisites = prerequisites;
     }
 
-    public void setCorequisites(ArrayList<Requirement> corequisites) {
+    public void setCorequisites(ArrayList<CourseRequirement> corequisites) {
         this.corequisites = corequisites;
     }
 
@@ -199,6 +202,8 @@ public class Course {
                 + courseStatus + "]";
     }
 
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid;
+    }
 
-    
 }

@@ -493,7 +493,7 @@ public class Student extends User {
                 return;
             }
             Student student = UserList.getInstance().getStudent(user.getUuid());
-            FileWriter writer = new FileWriter("backEnd/" + student.getFirstName() + student.getLastName() + "_SemesterPlan.txt");
+            FileWriter writer = new FileWriter("backEnd/txt/" + student.getFirstName() + student.getLastName() + "_SemesterPlan.txt");
             writer.write(student.getFirstName() + " " + student.getLastName() + "'s 8-Semester Plan:\n\n");
             ArrayList<Course> coursesToTake = new ArrayList<>(student.getCurrentCourses());
             for (int i = 1; i <= 8; i++) {

@@ -55,7 +55,7 @@ public class DataWriter {
             }
 
             if (student.getCompletedCourses() != null) {
-                //getUUIDMap(student.getCompletedCourses());
+                // getUUIDMap(student.getCompletedCourses());
                 studentJSON.put(DataConstants.COMPLETEDCOURSES, getUUIDMap(student.getCompletedCourses()));
             }
 
@@ -237,17 +237,36 @@ public class DataWriter {
             courseJSON.put(DataConstants.COURSENAME, course.getCourseName());
             courseJSON.put(DataConstants.COURSESUBJECT, course.getCourseSubject());
             courseJSON.put(DataConstants.COURSENUMBER, course.getCourseNumber());
-            //TODO store prereq 
-            //TODO store coreq 
-            //TODO semesters
+            // TODO store prereq
+            // TODO store coreq
+            // TODO semesters
+
+            List<String> semesterStrings = course.getCourseAvailability().stream().map(Semester::toString)
+                    .collect(Collectors.toList());
+
+            // Convert the Objects to UUID arraylist and store
+            if (course.getPrerequisites() != null) {
+                List<String> uuids = course.getPrerequisites().stream().map(CourseRequirement::getUuidString)
+                        .collect(Collectors.toList());
+                courseJSON.put(DataConstants.PREREQUISITES, uuids);
+            }
+
+            // Convert the Objects to UUID arraylist and store
+            if (course.getCorequisites() != null) {
+                List<String> uuids = course.getCorequisites().stream().map(CourseRequirement::getUuidString)
+                        .collect(Collectors.toList());
+                courseJSON.put(DataConstants.COREQUISITES, uuids);
+            }
+
+            courseJSON.put(DataConstants.COURSESEMESTER, semesterStrings);
             courseJSON.put(DataConstants.COURSEDESCRIPTION, course.getCourseDescription());
             courseJSON.put(DataConstants.COURSEHOURS, course.getCourseHours());
             courseJSON.put(DataConstants.MINGRADE, "" + course.getMinGrade());
             courseJSON.put(DataConstants.COURSESTATUS, "" + course.getCourseStatus());
-            
+
             // Note: User Grade and course STATUS not required for the list of courses
             // TODO : need to store pre and co requisites
-            System.out.println("added courseJSON" );
+            // System.out.println("added courseJSON");
 
             coursesJSONArray.add(courseJSON);
         }
@@ -255,7 +274,7 @@ public class DataWriter {
         // Write JSON to file
         try (FileWriter file = new FileWriter(DataConstants.COURSE_FILE_NAME)) {
 
-            System.out.println("JSon output:\n" + prettyPrint(coursesJSONArray));
+            // System.out.println("JSon output:\n" + prettyPrint(coursesJSONArray));
 
             file.write(prettyPrint(coursesJSONArray));
             file.flush();
