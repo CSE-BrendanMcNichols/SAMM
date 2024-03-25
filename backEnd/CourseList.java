@@ -43,7 +43,7 @@ public class CourseList {
         if (findCourse(course.getUuid()) == false) {
             courses.add(course);
             System.out.println("Course  " + course.getCourseName() + " added successfully.");
-            System.out.println(courses);
+            //System.out.println(courses);
             return true;
         } else {
             System.out.println("Course: " + course.getCourseName() + " already exists.");
