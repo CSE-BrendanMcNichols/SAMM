@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+import org.xml.sax.ErrorHandler;
+
 /**
  * This is a Student Class
  * 
@@ -250,11 +252,28 @@ public class Student extends User {
      */
 
     public void viewClassGrades() {
+        if(completedCourses.size() == 0) { 
+            System.out.print("Error No Classes");
+            return;
+        }
+
         System.out.println("These are your class grades:");
         for (Map.Entry<Course, String> entry : completedCourses.entrySet()) {
             Course course = entry.getKey();
             String grade = entry.getValue();
-            System.out.println(course.getCourseSubject() + ", " + grade);
+            String resultgrade;
+            String resultsubject = course.getCourseSubject();
+            if (grade == null) {
+                resultgrade = "Error null is not a Grade";
+            } else{
+                resultgrade = grade;
+            }
+
+            if(resultsubject == null) {
+                resultsubject = "Error Course Subject is Null";
+            }
+
+            System.out.println(resultsubject + ", " + resultgrade);
         }
     }
 
@@ -302,6 +321,8 @@ public class Student extends User {
             pointGrade = 1.0;
         } else if (grade == "F") {
             pointGrade = 0.0;
+        }else if (grade == "B+") {
+            pointGrade = 3.3;
         }
         return pointGrade;
     }
@@ -354,9 +375,14 @@ public class Student extends User {
         // updateCourse);
         this.completedCourses.put(updateCourse, courseGrade);
         for (Course course : this.currentCourses) {
-            if (course.getUuid() == updateCourse.getUuid()) {
-                currentCourses.remove(course);
-                break;
+            try {
+                if (course.getUuid() == updateCourse.getUuid()) {
+                    currentCourses.remove(course);
+                    break;
+                }
+            }
+            catch (NullPointerException e){
+
             }
         }
         updateCredits();
@@ -494,10 +520,13 @@ public class Student extends User {
         
         System.out.println("\n"+ student.getFirstName() + " " + student.getLastName() +"'s Remaining Courses:");
         System.out.println("------------------------------------");
-        
+        try {
         for (Course course : student.getCurrentCourses()) {
             System.out.println(course.getCourseName() + " " + course.getCourseNumber());
         }
+    } catch (NullPointerException e){
+
+    }
         
     }
     /*

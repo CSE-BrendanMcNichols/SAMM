@@ -759,11 +759,11 @@ public class StudentTester {
         Student.checkProgress(student);
         assertEquals("\nfirst last's Completed Courses: "+
                     "\n------------------------------------"+
-                    "\nCompleted Course 555 Grade: B"+
+                    "\nCompleted Course 5555 Grade: B"+
                     "\n"+
                     "\nfirst last's Remaining Courses:"+
                     "\n------------------------------------"+
-                    "\nCurrent Course 555"+
+                    "\nCurrent Course 5555"+
                     "\n", outputStreamCaptor.toString());
     }
     //These Tests don't seem to properly catch the errors so manually check if they succeed or fail
@@ -785,13 +785,13 @@ public class StudentTester {
         Student.checkProgress(student);
         assertEquals("\nfirst last's Completed Courses: "+
                     "\n------------------------------------"+
-                    "\nCompleted Course 555 Grade: B"+
-                    "\nCompleted Course2 555 Grade: B"+
+                    "\nCompleted Course 5555 Grade: B"+
+                    "\nCompleted Course2 5555 Grade: B"+
                     "\n"+
                     "\nfirst last's Remaining Courses:"+
                     "\n------------------------------------"+
-                    "\nCurrent Course 555"+
-                    "\nCurrent Course2 555"+
+                    "\nCurrent Course 5555"+
+                    "\nCurrent Course2 5555"+
                     "\n", outputStreamCaptor.toString());
     }
     //These Tests don't seem to properly catch the errors so manually check if they succeed or fail
@@ -808,7 +808,7 @@ public class StudentTester {
                     "\n"+
                     "\nfirst last's Remaining Courses:"+
                     "\n------------------------------------"+
-                    "\nCurrent Course 555"+
+                    "\nCurrent Course 5555"+
                     "\n", outputStreamCaptor.toString());
     }
     //These Tests don't seem to properly catch the errors so manually check if they succeed or fail
@@ -822,7 +822,7 @@ public class StudentTester {
         Student.checkProgress(student);
         assertEquals("\nfirst last's Completed Courses: "+
                     "\n------------------------------------"+
-                    "\nCompleted Course 555 Grade: B"+
+                    "\nCompleted Course 5555 Grade: B"+
                     "\n"+
                     "\nfirst last's Remaining Courses:"+
                     "\n------------------------------------"+
