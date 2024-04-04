@@ -27,7 +27,7 @@ public class Student extends User {
     private Advisor advisor = new Advisor("Default Advisor", "Default Constructor", "Default ID", "Default Email", "Default Username", "Default Password", null, "Default Apartment");
     private Major major = new Major("Default Major");
     private double overallGrade = 0.0;
-
+    
     private int credits = 0;
     private HashMap<Course, String> completedCourses = new HashMap<Course, String>();
     private ArrayList<Course> currentCourses = new ArrayList<Course>();
@@ -60,6 +60,19 @@ public class Student extends User {
         this.notes = notes;
         this.uuid = UUID.randomUUID();
         this.applicationArea = applicationArea;
+
+
+        if(getFirstName() == null){
+            this.setFirstName("Default First Name");
+        }
+        if(getLastName() == null){
+            this.setLastName("Default Last Name");
+    
+        }
+        if(getUsername() == null){
+            this.setUsername("Default Username");
+        }
+
     }
 
 
@@ -179,6 +192,7 @@ public class Student extends User {
     }
 
     public HashMap<Course, String> getCompletedCourses() {
+        
         return completedCourses;
     }
 
@@ -191,7 +205,9 @@ public class Student extends User {
     }
 
     public void setCurrentCourses(ArrayList<Course> currentCourses) {
+        
         this.currentCourses = currentCourses;
+        
     }
 
     public void setRemainingCourses(ArrayList<Course> remainingCourses) {
@@ -303,7 +319,7 @@ public class Student extends User {
             totalGrade += (toPointGrade(grade) * course.getCourseHours());
         }
         this.overallGrade = totalGrade / credits;
-        System.out.println(this.overallGrade);
+        
     }
     /*
      * Updates the students overall grade and prints it out
@@ -336,15 +352,16 @@ public class Student extends User {
     public void updateCourseCompleted(Course updateCourse, String courseGrade) {
         // System.out.println("updateCourseCompleted called. updateCourse: " +
         // updateCourse);
+        this.completedCourses.put(updateCourse, courseGrade);
         for (Course course : this.currentCourses) {
             if (course.getUuid() == updateCourse.getUuid()) {
                 currentCourses.remove(course);
                 break;
             }
         }
-        this.completedCourses.put(updateCourse, courseGrade);
         updateCredits();
         updateOverallGrade();
+        
     }
     /*
      * Updates students completed course
@@ -367,9 +384,8 @@ public class Student extends User {
      */
 
     public void updateCurrentCourses(Course course) {
-        ArrayList<Course> updatedclasses = currentCourses;
-        if (updatedclasses != null)
-            updatedclasses.add(course);
+        ArrayList<Course> updatedclasses = getCurrentCourses();
+        updatedclasses.add(course);
         setCurrentCourses(updatedclasses);
     }
     /*
@@ -465,26 +481,29 @@ public class Student extends User {
     public String displayStudent() {
         return "Student: " + this.getUscid() + " : " + this.getFirstName() + " " + this.getLastName();
     }
-
-    public static void checkProgress(User user) {
-
-        if(user.getType() != UserType.STUDENT){
-            return;
-        }
-
-        Student student = UserList.getInstance().getStudent(user.getUuid());
-
+    public static void checkProgress(Student student) {
         System.out.println("\n" + student.getFirstName() + " " + student.getLastName() + "'s Completed Courses: ");
         System.out.println("------------------------------------");
-        for(Course course : student.getCurrentCourses()) {
-            System.out.println(course.getCourseName() + " " + course.getCourseNumber() + " Grade: " + student.getCompletedCourses().get(course));
+        
+        HashMap<Course, String> test = student.getCompletedCourses();
+        for (Map.Entry<Course, String> entry : test.entrySet()) {
+            Course course = entry.getKey();
+            String grade = entry.getValue();
+            System.out.println(course.getCourseName() + " " + course.getCourseNumber() + " Grade: " + grade);
         }
+        
         System.out.println("\n"+ student.getFirstName() + " " + student.getLastName() +"'s Remaining Courses:");
         System.out.println("------------------------------------");
+        
         for (Course course : student.getCurrentCourses()) {
             System.out.println(course.getCourseName() + " " + course.getCourseNumber());
         }
+        
     }
+    /*
+     * Used to have error where program didnt compile.
+     * Fixed by realizing that only students call this and changed parameter to a student
+     */
 
     public static void generateSemesterPlan(User user) {
         try {

@@ -20,7 +20,8 @@ public class Course {
         this.courseName = "EMPTY CLASS";
         this.courseHours = 3;
         this.courseSubject = "TEST";
-        this.courseNumber = "5555";
+        this.courseNumber = "555";
+        this.uuid = UUID.randomUUID();
     }
 
     public Course(String courseName, String courseSubject, String courseNumber,
