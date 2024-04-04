@@ -463,7 +463,7 @@ public class Student extends User {
     }
 
     public String displayStudent() {
-        return "Student:: " + this.getUscid() + " : " + this.getFirstName() + " " + this.getLastName();
+        return "Student: " + this.getUscid() + " : " + this.getFirstName() + " " + this.getLastName();
     }
 
     public static void checkProgress(User user) {
