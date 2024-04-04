@@ -35,6 +35,7 @@ public class StudentTester {
 		System.setOut(standardOut);
 	}
     
+    
     @Test
     public void testStudentToPointGradeNormal(){
         Student student = new Student();
