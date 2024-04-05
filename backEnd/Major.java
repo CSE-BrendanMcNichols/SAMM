@@ -83,7 +83,11 @@ public class Major {
     }
 
     public void setElectiveCourses(Elective electiveCourses) {
-        this.electiveCourses = electiveCourses;
+        if(electiveCourses != null){
+            this.electiveCourses = electiveCourses;
+        } else {
+            System.out.println("Null is not a valide Elective");
+        }
     }
 
     public String getMajor() {
@@ -115,13 +119,19 @@ public class Major {
      */
 
     public void addCourse(Course course) {
-        courses.add(course);
-        System.out.println("addCourse called");
+        if(course != null){
+            courses.add(course);
+        } else {
+            System.out.println("Error null is not a course");
+        }
     }
 
     public void addCoreReq(RequirementType type, Integer hours) {
-        // TODO: ?
-        System.out.println("addCoreReq called");
+        if( type != null && hours != null){
+            coreReq.put(type, hours);
+        } else {
+        System.out.println("null is not valid");
+        }
     }
 
     @Override
@@ -135,8 +145,13 @@ public class Major {
     }
 
     public void removeCourse(Course course) {
-        // Todo:
-        System.out.println("removeCourse called");
+        for (int i = 0; i < courses.size(); i++){
+            if(courses.get(i) == course){
+                courses.remove(i);
+                return;
+            }
+        }
+        System.out.println("Course does not exist");
     }
 
     public void displaycoreReq() {
