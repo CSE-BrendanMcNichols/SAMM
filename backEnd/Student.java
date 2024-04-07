@@ -265,6 +265,8 @@ public class Student extends User {
             String resultsubject = course.getCourseSubject();
             if (grade == null) {
                 resultgrade = "Error null is not a Grade";
+            } else if(grade.equals("null")){
+                resultgrade = "Error null is not a Grade";
             } else{
                 resultgrade = grade;
             }
@@ -287,15 +289,25 @@ public class Student extends User {
     public void viewCurrentSchedule() {
         System.out.println("--------------------------");
         System.out.println("Current Courses:");
-        for (Course course : this.currentCourses) {
-            System.out.println(course.displayCourse());
+        for (Course course : currentCourses) {
+            if(course == null){
+                System.out.println("Error Null Class");
+            }else{
+                System.out.println(course.displayCourse());
+            }
+            
         }
         System.out.println("Current Electives");
         for (Elective elective : this.currentElectives) {
             System.out.println(elective.getName());
             if (elective.getCourses() != null) {
                 for (Course course : elective.getCourses()) {
-                    System.out.println(course.displayCourse());
+                    if(course == null){
+                        System.out.println("Error Null Class");
+                    }else{
+                        System.out.println(course.displayCourse());
+                    }
+                    
                 }
             }
         }
@@ -323,6 +335,20 @@ public class Student extends User {
             pointGrade = 0.0;
         }else if (grade == "B+") {
             pointGrade = 3.3;
+        }else if (grade == "B-") {
+            pointGrade = 2.7;
+        }else if (grade == "A+") {
+            pointGrade = 4.3;
+        }else if (grade == "A-") {
+            pointGrade = 3.7;
+        }else if (grade == "C+") {
+            pointGrade = 2.3;
+        }else if (grade == "C-") {
+            pointGrade = 1.7;
+        }else if (grade == "D+") {
+            pointGrade = 1.3;
+        }else if (grade == "D-") {
+            pointGrade = 0.7;
         }
         return pointGrade;
     }
@@ -573,3 +599,74 @@ public class Student extends User {
     }
 
 }
+
+
+
+
+/*
+ * Tests passed or failed in studenttester:
+ * ones with no extra text havent been tested yet
+ * tests that pass will be deleted from this list
+ 68
+ 75
+ 84
+ 95
+ 108
+ 121
+ 134
+ 146
+ 158
+ 170
+ 184
+ 192
+ 203
+ 217
+ 228
+ 240
+ 252
+ 264
+ 276
+ 282
+ 288
+ 294
+ 312
+ 320
+ 332
+ 341
+ 348
+ 356
+ 363
+ 373
+ 382
+ 391
+ 399
+ 408
+ 419
+ 428
+ 436
+ 448
+ 455
+ 464
+ 472
+ 482
+ 489
+ 495
+ 506
+ 522
+ 534
+ 544
+ 562-???
+ 592
+ 618
+ 643-???
+ 673-error
+ 692-error
+ 704-error
+ 724-error
+738-error
+751
+771-error
+799
+816-error
+833
+ */
