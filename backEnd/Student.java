@@ -177,9 +177,7 @@ public class Student extends User {
         this.major = major;
     }
 
-    public double getOverallGrade() {
-        return overallGrade;
-    }
+    
 
     public void setOverallGrade(double overallGrade) {
         this.overallGrade = overallGrade;
@@ -229,22 +227,15 @@ public class Student extends User {
     }
 
     public double calculateGPA() {
-        double gpa = 0.0;
+        double numerator = 0.0;
+        double counter = 0.0;
         for (Map.Entry<Course, String> entry : completedCourses.entrySet()) {
             Course course = entry.getKey();
             String grade = entry.getValue();
-            if (grade.equals("A")) {
-                gpa += 4.0;
-            } else if (grade.equals("B")) {
-                gpa += 3.0;
-            } else if (grade.equals("C")) {
-                gpa += 2.0;
-            } else if (grade.equals("D")) {
-                gpa += 1.0;
-            } else if (grade.equals("F")) {
-                gpa += 0.0;
-            }
+            numerator += toPointGrade(grade);
+            counter += 1.0;
         }
+        double gpa = numerator / counter;
         return gpa;
     }
     /*
@@ -357,19 +348,27 @@ public class Student extends User {
      * 
      * @return the students gpa
      */
-
+    public double getOverallGrade() {
+        return overallGrade;
+    }
     public void updateOverallGrade() {
         double totalGrade = 0.0;
+        int counter = 0;
         for (Map.Entry<Course, String> entry : completedCourses.entrySet()) {
             Course course = entry.getKey();
             String grade = entry.getValue();
-            totalGrade += (toPointGrade(grade) * course.getCourseHours());
+            totalGrade += toPointGrade(grade);
+            counter = counter + 1;
         }
+
+        overallGrade = totalGrade / counter;
+        /*
         if(credits == 0){
-            this.overallGrade = 0.0;
+            overallGrade = 0.0;
         }else{
-            this.overallGrade = totalGrade / credits;
+            overallGrade = totalGrade / credits;
         }
+        */
         
         
     }
@@ -379,7 +378,7 @@ public class Student extends User {
      */
 
     private void updateCredits() {
-        this.credits = getCreditsAccumulated();
+        credits = getCreditsAccumulated();
         // System.out.println("Credits updated to: " + this.credits);
     }
     /*
@@ -405,7 +404,7 @@ public class Student extends User {
         // System.out.println("updateCourseCompleted called. updateCourse: " +
         // updateCourse);
         try{
-            this.completedCourses.put(updateCourse, courseGrade);
+            completedCourses.put(updateCourse, courseGrade);
             for (Course course : this.currentCourses) {
                 try {
                     if (course.getUuid() == updateCourse.getUuid()) {
@@ -438,6 +437,7 @@ public class Student extends User {
             String grade = entry.getValue();
             creditTotal += course.getCourseHours();
         }
+        credits = creditTotal;
         return creditTotal;
     }
     /*
@@ -542,7 +542,7 @@ public class Student extends User {
     }
 
     public String displayStudent() {
-        return "Student: " + this.getUscid() + " : " + this.getFirstName() + " " + this.getLastName();
+        return "Student:: " + this.getUscid() + " : " + this.getFirstName() + " " + this.getLastName();
     }
     public static void checkProgress(Student student) {
         System.out.println("\n" + student.getFirstName() + " " + student.getLastName() + "'s Completed Courses: ");
@@ -626,55 +626,25 @@ public class Student extends User {
  * Tests passed or failed in studenttester:
  * ones with no extra text havent been tested yet
  * tests that pass will be deleted from this list
- 84-error
- 95-
- 108-
- 121-
- 134-
- 146-
- 158-
- 170-
- 184-
- 192-
- 203-
- 217-
- 228-
- 240-
- 252-
- 264-
- 276-
- 282-
- 288-
- 294-
- 312-
- 320-
- 332-
- 341-
- 348-
- 356-
- 363-
- 373-
- 382-
- 391-
- 399-
- 408-
- 419-
- 428-
- 436-
- 448-
- 455-
- 464-
- 472-
- 482-
- 489-
- 495-
- 506-
- 522-
- 534-
- 544-
+ 134-may be a faulty test. The .put command will replace the old value
+ and the same testcourse is entered twice.
+ 264-error
+ 332-error
+ 341-error
+ 356-error
+ 373-error
+ 399-error
+ 436-error
+ 448-error
+ 482-error
+ 495-error
+ 506-???
+ 522-???
+ 534-???
+ 544-???
  562-???
- 592
- 618
+ 592-error
+ 618-???
  643-???
  673-???
  692-???
