@@ -72,6 +72,9 @@ public class Course {
     }
 
     public String getCourseNumber() {
+        if(courseNumber == null){
+            courseNumber = "5555";
+        }
         return courseNumber;
     }
 
@@ -80,6 +83,7 @@ public class Course {
     }
 
     public int getCourseHours() {
+        
         return courseHours;
     }
 
@@ -175,7 +179,12 @@ public class Course {
     }
 
     public String getCourseName() {
-        return courseName;
+        if(courseName == null) {
+            return "EMPTY CLASS";
+        }else{
+            return courseName;
+        }
+        
     }
 
     public void setCourseName(String courseName) {

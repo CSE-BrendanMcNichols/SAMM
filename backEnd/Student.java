@@ -365,7 +365,12 @@ public class Student extends User {
             String grade = entry.getValue();
             totalGrade += (toPointGrade(grade) * course.getCourseHours());
         }
-        this.overallGrade = totalGrade / credits;
+        if(credits == 0){
+            this.overallGrade = 0.0;
+        }else{
+            this.overallGrade = totalGrade / credits;
+        }
+        
         
     }
     /*
@@ -399,20 +404,26 @@ public class Student extends User {
     public void updateCourseCompleted(Course updateCourse, String courseGrade) {
         // System.out.println("updateCourseCompleted called. updateCourse: " +
         // updateCourse);
-        this.completedCourses.put(updateCourse, courseGrade);
-        for (Course course : this.currentCourses) {
-            try {
-                if (course.getUuid() == updateCourse.getUuid()) {
-                    currentCourses.remove(course);
-                    break;
+        try{
+            this.completedCourses.put(updateCourse, courseGrade);
+            for (Course course : this.currentCourses) {
+                try {
+                    if (course.getUuid() == updateCourse.getUuid()) {
+                        currentCourses.remove(course);
+                        break;
+                    }
+                }
+                catch (NullPointerException e){
+
                 }
             }
-            catch (NullPointerException e){
-
-            }
+            updateCredits();
+            updateOverallGrade();
         }
-        updateCredits();
-        updateOverallGrade();
+    catch (NullPointerException e){
+        //Course courseisnull = new Course();
+        //this.completedCourses.put(courseisnull, courseGrade);
+    }
         
     }
     /*
@@ -541,13 +552,21 @@ public class Student extends User {
         for (Map.Entry<Course, String> entry : test.entrySet()) {
             Course course = entry.getKey();
             String grade = entry.getValue();
-            System.out.println(course.getCourseName() + " " + course.getCourseNumber() + " Grade: " + grade);
+            try{
+                System.out.println(course.getCourseName() + " " + course.getCourseNumber() + " Grade: " + grade);
+            }
+            catch(NullPointerException e){
+                System.out.println("");
+            }
+            
+            
         }
         
         System.out.println("\n"+ student.getFirstName() + " " + student.getLastName() +"'s Remaining Courses:");
         System.out.println("------------------------------------");
         try {
         for (Course course : student.getCurrentCourses()) {
+            
             System.out.println(course.getCourseName() + " " + course.getCourseNumber());
         }
     } catch (NullPointerException e){
@@ -607,66 +626,64 @@ public class Student extends User {
  * Tests passed or failed in studenttester:
  * ones with no extra text havent been tested yet
  * tests that pass will be deleted from this list
- 68
- 75
- 84
- 95
- 108
- 121
- 134
- 146
- 158
- 170
- 184
- 192
- 203
- 217
- 228
- 240
- 252
- 264
- 276
- 282
- 288
- 294
- 312
- 320
- 332
- 341
- 348
- 356
- 363
- 373
- 382
- 391
- 399
- 408
- 419
- 428
- 436
- 448
- 455
- 464
- 472
- 482
- 489
- 495
- 506
- 522
- 534
- 544
+ 84-error
+ 95-
+ 108-
+ 121-
+ 134-
+ 146-
+ 158-
+ 170-
+ 184-
+ 192-
+ 203-
+ 217-
+ 228-
+ 240-
+ 252-
+ 264-
+ 276-
+ 282-
+ 288-
+ 294-
+ 312-
+ 320-
+ 332-
+ 341-
+ 348-
+ 356-
+ 363-
+ 373-
+ 382-
+ 391-
+ 399-
+ 408-
+ 419-
+ 428-
+ 436-
+ 448-
+ 455-
+ 464-
+ 472-
+ 482-
+ 489-
+ 495-
+ 506-
+ 522-
+ 534-
+ 544-
  562-???
  592
  618
  643-???
- 673-error
- 692-error
- 704-error
- 724-error
-738-error
-751
-771-error
-799
-816-error
-833
+ 673-???
+ 692-???
+ 704-???
+ 724-???
+738-???
+751-???
+771-???
+799-???
+816-???
+833-???
  */
