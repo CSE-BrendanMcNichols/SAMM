@@ -327,8 +327,6 @@ public class Student extends User {
             pointGrade = 2.0;
         } else if (grade == "D") {
             pointGrade = 1.0;
-        } else if (grade == "F") {
-            pointGrade = 0.0;
         }else if (grade == "B+") {
             pointGrade = 3.3;
         }else if (grade == "B-") {
@@ -345,6 +343,8 @@ public class Student extends User {
             pointGrade = 1.3;
         }else if (grade == "D-") {
             pointGrade = 0.7;
+        } else{
+            pointGrade = 0.0;
         }
         return pointGrade;
     }
