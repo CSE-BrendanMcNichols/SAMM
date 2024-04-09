@@ -535,12 +535,12 @@ public class Student extends User {
         }else{
             removeElective(elect);
 
-        if (this.completedElectives == null) {
-            this.completedElectives = new ArrayList<Elective>();
-            // System.out.println("Elective: " + elect.getName() + " is added tp completed
-            // electives list");
-        }
-        this.completedElectives.add(elect);
+            if (this.completedElectives == null) {
+                this.completedElectives = new ArrayList<Elective>();
+                // System.out.println("Elective: " + elect.getName() + " is added tp completed
+                // electives list");
+            }
+            this.completedElectives.add(elect);
         }
     }
 
