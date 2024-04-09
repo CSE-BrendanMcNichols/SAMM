@@ -246,7 +246,6 @@ public class Student extends User {
             System.out.print("Error No Classes");
             return;
         }
-
         System.out.println("These are your class grades:");
         for (Map.Entry<Course, String> entry : completedCourses.entrySet()) {
             Course course = entry.getKey();
@@ -263,6 +262,8 @@ public class Student extends User {
 
             if(resultsubject == null) {
                 resultsubject = "Error Course Subject is Null";
+            }else if(resultsubject.equals("null")){
+                resultsubject = "Error Course Subject is a string containing null";
             }
 
             System.out.println(resultsubject + ", " + resultgrade);
@@ -293,16 +294,16 @@ public class Student extends User {
                 System.out.println("Error Null Elective");
             }else{
                 System.out.println(elective.getName());
-            if (elective.getCourses() != null) {
-                for (Course course : elective.getCourses()) {
-                    if(course == null){
-                        System.out.println("Error Null Class");
-                    }else{
-                        System.out.println(course.displayCourse());
-                    }
+                if (elective.getCourses() != null) {
+                    for (Course course : elective.getCourses()) {
+                        if(course == null){
+                            System.out.println("Error Null Class");
+                        }else{
+                            System.out.println(course.displayCourse());
+                        }
                     
+                    }
                 }
-            }
             }
             
         }
