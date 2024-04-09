@@ -136,15 +136,29 @@ public abstract class User {
     }
 
     public void setUscid(String uscid) {
-        this.uscid = uscid;
+        if(uscid != null){
+            this.uscid = uscid;
+        }else{
+            this.uscid = "Error:null";
+        }
+        
     }
 
     public void setFirstName(String firstName) {
-        this.firstName = firstName;
+        if(firstName != null){
+            this.firstName = firstName;
+        }else{
+            this.firstName = "Error:null";
+        }
+        
     }
 
     public void setLastName(String lastName) {
-        this.lastName = lastName;
+        if(lastName != null){
+            this.lastName = lastName;
+        }else{
+            this.lastName = "Error:null";
+        }
     }
 
     public void setUsername(String username) {

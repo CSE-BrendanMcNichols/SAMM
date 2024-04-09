@@ -209,7 +209,6 @@ public class Student extends User {
         this.currentCourses = currentCourses;
         
     }
-
     public void setRemainingCourses(ArrayList<Course> remainingCourses) {
         this.remainingCourses = remainingCourses;
     }
@@ -290,7 +289,10 @@ public class Student extends User {
         }
         System.out.println("Current Electives");
         for (Elective elective : this.currentElectives) {
-            System.out.println(elective.getName());
+            if(elective == null){
+                System.out.println("Error Null Elective");
+            }else{
+                System.out.println(elective.getName());
             if (elective.getCourses() != null) {
                 for (Course course : elective.getCourses()) {
                     if(course == null){
@@ -301,6 +303,8 @@ public class Student extends User {
                     
                 }
             }
+            }
+            
         }
         System.out.println("--------------------------");
 
@@ -403,26 +407,31 @@ public class Student extends User {
     public void updateCourseCompleted(Course updateCourse, String courseGrade) {
         // System.out.println("updateCourseCompleted called. updateCourse: " +
         // updateCourse);
-        try{
-            completedCourses.put(updateCourse, courseGrade);
-            for (Course course : this.currentCourses) {
-                try {
-                    if (course.getUuid() == updateCourse.getUuid()) {
-                        currentCourses.remove(course);
-                        break;
+        if(updateCourse == null){
+
+        }else{
+            try{
+                completedCourses.put(updateCourse, courseGrade);
+                for (Course course : this.currentCourses) {
+                    try {
+                        if (course.getUuid() == updateCourse.getUuid()) {
+                            currentCourses.remove(course);
+                            break;
+                        }
+                    }
+                    catch (NullPointerException e){
+    
                     }
                 }
-                catch (NullPointerException e){
-
-                }
+                updateCredits();
+                updateOverallGrade();
             }
-            updateCredits();
-            updateOverallGrade();
+            catch (NullPointerException e){
+            //Course courseisnull = new Course();
+            //this.completedCourses.put(courseisnull, courseGrade);
         }
-    catch (NullPointerException e){
-        //Course courseisnull = new Course();
-        //this.completedCourses.put(courseisnull, courseGrade);
     }
+        
         
     }
     /*
@@ -447,9 +456,14 @@ public class Student extends User {
      */
 
     public void updateCurrentCourses(Course course) {
-        ArrayList<Course> updatedclasses = getCurrentCourses();
+        if(getCurrentCourses().contains(course) || course == null){
+
+        }else{
+            ArrayList<Course> updatedclasses = getCurrentCourses();
         updatedclasses.add(course);
         setCurrentCourses(updatedclasses);
+        }
+        
     }
     /*
      * updates the students current courses
@@ -485,9 +499,14 @@ public class Student extends User {
     }
 
     public void addElective(Elective elect) {
-        if (currentElectives != null) {
-            currentElectives.add(elect);
+        if (currentElectives != null && elect != null) {
+            if(currentElectives.contains(elect)){
+
+            }else{
+                currentElectives.add(elect);
             // System.out.println("Added Elective: " + elect.getName());
+            }
+            
         }
     }
 
@@ -497,6 +516,9 @@ public class Student extends User {
         // good match
         if (this.currentElectives != null) {
             for (Elective elective : this.currentElectives) {
+                if(elect == null){
+                    break;
+                }
                 if (elective.getName().equals(elect.getName())) {
                     this.currentElectives.remove(elect);
                     // System.out.println("Removed Elective: " + elect.getName());
@@ -507,14 +529,17 @@ public class Student extends User {
     }
 
     public void updateElectiveCompleted(Elective elect) {
+        if(elect == null){
+            
+        }else{
+            removeElective(elect);
 
-        removeElective(elect);
-
-        if (this.completedElectives != null) {
+        if (this.completedElectives == null) {
             this.completedElectives = new ArrayList<Elective>();
-            this.completedElectives.add(elect);
             // System.out.println("Elective: " + elect.getName() + " is added tp completed
             // electives list");
+        }
+        this.completedElectives.add(elect);
         }
     }
 
@@ -535,10 +560,15 @@ public class Student extends User {
     }
 
     public void addNotes(String note) {
-        if (notes == null) {
-            this.notes = new ArrayList<String>();
+        if(note == null){
+
+        }else{
+            if (notes == null) {
+                this.notes = new ArrayList<String>();
+            }
+            notes.add(note);
         }
-        notes.add(note);
+        
     }
 
     public String displayStudent() {
@@ -628,22 +658,12 @@ public class Student extends User {
  * tests that pass will be deleted from this list
  134-may be a faulty test. The .put command will replace the old value
  and the same testcourse is entered twice.
- 264-error
- 332-error
- 341-error
- 356-error
- 373-error
- 399-error
- 436-error
- 448-error
- 482-error
- 495-error
  506-???
  522-???
  534-???
  544-???
  562-???
- 592-error
+ 592-???
  618-???
  643-???
  673-???
