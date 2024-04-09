@@ -573,7 +573,33 @@ public class Student extends User {
     }
 
     public String displayStudent() {
-        return "Student:: " + this.getUscid() + " : " + this.getFirstName() + " " + this.getLastName();
+        String resultid = "";
+        String resultfirst = "";
+        String resultlast = "";
+        if(this.getUscid() == null){
+            resultid = "Error null uscid";
+        }else if(this.getUscid().equals("null")){
+            resultid = "Error uscid is string with null";
+        }else{
+            resultid = this.getUscid();
+        }
+
+        if(this.getFirstName() == null){
+            resultfirst = "Error null first name";
+        }else if(this.getFirstName().equals("null")){
+            resultfirst = "Error first name is string with null";
+        }else{
+            resultfirst = this.getFirstName();
+        }
+
+        if(this.getLastName() == null){
+            resultlast = "Error null last name";
+        }else if(this.getLastName().equals("null")){
+            resultlast = "Error last name is string with null";
+        }else{
+            resultlast = this.getLastName();
+        }
+        return "Student:: " + resultid + " : " + resultfirst + " " + resultlast;
     }
     public static void checkProgress(Student student) {
         System.out.println("\n" + student.getFirstName() + " " + student.getLastName() + "'s Completed Courses: ");
