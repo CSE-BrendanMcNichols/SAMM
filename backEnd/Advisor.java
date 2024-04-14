@@ -266,23 +266,37 @@ public class Advisor extends User {
      * @param pCourse
      * @return
      */
+    
     private Course findStudentCourse(Student pStudent, Course pCourse) {
-
+        // Check if the student or the course is null
+        if (pStudent == null || pCourse == null) {
+            System.out.println("Invalid request: Student and/or Course is null.");
+            return null;
+        }
+    
+        // Check if there are no courses assigned to the student
+        if (pStudent.getCurrentCourses().isEmpty()) {
+            System.out.println("No courses assigned to Student: " + pStudent.getUsername());
+            return null;
+        }
+    
         boolean matchingCourseFound = false;
         for (Course course : pStudent.getCurrentCourses()) {
-            if (course.getCourseNumber() == pCourse.getCourseNumber()) {
+            if (course.getCourseNumber().equals(pCourse.getCourseNumber())) {
                 matchingCourseFound = true;
                 // Found the matching Course
                 return course;
             }
         }
+    
         if (!matchingCourseFound) {
             System.out.println("It looks like the Course: " + pCourse.getCourseName()
-                    + " is not an assinged to Student: " + pStudent.getUsername());
+                    + " is not assigned to Student: " + pStudent.getUsername());
         }
+    
         return null;
     }
-
+    
     public void displayStudents() {
         for(Student student : assignedStudents) {
             System.out.println(student.getFirstName() + " " + student.getLastName());
