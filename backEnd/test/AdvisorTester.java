@@ -1,45 +1,14 @@
 package backEnd.test;
 
 import static org.junit.jupiter.api.Assertions.*;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import backEnd.Advisor;
 import backEnd.Student;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
-
 public class AdvisorTester {
     
-    /* 
-    @BeforeClass
-	public void oneTimeSetup() {
-		
-	}
-	
-	@AfterClass
-	public void oneTimeTearDown() {
-		
-	}
-	
-	@BeforeEach
-	public void setup() {
-		//runs before each test
-	}
-	
-	@AfterEach
-	public void tearDown() {
-		//runs after each test
-	}
-    */
-
-
     //testing assignedStudents
     @Test
     public void testAdvisorAssignStudentNormal(){ //supposed to pass
@@ -116,6 +85,15 @@ public class AdvisorTester {
         advisor.setAssignedStudents(assignedStudents);
         advisor.unAssignStudent(student3);
         assertEquals(2 , advisor.getAssignedStudents().size(), "Unassigned the Student: \" + student.getUsername() + \" from advisor\" + advisor.getUsername())");
+    }
+
+    @Test
+    public void testMakeNote(){ //supposed to pass
+        Advisor advisor = new Advisor();
+        Student student = new Student();
+        advisor.assignStudent(student);
+        advisor.makeNote(student, "");
+        assertEquals("" , advisor.getAssignedStudents().get(0).getNotes().get(0), "Notes correctly added");
     }
    
 }

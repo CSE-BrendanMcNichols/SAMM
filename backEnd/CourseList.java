@@ -39,7 +39,7 @@ public class CourseList {
             System.out.println("Invalid Parameter");
             return false;
         }
-        // if not found add to the list
+        // if not found in the current list, add to the list
         if (findCourse(course.getUuid()) == false) {
             courses.add(course);
             System.out.println("Course  " + course.getCourseName() + " added successfully.");
