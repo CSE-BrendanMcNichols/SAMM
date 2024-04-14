@@ -237,12 +237,11 @@ public class DataWriter {
             courseJSON.put(DataConstants.COURSENAME, course.getCourseName());
             courseJSON.put(DataConstants.COURSESUBJECT, course.getCourseSubject());
             courseJSON.put(DataConstants.COURSENUMBER, course.getCourseNumber());
-            // TODO store prereq
-            // TODO store coreq
-            // TODO semesters
 
             List<String> semesterStrings = course.getCourseAvailability().stream().map(Semester::toString)
                     .collect(Collectors.toList());
+            courseJSON.put(DataConstants.COURSESEMESTER, semesterStrings);
+
 
             // Convert the Objects to UUID arraylist and store
             if (course.getPrerequisites() != null) {
@@ -258,7 +257,6 @@ public class DataWriter {
                 courseJSON.put(DataConstants.COREQUISITES, uuids);
             }
 
-            courseJSON.put(DataConstants.COURSESEMESTER, semesterStrings);
             courseJSON.put(DataConstants.COURSEDESCRIPTION, course.getCourseDescription());
             courseJSON.put(DataConstants.COURSEHOURS, course.getCourseHours());
             courseJSON.put(DataConstants.MINGRADE, "" + course.getMinGrade());
