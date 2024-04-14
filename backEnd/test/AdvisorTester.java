@@ -95,5 +95,19 @@ public class AdvisorTester {
         advisor.makeNote(student, "");
         assertEquals("" , advisor.getAssignedStudents().get(0).getNotes().get(0), "Notes correctly added");
     }
+
+    @Test
+    public void testMakeNotetoUnAssignedStudent(){ //supposed to pass
+        Advisor advisor = new Advisor();
+        Student student1 = new Student();
+        student1.setUsername("testStudent");
+        advisor.assignStudent(student1);
+
+        Student student2 = new Student();
+        advisor.makeNote(student2, "trying to add note to unassigned student ");
+
+        Student testStudent = advisor.searchStudentByUserName("testStudent");
+        assertTrue(testStudent.getNotes().isEmpty());
+    }
    
 }
