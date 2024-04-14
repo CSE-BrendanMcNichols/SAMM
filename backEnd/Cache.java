@@ -86,21 +86,23 @@ public class Cache {
     public void initializeStudentsNoAdvisor() {
         userListInsance.initializeStudentsNoAdvisor();
         for (Student student : userListInsance.getStudents()) {
-            // System.out.println(student+"\n");
+            //System.out.println("student: " + student.getUuid().toString()+"\n");
         }
     }
 
     public void initializeAdvisors() {
         userListInsance.initializeAdvisors();
         for (Advisor advisor : userListInsance.getAdvisors()) {
-            // System.out.println(advisor+"\n");
+            //System.out.println("Advisor: " + advisor.getUuid().toString()+"\n");
         }
     }
 
     public void initializeStudentsAdvisor() {
         DataLoader.loadStudentsAdvisor();
         for (Student student : userListInsance.getStudents()) {
-            // System.out.println(student+"\n");
+            //System.out.println("student: " + student.getUuid().toString()+"\n");
+            //System.out.println("advisor: " + student.getAdvisor().getUuid().toString()+"\n");
+            
         }
 
     }
